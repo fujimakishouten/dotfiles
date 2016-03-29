@@ -1,0 +1,1 @@
+../bundle/zencoding-vim/plugin/zencoding.vim

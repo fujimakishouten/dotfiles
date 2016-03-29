@@ -1,0 +1,1 @@
+../bundle/jscomplete-vim/autoload/jscomplete.vim

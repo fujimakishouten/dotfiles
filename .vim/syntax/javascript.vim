@@ -1,0 +1,1 @@
+../bundle/vim-javascript-syntax/syntax/javascript.vim
