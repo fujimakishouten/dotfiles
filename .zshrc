@@ -75,6 +75,10 @@ fi
 # Python
 export PYTHONIOENCODING=UTF-8
 export PYTHONHOME=/usr
+export WORKON_HOME=$HOME/.virtualenvs
+if [ -f /etc/bash_completion.d/virtualenvwrapper ]; then
+    . /etc/bash_completion.d/virtualenvwrapper
+fi
 
 # Go
 if type go > /dev/null 2>&1; then
@@ -89,8 +93,8 @@ if type go > /dev/null 2>&1; then
 fi
 
 # JavaScript
-if [ -d /opt/nave ]; then
-    export PATH=$PATH:/opt/nave
+if [ -d /opt/nave/bin ]; then
+    export PATH=$PATH:/opt/nave/bin
 fi
 if [ -d ~/.nvm ]; then
     . ~/.nvm/nvm.sh
@@ -104,6 +108,11 @@ fi
 # Kotlin
 if [ -d /opt/jetbrains/kotlinc/bin ]; then
     export PATH=$PATH:/opt/jetbrains/kotlinc/bin
+fi
+
+# Swift
+if [ -d /opt/apple/swift/usr/bin ]; then
+    export PATH=$PATH:/opt/apple/swift/usr/bin
 fi
 
 # Android SDK
