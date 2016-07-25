@@ -5,8 +5,8 @@ export LC_ALL=en_US.UTF-8
 export LC_COLLATE=ja_JP.UTF-8
 
 # Path
-if [ -d ~/bin ]; then
-    export PATH=$PATH:~/bin
+if [ -d $HOME/bin ]; then
+    export PATH=$PATH:$HOME/bin
 fi
 
 # zsh
@@ -75,35 +75,52 @@ fi
 # Python
 export PYTHONIOENCODING=UTF-8
 export PYTHONHOME=/usr
+export WORKON_HOME=$HOME/.virtualenvs
+if [ -f /etc/bash_completion.d/virtualenvwrapper ]; then
+    . /etc/bash_completion.d/virtualenvwrapper
+fi
 
 # Go
 if type go > /dev/null 2>&1; then
     if [ -z $GOPATH ]; then
-        if [ ! -d ~/gocode ]; then
-            mkdir -p  ~/gocode/bin ~/gocode/pkg ~/gocode/src
+        if [ ! -d $HOME/gocode ]; then
+            mkdir -p  $HOME/gocode/bin $HOME/gocode/pkg $HOME/gocode/src
         fi
 
-        export GOPATH=~/gocode
+        export GOPATH=$HOME/gocode
         export PATH=$PATH:$GOPATH/bin
     fi
 fi
 
 # JavaScript
-if [ -d /opt/nave ]; then
-    export PATH=$PATH:/opt/nave
+if [ -d /opt/nave/bin ]; then
+    export PATH=$PATH:/opt/nave/bin
 fi
-if [ -d ~/.nvm ]; then
-    . ~/.nvm/nvm.sh
+if [ -d $HOME/.nvm ]; then
+    . $HOME/.nvm/nvm.sh
 fi
 
 # PHP
 if [ -d /opt/composer ]; then
     export PATH=$PATH:/opt/composer
 fi
+if [ -d /opt/virtphp ]; then
+    export PATH=$PATH:/opt/virtphp
+fi
+if [ -d $HOME/.phpenv ]; then
+    export PHPENV_ROOT=$HOME/.phpenv
+    export PATH=$PATH:$PHPENV_ROOT/bin
+    eval "$(phpenv init -)"
+fi
 
 # Kotlin
 if [ -d /opt/jetbrains/kotlinc/bin ]; then
     export PATH=$PATH:/opt/jetbrains/kotlinc/bin
+fi
+
+# Swift
+if [ -d /opt/apple/swift/usr/bin ]; then
+    export PATH=$PATH:/opt/apple/swift/usr/bin
 fi
 
 # Android SDK
