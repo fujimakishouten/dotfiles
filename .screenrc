@@ -1,17 +1,16 @@
-startup_message off
 autodetach      on
-hardstatus      alwayslastline "%{= gk}[%n] %w %= %H %02c %y/%m/%d"
-defscrollback   200000 
 defbce          on
-vbell           off
+defencoding     utf8
+defhstatus      "Screen[^En]: ^Et"
+defkanji        utf8
+deflogin        off
+defscrollback   200000
+escape          ^b^b
+hardstatus      alwayslastline "%{= gk}[%n] %w %= %H %02c %y/%m/%d"
+startup_message off
 term            xterm-256color
 termcapinfo     xterm* 'Co#256:pa#32767:AB=\E[48;5;%dm:AF=\E[38;5;%dm:'
-defhstatus "Screen[^En]: ^Et"
-deflogin        off
-defkanji        utf8
-defencoding     utf8
+vbell           off
 
-escape ^b^b
-bind  w windowlist -b
+bind w windowlist -b
 bind ^p paste
-

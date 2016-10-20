@@ -14,26 +14,34 @@ HISTFILE=$HOME/.zsh_history
 HISTSIZE=100000
 SAVEHIST=100000
 
-autoload -U compinit
-autoload -U zed
-autoload -U colors
+autoload -Uz colors
+autoload -Uz compinit
+autoload -Uz zed
+colors
 compinit -u
 
-setopt correct
-setopt nolistbeep
-setopt hist_ignore_all_dups
 setopt append_history
-setopt extended_history
-setopt share_history
 setopt auto_pushd
-setopt multios
-setopt print_eight_bit
-setopt prompt_subst
 setopt complete_aliases
 setopt complete_in_word
+setopt correct
+setopt extended_history
+setopt hist_ignore_all_dups
+setopt hist_ignore_dups
+setopt hist_no_store
+setopt hist_verify
+setopt magic_equal_subst
+setopt multios
+setopt no_beep
+setopt nolistbeep
 setopt numeric_glob_sort
+setopt print_eight_bit
+setopt prompt_subst
+setopt pushd_ignore_dups
+setopt share_history
 
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
 PROMPT="%n@%M:%/%% "
 
@@ -43,18 +51,18 @@ case "${OSTYPE}" in
     linux*)
         export LESS="--raw-control-chars"
 
-        alias  ls="ls --color=auto"
-        alias  grep="grep --color=auto"
-        alias  egrep="egrep --color=auto"
         alias  diff="colordiff"
+        alias  egrep="egrep --color=auto"
+        alias  emacs="emacs -nw"
+        alias  fgrep="fgrep --color=auto"
+        alias  grep="grep --color=auto"
+        alias  ls="ls --color=auto"
+        alias  mysql="mysql --auto-rehash"
         alias  screen="screen -U"
         alias  tmux="tmux -2"
-        alias  emacs="emacs -nw"
-        alias  mysql="mysql --auto-rehash"
-
-        alias  vld="php -d vld.active=1 -d vld.execute=0 -f"
 
         alias  php6=python3
+        alias  vld="php -d vld.active=1 -d vld.execute=0 -f"
         ;;
 esac
 
@@ -170,4 +178,3 @@ if [ -d /opt/cocos2d-x/cocos2d-x ]; then
         export PATH=$ANT_ROOT:$PATH
     fi
 fi
-
