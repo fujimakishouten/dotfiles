@@ -92,6 +92,13 @@ if type go > /dev/null 2>&1; then
     fi
 fi
 
+# OCaml
+if [ -d $HOME/.opam/opam-init ]; then
+    if [ -f $HOME/.opam/opam-init/init.zsh ]; then
+        . $HOME/.opam/opam-init/init.zsh
+    fi
+fi
+
 # JavaScript
 if [ -d /opt/nave/bin ]; then
     export PATH=$PATH:/opt/nave/bin
