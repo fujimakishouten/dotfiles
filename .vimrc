@@ -105,6 +105,9 @@ au BufRead,BufNew * match JpSpace /　/
 " 全角記号の幅
 set ambiwidth=double
 
+" 折りたたみを行わない
+set foldmethod=manual
+
 "--------------------------------------------------------------------
 " 編集・整形の設定
 "--------------------------------------------------------------------
@@ -204,7 +207,7 @@ highlight PmenuSel ctermbg=1
 highlight PMenuSbar ctermbg=4
 
 " 保存時に php 構文チェック
-autocmd BufWritePost *.php !php -l %
+" autocmd BufWritePost *.php !php -l %
 
 " Javascript　構文チェック
 " autocmd FileType javascript noremap <buffer> <up> :<C-u>!/usr/local/bin/gjslint %<cr>
@@ -217,17 +220,11 @@ let g:SimpleJsIndenter_CaseIndentLevel = -1
 " Syntax file for jQuery
 au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
 
-" vim-javascript-syntax
-au FileType javascript call JavaScriptFold()
-
 " jscomplete-vim
 " dom  : Adding DOM keywords completion.
 " moz  : Adding Mozilla JavaScript keywords completion.
 " xpcom: Adding Mozilla XPCOM component keywords completion.
 " es6th: Adding ECMAScript 6th keywords completion.
 let g:jscomplete_use = ['dom', 'es6th']
-
-
-
 
 
