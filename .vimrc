@@ -172,8 +172,7 @@ autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 set encoding=utf-8
 set termencoding=utf-8
 set fileencoding=utf-8
-set fileencodings=ucs-bom,iso-2022-jp,euc-jp
-set fileencodings+=,ucs-2le,ucs-2,cp932,utf-8
+set fileencodings=ucs-bom,utf-8,utf-16,utf-16le,utf-32,utf31-le,ucs2,ucs2-le,ucs-4,ucs-4le,iso-2022-jp,euc-jp,cp932,latin1
 
 " 改行コード
 set fileformat=unix
