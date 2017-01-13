@@ -7,16 +7,19 @@
 "--------------------------------------------------------------------
 
 " ウィンドウの幅
-set columns=100
+set columns=120
 
 " ウィンドウの高さ
-set lines=29 " 解像度 1024x600 用
+set lines=36
 
 " ウィンドウの位置
-winpos 198 0 " 解像度 1024x600 用
+winpos 420 180
 
 " 水平スクロールバーを表示
 "set guioptions+=b
+
+" タブを常に表示
+" set showtabline=2
 
 "--------------------------------------------------------------------
 " カラーテーマの設定
@@ -30,12 +33,12 @@ winpos 198 0 " 解像度 1024x600 用
 " フォントの設定
 "--------------------------------------------------------------------
 
-set guifont=VLGothic\ 9
-set guifontset=Bitstream\ Vera\ Sans\ Mono\ 9:VLGothic\ 9
-set guifontwide=VLGothic\ 9
-"set guifont=MS\ Gothic\ 11
-"set guifontset=Bitstream\ Vera\ Sans\ Mono\ 11:MS\ Gothic\ 11
-"set guifontwide=MS\ Gothic\ 11
+set guifont=VLGothic\ 12
+set guifontset=Bitstream\ Vera\ Sans\ Mono\ 11:VLGothic\ 12
+set guifontwide=VLGothic\ 12
+"set guifont=MS\ Gothic\ 12
+"set guifontset=Bitstream\ Vera\ Sans\ Mono\ 11:MS\ Gothic\ 12
+"set guifontwide=MS\ Gothic\ 12
 
 "--------------------------------------------------------------------
 " カーソルの設定
@@ -61,8 +64,16 @@ set mousehide
 set clipboard+=unnamed " .vimrcで指定済みかも
 
 "--------------------------------------------------------------------
+" キーボードの設定
+"--------------------------------------------------------------------
+
+" コマンドモード時に日本語変換をOFFにする
+set imdisable
+
+"--------------------------------------------------------------------
 " メニューに関する設定
 "--------------------------------------------------------------------
 
 " ツールバーを表示しない
 set guioptions-=T
+
