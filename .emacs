@@ -152,6 +152,7 @@
 ; ウィンドウの左側にラインナンバーを表示
 (require 'linum)
 (global-linum-mode)
+(setq linum-format "%d  ")
 
 ; スタートアップメッセージを表示しない
 (setq inhibit-startup-message t)
