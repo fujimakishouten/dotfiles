@@ -114,6 +114,9 @@ fi
 if [ -d $HOME/.nvm ]; then
     . $HOME/.nvm/nvm.sh
 fi
+if [ -d $HOME/.nodebrew/current/bin ]; then
+    export PATH=$PATH:$HOME/.nodebrew/current/bin
+fi
 
 # PHP
 if [ -d /opt/composer ]; then
