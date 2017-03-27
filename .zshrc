@@ -63,6 +63,10 @@ case "${OSTYPE}" in
 
         alias  php6=python3
         alias  vld="php -d vld.active=1 -d vld.execute=0 -f"
+        
+        if [ -f /usr/bin/rlwrap ]; then
+            alias ocaml="/usr/bin/rlwrap ocaml"
+        fi
         ;;
 esac
 
