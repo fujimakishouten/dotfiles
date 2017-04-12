@@ -1,4 +1,4 @@
-# Language
+# Language                                                                                                                                                      
 export LANGUAGE=en_GB.UTF-8
 export LANG=en_GB.UTF-8
 export LC_ALL=en_GB.UTF-8
@@ -9,42 +9,10 @@ if [ -d $HOME/bin ]; then
     export PATH=$PATH:$HOME/bin
 fi
 
-# zsh
-HISTFILE=$HOME/.zsh_history
-HISTSIZE=100000
-SAVEHIST=100000
-
-autoload -Uz colors
-autoload -Uz compinit
-autoload -Uz zed
-colors
-compinit -u
-
-setopt append_history
-setopt auto_pushd
-setopt complete_aliases
-setopt complete_in_word
-setopt correct
-setopt extended_history
-setopt hist_ignore_all_dups
-setopt hist_ignore_dups
-setopt hist_no_store
-setopt hist_verify
-setopt magic_equal_subst
-setopt multios
-setopt no_beep
-setopt nolistbeep
-setopt numeric_glob_sort
-setopt print_eight_bit
-setopt prompt_subst
-setopt pushd_ignore_dups
-setopt share_history
-
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-
-PROMPT="%n@%M:%/%% "
-
+# bash
+if [ -f /etc/bash_completion ]; then
+ . /etc/bash_completion
+fi
 
 # Aliases
 case "${OSTYPE}" in
@@ -79,14 +47,13 @@ esac
 #case "${UID}" in
 #    *)
 #        [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
-#            PROMPT="%{[37m%}${HOST%%.*} ${PROMPT}"
+#            PROMPT="%{^[[37m%}${HOST%%.*} ${PROMPT}"
 #        ;;
 #esac
 
 
 # Others
-export ATLAS_TOKEN="VwgMtyOpYITL1Q.atlasv1.i9Asn0O3GM3Nr4I0lkx4YapqdzQNqVsm7zLlyh82TYYzWVJPuczzHJZEoOxDs0WITFk"
-export SVN_EDITOR=/usr/bin/vim
+export SVN_EDITOR=/usr/bin/nvim
 if [ -d /opt/hashicorp/packer ]; then
     export PATH=$PATH:/opt/hashicorp/packer
 fi
@@ -152,20 +119,6 @@ if [ -d /opt/apple/swift/usr/bin ]; then
     export PATH=$PATH:/opt/apple/swift/usr/bin
 fi
 
-# Android SDK
-if [ -d /opt/google/android-sdk-linux ]; then
-    export ANDROID_SDK_ROOT=/opt/google/android-sdk-linux
-    export PATH=$PATH:$ANDROID_SDK_ROOT
-
-    if [ -d $ANDROID_SDK_ROOT/tools ]; then
-        export PATH=$PATH:$ANDROID_SDK_ROOT/tools
-    fi
-
-    if [ -d $ANDROID_SDK_ROOT/platform-tools ]; then
-        export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
-    fi
-fi
-
 # Android NDK
 if [ -d /opt/google/android-ndk ]; then
     export NDK_ROOT=/opt/google/android-ndk
@@ -192,3 +145,4 @@ if [ -d /opt/cocos2d-x/cocos2d-x ]; then
         export PATH=$ANT_ROOT:$PATH
     fi
 fi
+
