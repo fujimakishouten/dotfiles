@@ -121,6 +121,11 @@ fi
 # JavaScript
 if [ -d /opt/nave/bin ]; then
     export PATH=$PATH:/opt/nave/bin
+    
+    NODE_LATEST_VERSION=`nave latest`
+    if [ -d $HOME/.nave/installed/$NODE_LATEST_VERSION/bin ]; then
+        export PATH=$PATH:$HOME/.nave/installed/$NODE_LATEST_VERSION/bin
+    fi
 fi
 if [ -d $HOME/.nvm ]; then
     . $HOME/.nvm/nvm.sh
