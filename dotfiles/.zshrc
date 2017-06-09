@@ -85,7 +85,6 @@ esac
 
 
 # Others
-export ATLAS_TOKEN="VwgMtyOpYITL1Q.atlasv1.i9Asn0O3GM3Nr4I0lkx4YapqdzQNqVsm7zLlyh82TYYzWVJPuczzHJZEoOxDs0WITFk"
 export SVN_EDITOR=/usr/bin/vim
 if [ -d /opt/hashicorp/packer ]; then
     export PATH=$PATH:/opt/hashicorp/packer
