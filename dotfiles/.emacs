@@ -18,10 +18,10 @@
 ; emacs23
 (when (>= emacs-major-version 23)
   (cond (window-system
-      (set-default-font "VL Gothic-8")
+      (set-default-font "VL Gothic-14")
           (set-fontset-font (frame-parameter nil 'font)
                 'japanese-jisx0208
-                      '("VL Gothic-8" . "unicode-bmp"))
+                      '("VL Gothic-14" . "unicode-bmp"))
 )))
 
 ; emacs24
