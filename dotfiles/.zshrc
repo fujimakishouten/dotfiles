@@ -101,13 +101,14 @@ fi
 # Go
 if type go > /dev/null 2>&1; then
     if [ -z $GOPATH ]; then
-        if [ ! -d $HOME/gocode ]; then
-            mkdir -p  $HOME/gocode/bin $HOME/gocode/pkg $HOME/gocode/src
-        fi
-
-        export GOPATH=$HOME/gocode
-        export PATH=$PATH:$GOPATH/bin
+        export GOPATH=$HOME/go
     fi
+
+    if [ ! -d $GOPATH ]; then
+        mkdir -p $GOPATH/bin $GOPATH/pkg $GOPATH/src
+    fi
+
+    export PATH=$PATH:$GOPATH/bin
 fi
 
 # OCaml
