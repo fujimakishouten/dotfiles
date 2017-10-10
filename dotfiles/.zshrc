@@ -63,7 +63,7 @@ case "${OSTYPE}" in
 
         alias  php6=python3
         alias  vld="php -d vld.active=1 -d vld.execute=0 -f"
- 
+
         if [ -f /usr/bin/nvim ]; then
             alias vi="/usr/bin/nvim"
             alias vim="/usr/bin/nvim"
@@ -121,10 +121,13 @@ fi
 # JavaScript
 if [ -d /opt/nave/bin ]; then
     export PATH=$PATH:/opt/nave/bin
-    
+
     NODE_LATEST_VERSION=`nave latest`
     if [ -d $HOME/.nave/installed/$NODE_LATEST_VERSION/bin ]; then
         export PATH=$PATH:$HOME/.nave/installed/$NODE_LATEST_VERSION/bin
+    fi
+    if [ -d $HOME/.nave/installed/$NODE_LATEST_VERSION/lib/node_modules ]; then
+        export NODE_PATH=$NODE_PATH:$HOME/.nave/installed/$NODE_LATEST_VERSION/lib/node_modules
     fi
 fi
 if [ -d $HOME/.nvm ]; then
