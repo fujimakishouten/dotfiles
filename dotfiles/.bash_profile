@@ -51,6 +51,17 @@ esac
 #        ;;
 #esac
 
+# SSH
+if [ $SSH_CONNECTION ]; then
+    if [ -f /usr/bin/fcitx ]; then
+        export XMODIFIERS="@im=fcitx"
+        export DefaultIMModule=fcitx
+        export GTK_IM_MODULE=fcitx
+        export QT_IM_MODULE=fcitx
+
+        fcitx -dr 
+    fi  
+fi
 
 # Others
 export SVN_EDITOR=/usr/bin/nvim
