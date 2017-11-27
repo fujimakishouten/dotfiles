@@ -138,7 +138,7 @@ if [ -d /opt/nave/bin ]; then
         export PATH=$PATH:$HOME/.nave/installed/$NODE_LATEST_VERSION/bin
     fi
     if [ -d $HOME/.nave/installed/$NODE_LATEST_VERSION/lib/node_modules ]; then
-        export NODE_PATH=$NODE_PATH:$HOME/.nave/installed/$NODE_LATEST_VERSION/lib/node_modules
+        export NODE_PATH=$NODE_PATH:$HOME/.nave/installed/$NODE_LATEST_VERSION/lib/node:$HOME/.nave/installed/$NODE_LATEST_VERSION/lib/node_modules
     fi
 fi
 if [ -d $HOME/.nvm ]; then
