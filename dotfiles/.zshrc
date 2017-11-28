@@ -84,14 +84,16 @@ esac
 #esac
 
 # SSH
-if [ $SSH_CONNECTION ]; then
-    if [ -f /usr/bin/fcitx ]; then
-        export XMODIFIERS="@im=fcitx"
-        export DefaultIMModule=fcitx
-        export GTK_IM_MODULE=fcitx
-        export QT_IM_MODULE=fcitx
+if [ -n "$SSH_CONNECTION" ]; then
+    if [ -n "$DISPLAY" ] && [ -z "$TMUX" ] && [ -z "$WINDOW" ]; then                                                                                                             
+        if [ -f /usr/bin/fcitx ]; then
+            export XMODIFIERS="@im=fcitx"
+            export DefaultIMModule=fcitx
+            export GTK_IM_MODULE=fcitx
+            export QT_IM_MODULE=fcitx
 
-        fcitx -dr
+            fcitx -dr
+        fi
     fi
 fi
 
@@ -111,7 +113,7 @@ fi
 
 # Go
 if type go > /dev/null 2>&1; then
-    if [ -z $GOPATH ]; then
+    if [ -z "$GOPATH" ]; then
         export GOPATH=$HOME/go
     fi
 
