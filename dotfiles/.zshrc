@@ -173,6 +173,11 @@ if [ -d /opt/apple/swift/usr/bin ]; then
     export PATH=$PATH:/opt/apple/swift/usr/bin
 fi
 
+# .NET Core
+if [ -d $HOME/dotnet ]; then
+    export PATH=$PATH:$HOME/dotnet
+fi
+
 # Android SDK
 if [ -d /opt/google/android-sdk-linux ]; then
     export ANDROID_SDK_ROOT=/opt/google/android-sdk-linux
