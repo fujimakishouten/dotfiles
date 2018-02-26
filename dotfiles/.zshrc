@@ -98,9 +98,12 @@ if [ -n "$SSH_CONNECTION" ]; then
 fi
 
 # Others
-export SVN_EDITOR=/usr/bin/vim
+export SVN_EDITOR=/usr/bin/nvim
 if [ -d /opt/hashicorp/packer ]; then
     export PATH=$PATH:/opt/hashicorp/packer
+fi
+if [ -d /opt/apache/apache-drill/bin ]; then
+    export PATH=$PATH:/opt/apache/apache-drill/bin
 fi
 
 # Python
@@ -178,26 +181,6 @@ if [ -d $HOME/dotnet ]; then
     export PATH=$PATH:$HOME/dotnet
 fi
 
-# Android SDK
-if [ -d /opt/google/android-sdk-linux ]; then
-    export ANDROID_SDK_ROOT=/opt/google/android-sdk-linux
-    export PATH=$PATH:$ANDROID_SDK_ROOT
-
-    if [ -d $ANDROID_SDK_ROOT/tools ]; then
-        export PATH=$PATH:$ANDROID_SDK_ROOT/tools
-    fi
-
-    if [ -d $ANDROID_SDK_ROOT/platform-tools ]; then
-        export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
-    fi
-fi
-
-# Android NDK
-if [ -d /opt/google/android-ndk ]; then
-    export NDK_ROOT=/opt/google/android-ndk
-    export PATH=$PATH:$NDK_ROOT
-fi
-
 # cocos2d-x
 if [ -d /opt/cocos2d-x/cocos2d-x ]; then
     # Add environment variable COCOS_CONSOLE_ROOT for cocos2d-x
@@ -218,3 +201,4 @@ if [ -d /opt/cocos2d-x/cocos2d-x ]; then
         export PATH=$ANT_ROOT:$PATH
     fi
 fi
+

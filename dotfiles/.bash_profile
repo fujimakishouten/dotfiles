@@ -52,21 +52,26 @@ esac
 #esac
 
 # SSH
-if [ $SSH_CONNECTION ]; then
-    if [ -f /usr/bin/fcitx ]; then
-        export XMODIFIERS="@im=fcitx"
-        export DefaultIMModule=fcitx
-        export GTK_IM_MODULE=fcitx
-        export QT_IM_MODULE=fcitx
+if [ -n "$SSH_CONNECTION" ]; then
+    if [ -n "$DISPLAY" ] && [ -z "$TMUX" ] && [ -z "$WINDOW" ]; then                                                                                                             
+        if [ -f /usr/bin/fcitx ]; then
+            export XMODIFIERS="@im=fcitx"
+            export DefaultIMModule=fcitx
+            export GTK_IM_MODULE=fcitx
+            export QT_IM_MODULE=fcitx
 
-        fcitx -dr 
-    fi  
+            fcitx -dr
+        fi
+    fi
 fi
 
 # Others
 export SVN_EDITOR=/usr/bin/nvim
 if [ -d /opt/hashicorp/packer ]; then
     export PATH=$PATH:/opt/hashicorp/packer
+fi
+if [ -d /opt/apache/apache-drill/bin ]; then
+    export PATH=$PATH:/opt/apache/apache-drill/bin
 fi
 
 # Python
@@ -79,14 +84,15 @@ fi
 
 # Go
 if type go > /dev/null 2>&1; then
-    if [ -z $GOPATH ]; then
-        if [ ! -d $HOME/gocode ]; then
-            mkdir -p  $HOME/gocode/bin $HOME/gocode/pkg $HOME/gocode/src
-        fi
-
-        export GOPATH=$HOME/gocode
-        export PATH=$PATH:$GOPATH/bin
+    if [ -z "$GOPATH" ]; then
+        export GOPATH=$HOME/go
     fi
+
+    if [ ! -d $GOPATH ]; then
+        mkdir -p $GOPATH/bin $GOPATH/pkg $GOPATH/src
+    fi
+
+    export PATH=$PATH:$GOPATH/bin
 fi
 
 # OCaml
@@ -99,6 +105,14 @@ fi
 # JavaScript
 if [ -d /opt/nave/bin ]; then
     export PATH=$PATH:/opt/nave/bin
+
+    NODE_LATEST_VERSION=`nave latest`
+    if [ -d $HOME/.nave/installed/$NODE_LATEST_VERSION/bin ]; then
+        export PATH=$PATH:$HOME/.nave/installed/$NODE_LATEST_VERSION/bin
+    fi
+    if [ -d $HOME/.nave/installed/$NODE_LATEST_VERSION/lib/node_modules ]; then
+        export NODE_PATH=$NODE_PATH:$HOME/.nave/installed/$NODE_LATEST_VERSION/lib/node:$HOME/.nave/installed/$NODE_LATEST_VERSION/lib/node_modules
+    fi
 fi
 if [ -d $HOME/.nvm ]; then
     . $HOME/.nvm/nvm.sh
@@ -130,10 +144,9 @@ if [ -d /opt/apple/swift/usr/bin ]; then
     export PATH=$PATH:/opt/apple/swift/usr/bin
 fi
 
-# Android NDK
-if [ -d /opt/google/android-ndk ]; then
-    export NDK_ROOT=/opt/google/android-ndk
-    export PATH=$PATH:$NDK_ROOT
+# .NET Core
+if [ -d $HOME/dotnet ]; then
+    export PATH=$PATH:$HOME/dotnet
 fi
 
 # cocos2d-x
