@@ -6,7 +6,7 @@ export LC_COLLATE=ja_JP.UTF-8
 
 # Path
 if [ -d $HOME/bin ]; then
-    export PATH=$PATH:$HOME/bin
+    export PATH=$HOME/bin:$PATH
 fi
 
 # zsh
