@@ -8,6 +8,9 @@ export LC_COLLATE=ja_JP.UTF-8
 if [ -d $HOME/bin ]; then
     export PATH=$HOME/bin:$PATH
 fi
+if [ -d $HOME/.local/bin ]; then
+    export PATH=$PATH:$HOME/.local/bin
+fi
 
 # zsh
 HISTFILE=$HOME/.zsh_history
