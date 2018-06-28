@@ -1,10 +1,39 @@
-; Load path
-(let ((default-directory "~/.emacs.d/vendor/"))
-  (setq load-path (cons default-directory load-path))
-  (normal-top-level-add-subdirs-to-load-path)
+;;; init.el --- Initialization file for Emacs
+;;; Commentary:
+;;;     Emacs Startup File --- initialization for Emacs
+
+;; Load path
+(when (file-directory-p "~/.emacs.d/vendor")
+  (let ((default-directory "~/.emacs.d/vendor/"))
+    (setq load-path (cons default-directory load-path))
+    (normal-top-level-add-subdirs-to-load-path)))
+
+
+;; emacs
+;; emacs23
+(when (>= emacs-major-version 23)
+  (cond (window-system
+      (set-default-font "VL Gothic-14")
+          (set-fontset-font (frame-parameter nil 'font)
+                'japanese-jisx0208
+                      '("VL Gothic-14" . "unicode-bmp"))
+)))
+
+;; emacs24
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+  ;(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+  (package-initialize)
 )
 
-; Language
+
+;; Environments
+(autoload 'exec-path-from-shell "exec-path-from-shell" nil t)
+;(exec-path-from-shell-initialize)
+
+
+;; Language
 (set-language-environment "Japanese")
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
@@ -15,47 +44,9 @@
 (setq file-name-coding-system 'utf-8)
 (setq quail-japanese-use-double-n t)
 
-; emacs23
-(when (>= emacs-major-version 23)
-  (cond (window-system
-      (set-default-font "VL Gothic-14")
-          (set-fontset-font (frame-parameter nil 'font)
-                'japanese-jisx0208
-                      '("VL Gothic-14" . "unicode-bmp"))
-)))
 
-; emacs24
-(when (>= emacs-major-version 24)
-  (require 'package)
-  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-  ;(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-  (package-initialize)
-)
-
-
-; キーバインドの変更
-; M-g => M-x goto-line
-(global-set-key (kbd "M-g") 'goto-line)
-(global-set-key (kbd "C-r") 'replace-string)
-(global-set-key (kbd "C-M-r") 'replace-regexp)
-(global-set-key (kbd "C-/") 'undo)
-
-; ハイライト設定
-(global-font-lock-mode t)
-(setq font-lock-maximum-decoration t)
-(setq fast-lock nil)
-(setq lazy-lock nil)
-(setq jit-lock t)
-; (setq hilit-background-mode 'light) ; 明るい背景色用
-; (setq hilit-background-mode 'dark) ; 暗い背景色用
-
-; 検索にマッチした文字列をハイライト
-(setq search-highlight t)
-
-; 選択範囲を見えるようにする
-(setq transient-mark-mode t)
-
-; ウィンドウサイズ・カラー
+;; Display
+;; Window size and colors
 (if window-system
     (setq default-frame-alist
         (append (list '(width . 120)
@@ -81,37 +72,64 @@
     )
 )
 
-; タイトルバーにファイル名を表示する
+;; Hide startup message
+(setq inhibit-startup-message t)
+
+;; Show filename in title bar
 (setq frame-title-format (format "emacs@%s : %%f" (system-name)))
 
-; ツールバーを表示しない
+;; Hide toolbar
 ;(if window-system
 ;    (tool-bar-mode 0)
 ;)
 
-; カーソルの位置が何文字目かを表示する
+;; Show scroll bar
+(if window-system
+    (set-scroll-bar-mode 'right)
+)
+
+;; Show line numbers
+(autoload 'linum "linum" nil t)
+(global-linum-mode)
+(setq linum-format "%d  ")
+
+;; Show cursor position
+(line-number-mode t)
 (column-number-mode t)
 
-; カーソルの位置が何文字目かを表示する
-(line-number-mode t)
+;; Highlight
+(global-font-lock-mode t)
+(setq font-lock-maximum-decoration t)
+(setq fast-lock nil)
+(setq lazy-lock nil)
+(setq jit-lock t)
+(setq search-highlight t)
+; (setq hilit-background-mode 'light) ; Light theme
+; (setq hilit-background-mode 'dark) ; Dark theme
 
-; タブの設定
+;; Show matching brackets
+(setq show-paren-mode t)
+
+;; Show selection
+(setq transient-mark-mode t)
+
+;; Disable word wrapping
+(setq-default truncate-lines t)
+(setq-default truncate-partial-width-windows t)
+(set-default 'auto-show-mode t)
+
+;; Tabs and indents
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 (setq-default indent-tab-width 4)
 (setq-default c-basic-offset 4)
 (setq tab-stop-list
   '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80 84 88 92 96 100 104 108  112 116 120 124 128))
-
-; 前の行と同じサイズでインデントを行う
 (setq indent-line-function 'indent-relative-maybe)
 
-; 括弧の対応を表示
-(setq show-paren-mode t)
-
-; タブやスペースを表示
+;; Display tabs and spaces
 (when (and (>= emacs-major-version 23)
-     (require 'whitespace nil t))
+  (require 'whitespace))
   (setq whitespace-style
   '(face
     tabs spaces newline trailing space-before-tab space-after-tab
@@ -139,42 +157,49 @@
   (setq whitespace-global-modes '(not dired-mode tar-mode))
   (global-whitespace-mode 1))
 
-; 長い行を折り返さない
-(setq-default truncate-lines t)
-(setq-default truncate-partial-width-windows t)
-(set-default 'auto-show-mode t)
 
-; スクロールバーを右側に表示
-(if window-system
-    (set-scroll-bar-mode 'right)
-)
+;; Operation
+(setq enable-double-n-syntax t)    ; Input "ん" by "nn"
 
-; ウィンドウの左側にラインナンバーを表示
-(require 'linum)
-(global-linum-mode)
-(setq linum-format "%d  ")
+;; Keybind
+(global-set-key (kbd "C-c <left>")  'windmove-left)
+(global-set-key (kbd "C-c <right>") 'windmove-right)
+(global-set-key (kbd "C-c <up>")    'windmove-up)
+(global-set-key (kbd "C-c <down>")  'windmove-down)
+(global-set-key (kbd "M-g") 'goto-line)           ; M-g => M-x goto-line
+(global-set-key (kbd "C-r") 'replace-string)
+(global-set-key (kbd "C-M-r") 'replace-regexp)
+(global-set-key (kbd "C-/") 'undo)
 
-; スタートアップメッセージを表示しない
-(setq inhibit-startup-message t)
 
-; バックアップを作らない
+;; Save and backup
+;; Buckup:
 (setq make-backup-files nil)
 
-; 自動保存しない
+;; Auto save
 (setq auto-save-default nil)
 
-; ファイルの最後に改行を入れる
+;; Ensure new line at EOF
 (setq require-final-newline t)
 
-; 「nn」で「ん」を入力
-(setq enable-double-n-syntax t)
+
+;; Editorconfig
+(autoload 'editorconfig "editorconfig" nil t)
 
 
-; Editorconfig
-(load "editorconfig")
+;; flycheck
+(add-hook 'after-init-hook #'global-flycheck-mode)
 
-; GNU Global
-(require 'gtags)
+
+;; Auto complete
+(autoload 'auto-complete-config "auto-complete-config" nil t)
+(when (file-directory-p "~/.emacs.d/ac-dict")
+  (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+  (ac-config-default))
+
+
+;; GNU Global
+(autoload 'gtags "gtags" nil t)
 (global-set-key "\M-t" 'gtags-find-tag)
 (global-set-key "\M-r" 'gtags-find-rtag)
 (global-set-key "\M-s" 'gtags-find-symbol)
@@ -190,22 +215,17 @@
     )
 )
 
-; flycheck
-(add-hook 'after-init-hook #'global-flycheck-mode)
 
-; Auto complete
-(require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
-(ac-config-default)
-
-; reStructuredText
-(add-to-list 'auto-mode-alist '("\\.re?st$" . rst-mode))
-
-; Markdown
+;; Markdown
 (autoload 'markdown-mode "markdown-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 
-; Web
+
+;; reStructuredText
+(add-to-list 'auto-mode-alist '("\\.re?st$" . rst-mode))
+
+
+;; Web
 (autoload 'web-mode "web-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.x?html?$" . web-mode))
 (add-hook 'web-mode-hook
@@ -220,8 +240,6 @@
         )
     )
 )
-
-; Emmet (Zencoding)
 (autoload 'emmet-mode "emmet-mode" nil t)
 (add-hook 'sgml-mode-hook 'emmet-mode)
 (add-hook 'css-mode-hook  'emmet-mode)
@@ -234,7 +252,8 @@
     )
 )
 
-; Python
+
+;; Python
 (autoload 'python-mode "python-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
 (add-hook 'python-mode-hook
@@ -248,16 +267,27 @@
     )
 )
 
-; Go
-(require 'exec-path-from-shell)
-(let
-    ((envs '("PATH" "GOPATH")))
-    (exec-path-from-shell-copy-envs envs))
+
+;; OCaml
+(autoload 'tuareg-mode "tuareg-mode" nil t)
+(autoload 'tuareg-run-ocaml "tuareg-run-ocaml" nil t)
+(autoload 'ocamldebug "ocamldebug" nil t)
+(add-to-list 'auto-mode-alist '("\\.ml[iylp]?$" . tuareg-mode))
+
+
+
+;; Go
 (autoload 'go-mode "go-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.go$" . go-mode))
 (add-hook 'before-save-hook 'gofmt-before-save)
 
-; PHP
+
+;; Kotlin
+(autoload 'kotlin-mode "kotlin-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.kt$" . kotlin-mode))
+
+
+;; PHP
 (autoload 'php-mode "php-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
 (add-hook 'php-mode-hook
@@ -279,11 +309,13 @@
     )
 )
 
-; TypeScript
+
+;; TypeScript
 (autoload 'typescript-mode "TypeScript" nil t)
 (add-to-list 'auto-mode-alist '("\\.ts$" . typescript-mode))
 
-; JavaScript
+
+;; JavaScript
 (autoload 'js2-mode "js2-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 (add-hook 'js2-mode-hook
@@ -294,21 +326,22 @@
         )
     )
 )
-(eval-after-load 'flycheck
-    '(progn
-        (flycheck-add-next-checker 'javascript-jshint 'javascript-gjslint)
-    )
-)
 
 
-; JSON
+;; JSON
 (autoload 'json-mode "json-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.json$" . json-mode))
 
-; YAML
+
+;; YAML
 (autoload 'yaml-mode "yaml-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.ya?ml$" . yaml-mode))
 
+;; Packages
+;;     Install:
+;;         M-x package-refresh-contents
+;;         M-x package-install-selected-packages
+;;
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -316,10 +349,11 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (yaml-mode web-mode typescript-mode swiper python-mode py-autopep8 php-mode multi-web-mode markdown-mode+ json-mode js2-mode go-mode fuzzy flycheck f exec-path-from-shell espresso-theme emmet-mode elpy editorconfig-core editorconfig auto-complete))))
+    (flycheck-kotlin kotlin-mode flycheck-ocaml tuareg yaml-mode web-mode typescript-mode swiper python-mode py-autopep8 php-mode multi-web-mode markdown-mode+ json-mode js2-mode go-mode fuzzy flycheck f exec-path-from-shell espresso-theme emmet-mode elpy editorconfig-core editorconfig auto-complete))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
