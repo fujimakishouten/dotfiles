@@ -79,10 +79,13 @@ fi
 
 # Python
 export PYTHONIOENCODING=UTF-8
-export PYTHONHOME=/usr
 export WORKON_HOME=$HOME/.virtualenvs
+export PYENV_ROOT=$HOME/.pyenv
 if [ -f /etc/bash_completion.d/virtualenvwrapper ]; then
     . /etc/bash_completion.d/virtualenvwrapper
+fi
+if [ -d $PYENV_ROOT/bin ]; then
+    export PATH=$PATH:$PYENV_ROOT/bin
 fi
 
 # Go
