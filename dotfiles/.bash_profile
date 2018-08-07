@@ -45,6 +45,32 @@ case "${OSTYPE}" in
             alias ocaml="/usr/bin/rlwrap ocaml"
         fi
         ;;
+    darwin*)
+        export LESS="--raw-control-chars"
+
+        alias  diff="colordiff"
+        alias  egrep="egrep --color=auto"
+        alias  emacs="emacs -nw"
+        alias  fgrep="fgrep --color=auto"
+        alias  grep="grep --color=auto"
+        alias  ls="ls -FG"
+        alias  mysql="mysql --auto-rehash"
+        alias  screen="screen -U"
+        alias  tmux="tmux -2"
+
+        alias  php6=python3
+        alias  vld="php -d vld.active=1 -d vld.execute=0 -f"
+
+        if [ -f /usr/bin/nvim ]; then
+            alias vi="/usr/bin/nvim"
+            alias vim="/usr/bin/nvim"
+            alias view="/usr/bin/nvim -R"
+        fi
+
+        if [ -f /usr/bin/rlwrap ]; then
+            alias ocaml="/usr/bin/rlwrap ocaml"
+        fi
+        ;;
 esac
 
 #case "${UID}" in
@@ -86,6 +112,7 @@ if [ -f /etc/bash_completion.d/virtualenvwrapper ]; then
 fi
 if [ -d $PYENV_ROOT/bin ]; then
     export PATH=$PATH:$PYENV_ROOT/bin
+    eval "$(pyenv init -)"
 fi
 
 # Go
