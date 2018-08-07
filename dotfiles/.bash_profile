@@ -61,6 +61,13 @@ case "${OSTYPE}" in
         alias  php6=python3
         alias  vld="php -d vld.active=1 -d vld.execute=0 -f"
 
+        if [ -d /sw/bin ]; then
+            export PATH=/sw/bin:$PATH
+        fi
+        if [ -d /sw/sbin ]; then
+            export PATH=/sw/sbin:$PATH
+        fi
+
         if [ -f /usr/bin/nvim ]; then
             alias vi="/usr/bin/nvim"
             alias vim="/usr/bin/nvim"
@@ -113,6 +120,9 @@ fi
 if [ -d $PYENV_ROOT/bin ]; then
     export PATH=$PATH:$PYENV_ROOT/bin
     eval "$(pyenv init -)"
+    if [ -d $PYENV_ROOT/plugins/pyenv-virtualenv ]; then
+        eval "$(pyenv virtualenv-init -)"
+    fi
 fi
 
 # Go
