@@ -18,6 +18,9 @@ set clipboard=unnamed
 " カーソルを行頭・行末で止まらないようにする
 set whichwrap=b,s,h,l,<,>,[,]
 
+" 選択範囲がヴィジュアルモードになることを抑止
+set mouse-=a
+
 " 画面に収まらずにスクロールしてしまう出力をmoreで表示する
 set more
 
