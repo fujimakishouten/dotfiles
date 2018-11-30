@@ -19,6 +19,7 @@ SAVEHIST=100000
 
 autoload -Uz colors
 autoload -Uz compinit
+autoload -Uz vcs_info
 autoload -Uz zed
 colors
 compinit -u
@@ -45,6 +46,14 @@ setopt share_history
 
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:*' formats '[%b]'
+zstyle ':vcs_info:*' actionformats '[%b|%a]'
+
+precmd() {
+    vcs_info
+    RPROMPT=${vcs_info_msg_0_}
+}
 
 PROMPT="%n@%M:%/%% "
 
