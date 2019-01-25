@@ -46,9 +46,9 @@ colours=magenta
 #row delimeter when using \G key
 regexp=[*]+.+[*]+
 count=stop
-colours=white
+colours=blue
 -
 
 #column names when using \G key
 regexp=^\s*\w+:
-colours=white
+colours=blue
