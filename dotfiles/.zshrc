@@ -57,7 +57,6 @@ precmd() {
 
 PROMPT="%n@%M:%/%% "
 
-
 # Aliases
 case "${OSTYPE}" in
     linux*)
@@ -108,16 +107,23 @@ case "${OSTYPE}" in
         if [ -d /sw/sbin ]; then
             export PATH=/sw/sbin:$PATH
         fi
+        
+        if [ -f /sw/bin/nvim ]; then
+            alias vi="/sw/bin/nvim"
+            alias vim="/sw/bin/nvim"
+            alias view="/sw/bin/nvim -R"
+        fi
 
-        if [ -f /usr/bin/nvim ]; then
-            alias vi="/usr/bin/nvim"
-            alias vim="/usr/bin/nvim"
-            alias view="/usr/bin/nvim -R"
+        if [ -f /usr/local/bin/nvim ]; then
+            alias vi="/usr/local/bin/nvim"
+            alias vim="/usr/local/bin/nvim"
+            alias view="/usr/local/bin/nvim -R"
         fi
 
         if [ -f /usr/bin/rlwrap ]; then
             alias ocaml="/usr/bin/rlwrap ocaml"
         fi
+
         ;;
 esac
 
@@ -143,7 +149,7 @@ if [ -n "$SSH_CONNECTION" ]; then
 fi
 
 # Others
-export SVN_EDITOR=/usr/bin/nvim
+export SVN_EDITOR=vim
 if [ -d /opt/hashicorp/packer ]; then
     export PATH=$PATH:/opt/hashicorp/packer
 fi
