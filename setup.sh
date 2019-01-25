@@ -12,11 +12,14 @@ DIRECTORY=`pwd`
 for FILE in `find $DIRECTORY/dotfiles -maxdepth 1 ! -path dotfiles`
 do
     BASENAME=`basename $FILE`
-    ln --interactive --no-dereference --symbol  $FILE $HOME/$BASENAME
+    ln -i -s  $FILE $HOME/$BASENAME
 done
 
 if [ -d ~/.config ]; then
-    ln --interactive --no-dereference --symbol $HOME/.vim $HOME/.config/nvim
+    ln -i -s $HOME/.vim $HOME/.config/nvim
+fi
+if [ -d ~/.config ]; then
+    ln -i -s $HOME/.fish $HOME/.config/fish
 fi
 
 
