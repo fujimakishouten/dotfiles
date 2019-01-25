@@ -80,6 +80,9 @@ set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']['.&ft.']'}
 " シンタックスハイライトを有効にする
 syntax on
 
+" カラースキームを指定する
+colorscheme desert 
+
 " 検索結果文字列のハイライトを有効にする
 set hlsearch
 
