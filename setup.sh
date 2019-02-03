@@ -15,11 +15,13 @@ do
     ln -ins  $FILE $HOME/$BASENAME
 done
 
-if [ -d ~/.config ]; then
+if [ ! -d ~/.config/nvim ]; then
     ln -ins $HOME/.vim $HOME/.config/nvim
 fi
-if [ -d ~/.config ]; then
-    ln -ins $HOME/.fish $HOME/.config/fish
+if [ ! -d ~/.config/fish ]; then
+    mkdir -p $HOME/.config/fish
+    ln -ins $HOME/.fish/config.fish $HOME/.config/fish
+    ln -ins $HOME/.fish/functions $HOME/.config/fish
 fi
 
 
