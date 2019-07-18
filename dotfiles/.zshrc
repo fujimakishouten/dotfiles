@@ -225,7 +225,9 @@ if [ -d $HOME/.phpenv ]; then
 fi
 
 # Kotlin
-if [ -d /opt/jetbrains/kotlinc/bin ]; then
+if [ -d /opt/jetbrains/kotlin-native/bin ]; then
+    export PATH=$PATH:/opt/jetbrains/kotlin-native/bin
+elif [ -d /opt/jetbrains/kotlinc/bin ]; then
     export PATH=$PATH:/opt/jetbrains/kotlinc/bin
 fi
 
