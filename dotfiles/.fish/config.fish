@@ -85,8 +85,8 @@ switch (uname)
 end
 
 # Others
-set -x ATLAS_TOKEN "AZUVi88uFsUhbQ.atlasv1.zxsipzIfWKLP4y7dottbK4BJJH4kZqKu4qOdxRd9SAu7fT8n1Yga4BBXZYheB2xHGsE"
 set -x SVN_EDITOR vim
+set -x DOCKER_BUILDKIT 1
 if test -d /opt/hashicorp/packer
     set -x PATH $PATH /opt/hashicorp/packer
 end
@@ -162,7 +162,9 @@ if test -d $HOME/.phpenv
 end
 
 # Kotlin
-if test -d /opt/jetbrains/kotlinc/bin
+if test -d /opt/jetbrains/kotlin-native/bin
+    set -x PATH $PATH /opt/jetbrains/kotlin-native/bin
+else if test -d /opt/jetbrains/kotlinc/bin
     set -x PATH $PATH /opt/jetbrains/kotlinc/bin
 end
 
