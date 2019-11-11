@@ -60,7 +60,7 @@ PROMPT="%n@%M:%/%% "
 # Aliases
 case "${OSTYPE}" in
     linux*)
-        export LESS="--raw-control-chars"
+        export LESS="--chop-long-lines --ignore-case --line-numbers --long-prompt --raw-control-chars"
 
         alias  diff="colordiff"
         alias  egrep="egrep --color=auto"
@@ -86,7 +86,7 @@ case "${OSTYPE}" in
         fi
         ;;
     darwin*)
-        export LESS="--raw-control-chars"
+        export LESS="--chop-long-lines --ignore-case --line-numbers --long-prompt --raw-control-chars"
 
         alias  diff="colordiff"
         alias  egrep="egrep --color=auto"
@@ -150,6 +150,7 @@ fi
 
 # Others
 export SVN_EDITOR=vim
+export DOCKER_BUILDKIT=1
 if [ -d /opt/hashicorp/packer ]; then
     export PATH=$PATH:/opt/hashicorp/packer
 fi
