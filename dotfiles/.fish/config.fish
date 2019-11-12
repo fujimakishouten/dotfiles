@@ -85,8 +85,14 @@ switch (uname)
 end
 
 # Others
-set -x SVN_EDITOR vim
 set -x DOCKER_BUILDKIT 1
+if type nvim > /dev/null ^&1
+    set -x SVN_EDITOR (which nvim)
+else if type vim > /dev/null ^&1
+    set -x SVN_EDITOR (which vim)
+else if type vi > /dev/null ^&1
+    set -x SVN_EDITOR (which vi)
+end
 if test -d /opt/hashicorp/packer
     set -x PATH $PATH /opt/hashicorp/packer
 end
@@ -132,8 +138,8 @@ end
 # JavaScript
 if test -d /opt/nave/bin
     set -x PATH $PATH /opt/nave/bin
-
     set -x NODE_LATEST_VERSION (nave latest)
+ 
     if test -d $HOME/.nave/installed/$NODE_LATEST_VERSION/bin
         set -x PATH $PATH $HOME/.nave/installed/$NODE_LATEST_VERSION/bin
     end

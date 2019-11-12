@@ -102,7 +102,14 @@ if [ -n "$SSH_CONNECTION" ]; then
 fi
 
 # Others
-export SVN_EDITOR=/usr/bin/nvim
+export DOCKER_BUILDKIT=1
+if type nvim > /dev/null 2>&1; then
+    export SVN_EDITOR=`which nvim`
+elif type vim > /dev/null 2&1; then
+    export SVN_EDITOR=`which vim`
+elif type vi > /dev/null 2&1; then
+    export SVN_EDITOR=`which vi`
+fi
 if [ -d /opt/hashicorp/packer ]; then
     export PATH=$PATH:/opt/hashicorp/packer
 fi
@@ -148,8 +155,8 @@ fi
 # JavaScript
 if [ -d /opt/nave/bin ]; then
     export PATH=$PATH:/opt/nave/bin
+    export NODE_LATEST_VERSION=`nave latest`
 
-    NODE_LATEST_VERSION=`nave latest`
     if [ -d $HOME/.nave/installed/$NODE_LATEST_VERSION/bin ]; then
         export PATH=$PATH:$HOME/.nave/installed/$NODE_LATEST_VERSION/bin
     fi
@@ -178,7 +185,9 @@ if [ -d $HOME/.phpenv ]; then
 fi
 
 # Kotlin
-if [ -d /opt/jetbrains/kotlinc/bin ]; then
+if [ -d /opt/jetbrains/kotlin-native/bin ]; then
+    export PATH=$PATH:/opt/jetbrains/kotlin-native/bin
+elif [ -d /opt/jetbrains/kotlinc/bin ]; then
     export PATH=$PATH:/opt/jetbrains/kotlinc/bin
 fi
 
