@@ -72,17 +72,16 @@ case "${OSTYPE}" in
         alias  screen="screen -U"
         alias  tmux="tmux -2"
 
-        alias  php6=python3
         alias  vld="php -d vld.active=1 -d vld.execute=0 -f"
 
-        if [ -f /usr/bin/nvim ]; then
-            alias vi="/usr/bin/nvim"
-            alias vim="/usr/bin/nvim"
-            alias view="/usr/bin/nvim -R"
+        if type nvim > /dev/null 2>&1; then
+            alias vi="$(/usr/bin/env which nvim)"
+            alias vim="$(/usr/bin/env which nvim)"
+            alias view="$(/usr/bin/env which nvim) -R"
         fi
 
-        if [ -f /usr/bin/rlwrap ]; then
-            alias ocaml="/usr/bin/rlwrap ocaml"
+        if type rlwrap > /dev/null 2>&1; then
+            alias ocaml="$(/usr/bin/env which rlwrap) ocaml"
         fi
         ;;
     darwin*)
@@ -98,7 +97,6 @@ case "${OSTYPE}" in
         alias  screen="screen -U"
         alias  tmux="tmux -2"
 
-        alias  php6=python3
         alias  vld="php -d vld.active=1 -d vld.execute=0 -f"
 
         if [ -d /sw/bin ]; then
@@ -107,23 +105,16 @@ case "${OSTYPE}" in
         if [ -d /sw/sbin ]; then
             export PATH=/sw/sbin:$PATH
         fi
-        
-        if [ -f /sw/bin/nvim ]; then
-            alias vi="/sw/bin/nvim"
-            alias vim="/sw/bin/nvim"
-            alias view="/sw/bin/nvim -R"
+
+        if type nvim > /dev/null 2>&1; then
+            alias vi="$(/usr/bin/env which nvim)"
+            alias vim="$(/usr/bin/env which nvim)"
+            alias view="$(/usr/bin/env which nvim) -R"
         fi
 
-        if [ -f /usr/local/bin/nvim ]; then
-            alias vi="/usr/local/bin/nvim"
-            alias vim="/usr/local/bin/nvim"
-            alias view="/usr/local/bin/nvim -R"
-        fi
-
-        if [ -f /usr/bin/rlwrap ]; then
-            alias ocaml="/usr/bin/rlwrap ocaml"
-        fi
-
+        if type rlwrap > /dev/null 2>&1; then
+            alias ocaml="$(/usr/bin/env which rlwrap) ocaml"
+        fi 
         ;;
 esac
 
@@ -149,13 +140,17 @@ if [ -n "$SSH_CONNECTION" ]; then
 fi
 
 # Others
+eval "$(direnv hook zsh)"
 export DOCKER_BUILDKIT=1
 if type nvim > /dev/null 2>&1; then
-    export SVN_EDITOR=`which nvim`
+    export SVN_EDITOR=$(/usr/bin/env which nvim)
 elif type vim > /dev/null 2&1; then
-    export SVN_EDITOR=`which vim`
+    export SVN_EDITOR=$(/usr/bin/env which vim)
 elif type vi > /dev/null 2&1; then
-    export SVN_EDITOR=`which vi`
+    export SVN_EDITOR=$(/usr/bin/env which vi)
+fi
+if type direnv > /dev/null 2>&1; then
+    eval "$(/usr/bin/env direnv hook zsh)"
 fi
 if [ -d /opt/hashicorp/packer ]; then
     export PATH=$PATH:/opt/hashicorp/packer
@@ -203,7 +198,7 @@ fi
 # JavaScript
 if [ -d /opt/nave/bin ]; then
     export PATH=$PATH:/opt/nave/bin
-    export NODE_LATEST_VERSION=`nave latest`
+    export NODE_LATEST_VERSION=$(nave latest)
 
     if [ -d $HOME/.nave/installed/$NODE_LATEST_VERSION/bin ]; then
         export PATH=$PATH:$HOME/.nave/installed/$NODE_LATEST_VERSION/bin
