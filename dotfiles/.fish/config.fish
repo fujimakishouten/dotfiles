@@ -31,16 +31,15 @@ switch (uname)
         alias screen "screen -U"
         alias tmux "tmux -2"
 
-        alias php6 "python3"
         alias vld "php -d vld.active=1 -d vld.execute=0 -f"
-
-        if test -f /usr/bin/nvim
-            alias vi "/usr/bin/nvim"
-            alias vim "/usr/bin/nvim"
-            alias view "/usr/bin/nvim -R"
+        
+        if type nvim > /dev/null ^&1
+            alias vi "/usr/bin/env nvim"
+            alias vim "/usr/bin/env nvim"
+            alias view "/usr/bin/env nvim -R"
         end
 
-        if test -f /usr/bin/rlwrap
+        if type rlwrap > /dev/null ^&1
             alias ocaml "/usr/bin/rlwrap ocaml"
         end
 
@@ -57,7 +56,6 @@ switch (uname)
         alias screen "screen -U"
         alias tmux "tmux -2"
 
-        alias php6 "python3"
         alias vld "php -d vld.active=1 -d vld.execute=0 -f"
 
         if test -d /sw/bin
@@ -67,19 +65,13 @@ switch (uname)
             set -x PATH /sw/sbin $PATH
         end
 
-        if test -f /sw/bin/nvim
-            alias vi "/sw/bin/nvim"
-            alias vim "/sw/bin/nvim"
-            alias view "/sw/bin/nvim -R"
+        if type nvim > /dev/null ^&1
+            alias vi "/usr/bin/env nvim"
+            alias vim "/usr/bin/env nvim"
+            alias view "/usr/bin/env nvim -R"
         end
 
-        if test -f /usr/local/bin/nvim
-            alias vi "/usr/local/bin/nvim"
-            alias vim "/usr/local/bin/nvim"
-            alias view "/usr/local/bin/nvim -R"
-        end
-
-        if test -f /usr/bin/rlwrap
+        if type rlwrap > /dev/null ^&1
             alias ocaml "/usr/bin/rlwrap ocaml"
         end
 end
