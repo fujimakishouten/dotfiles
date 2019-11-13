@@ -125,7 +125,8 @@ if type go > /dev/null ^&1
         mkdir -p $GOPATH/bin $GOPATH/pkg $GOPATH/src
     end
 
-    set -x PATH $PATH $GOPATH/bin
+    set -x GOBIN $GOPATH/bin
+    set -x PATH $PATH $GOBIN
 end
 
 # OCaml

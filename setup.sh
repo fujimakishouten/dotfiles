@@ -9,7 +9,7 @@ set -Ceu
 cd `dirname $0`
 DIRECTORY=`pwd`
 
-for FILE in `find $DIRECTORY/dotfiles -maxdepth 1 ! -path dotfiles`
+for FILE in `find $DIRECTORY/dotfiles -maxdepth 1 | egrep -v ^"$DIRECTORY"/dotfiles$`
 do
     BASENAME=`basename $FILE`
     ln -ins  $FILE $HOME/$BASENAME
