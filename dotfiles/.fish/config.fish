@@ -93,6 +93,9 @@ else if type vim > /dev/null ^&1
 else if type vi > /dev/null ^&1
     set -x SVN_EDITOR (which vi)
 end
+if type direnv > /dev/null ^&1
+    eval (/usr/bin/env direnv hook fish)
+end
 if test -d /opt/hashicorp/packer
     set -x PATH $PATH /opt/hashicorp/packer
 end
