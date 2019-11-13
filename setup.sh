@@ -9,24 +9,27 @@ set -Ceu
 cd `dirname $0`
 DIRECTORY=`pwd`
 
+if [ ! -d $HOME/.config/nvim ]; then
+    mkdir -p $HOME/.config/nvim
+fi
+if [ ! -d $HOME/.config/fish ]; then
+    mkdir -p $HOME/.config/fish
+fi
+
 for FILE in `find $DIRECTORY/dotfiles -maxdepth 1 | egrep -v ^"$DIRECTORY"/dotfiles$`
 do
     BASENAME=`basename $FILE`
     ln -ins  $FILE $HOME/$BASENAME
 done
 
-if [ ! -d ~/.config ]; then
-    mkdir $HOME/.config
-fi
-if [ ! -d ~/.config/nvim ]; then
-    ln -ins $HOME/.vim $HOME/.config/nvim
-    ln -ins $HOME/.vimrc $HOME/.config/nvim/init.vim
-fi
-if [ ! -d ~/.config/fish ]; then
-    mkdir -p $HOME/.config/fish
-    ln -ins $HOME/.fish/config.fish $HOME/.config/fish
-    ln -ins $HOME/.fish/functions $HOME/.config/fish
-fi
+# neovim
+ln -ins $HOME/.vim $HOME/.config/nvim
+ln -ins $HOME/.vimrc $HOME/.config/nvim/init.vim
+
+# fish
+ln -ins $HOME/.fish/config.fish $HOME/.config/fish
+ln -ins $HOME/.fish/functions $HOME/.config/fish
+
 
 
 # Local variables:
