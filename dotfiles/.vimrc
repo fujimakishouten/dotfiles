@@ -81,7 +81,7 @@ set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']['.&ft.']'}
 syntax on
 
 " カラースキームを指定する
-colorscheme desert 
+colorscheme desert
 
 " 検索結果文字列のハイライトを有効にする
 set hlsearch
@@ -148,6 +148,9 @@ set nobomb
 " スペルチェックを有効にする
 " set spell
 
+" 保存時に行末のスペースを削除する
+autocmd BufWritePre * :%s/\s\+$//e
+
 "--------------------------------------------------------------------
 " ファイルの設定
 "--------------------------------------------------------------------
@@ -185,14 +188,14 @@ set fileformat=unix
 set fileformats=unix,dos,mac
 
 "--------------------------------------------------------------------
-" プラグイン 
+" プラグイン
 "--------------------------------------------------------------------
 
 filetype on
 filetype plugin indent on
 
 "--------------------------------------------------------------------
-" その他 
+" その他
 "--------------------------------------------------------------------
 
 " スペルチェック
@@ -231,5 +234,4 @@ au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
 " xpcom: Adding Mozilla XPCOM component keywords completion.
 " es6th: Adding ECMAScript 6th keywords completion.
 let g:jscomplete_use = ['dom', 'es6th']
-
 
