@@ -157,6 +157,8 @@
   (setq whitespace-global-modes '(not dired-mode tar-mode))
   (global-whitespace-mode 1))
 
+;; Remove trailing whitespece on save
+(add-hook 'before-save-hoook 'delete-trailing-whitespace)
 
 ;; Operation
 (setq enable-double-n-syntax t)    ; Input "ん" by "nn"
