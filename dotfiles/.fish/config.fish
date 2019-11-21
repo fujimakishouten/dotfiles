@@ -32,7 +32,7 @@ switch (uname)
         alias tmux "tmux -2"
 
         alias vld "php -d vld.active=1 -d vld.execute=0 -f"
-        
+
         if type nvim > /dev/null ^&1
             alias vi "/usr/bin/env nvim"
             alias vim "/usr/bin/env nvim"
@@ -120,6 +120,7 @@ if type go > /dev/null ^&1
         mkdir -p $GOPATH/bin $GOPATH/pkg $GOPATH/src
     end
 
+    set -x GO111MODULE on
     set -x GOBIN $GOPATH/bin
     set -x PATH $PATH $GOBIN
 end
@@ -135,7 +136,7 @@ end
 if test -d /opt/nave/bin
     set -x PATH $PATH /opt/nave/bin
     set -x NODE_LATEST_VERSION (nave latest)
- 
+
     if test -d $HOME/.nave/installed/$NODE_LATEST_VERSION/bin
         set -x PATH $PATH $HOME/.nave/installed/$NODE_LATEST_VERSION/bin
     end

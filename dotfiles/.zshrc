@@ -114,7 +114,7 @@ case "${OSTYPE}" in
 
         if type rlwrap > /dev/null 2>&1; then
             alias ocaml="$(/usr/bin/env which rlwrap) ocaml"
-        fi 
+        fi
         ;;
 esac
 
@@ -127,7 +127,7 @@ esac
 
 # SSH
 if [ -n "$SSH_CONNECTION" ]; then
-    if [ -n "$DISPLAY" ] && [ -z "$TMUX" ] && [ -z "$WINDOW" ]; then                                                                                                             
+    if [ -n "$DISPLAY" ] && [ -z "$TMUX" ] && [ -z "$WINDOW" ]; then
         if [ -f /usr/bin/fcitx ]; then
             export XMODIFIERS="@im=fcitx"
             export DefaultIMModule=fcitx
@@ -184,6 +184,7 @@ if type go > /dev/null 2>&1; then
         mkdir -p $GOPATH/bin $GOPATH/pkg $GOPATH/src
     fi
 
+    export GO111MODULE=on
     export GOBIN=$GOPATH/bin
     export PATH=$PATH:$GOBIN
 fi
