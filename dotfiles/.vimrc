@@ -6,8 +6,8 @@
 " General settings
 "--------------------------------------------------------------------
 
-" Save command and search history.
-set history=256
+" Increase the undo limit.
+set history=2048
 
 " Clipboard settings.
 set clipboard^=unnamed,unnamedplus
@@ -18,7 +18,7 @@ set whichwrap=b,s,h,l,<,>,[,]
 " Disable automatic visual mode on mouse select.
 set mouse-=a
 
-" 画面に収まらずにスクロールしてしまう出力をmoreで表示する
+" No pauses in listings.
 set more
 
 " Enable modeline.
@@ -31,10 +31,10 @@ set notitle
 " Search settings
 "--------------------------------------------------------------------
 
-" Search ignore case.
+" Ignore case when searching.
 set ignorecase
 
-" Case sensitive search when pattern contains an upper and lower case.
+" Automatically switch search to case-sensitive when search query contains an uppercase letter.
 set smartcase
 
 " Search wraps around to the beginning when reaches end of file
@@ -47,13 +47,13 @@ set noincsearch
 " Appearance settings
 "--------------------------------------------------------------------
 
-" Show line number.
+" Show line numbers on the sidebar.
 set number
 
-" Highlight current line.
+" Highlight the line currently under cursor.
 set cursorline
 
-" Show file name on window title bar.
+" Set the window’s title, reflecting the file currently being edited.
 set title
 
 " Hide ruler.
@@ -65,37 +65,37 @@ set showcmd
 " Highlight matching braces.
 set showmatch
 
-" Always show status line.
+" Always display the status bar.
 set laststatus=2
 
 " Status line format.
 set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']['.&ft.']'}\ %F%=%l,%c%V%8P
 
-" Enable syntax highlight.
+" Enable syntax highlighting.
 syntax on
 
 " Enable true color.
 "set termguicolors
 
-" Set color scheme.
+" Change color scheme.
 colorscheme desert
 
-" Enable Highlight search pattern matches.
+" Enable search highlighting.
 set hlsearch
 
 " Show mode.
 set showmode
 
-" 補完候補をコマンドラインのすぐ上の行に表示
+" Display command line’s tab complete options as a menu.
 set wildmenu
 
-" 補完モードの設定
+" Wildmenu settings.
 set wildmode=full
 
 " Disable word wrap.
 set nowrap
 
-" テキストの表示の方法を変える
+" Always try to show a paragraph’s last line.
 set display=lastline
 
 " Display tab character.
@@ -115,38 +115,35 @@ set foldmethod=manual
 " Edit and shaping settings.
 "--------------------------------------------------------------------
 
-" Set backspace key
+" Allow backspacing over indention, line breaks and insertion start.
 set backspace=indent,eol,start
 
-" Enable auto indent.
+" New lines inherit the indentation of previous lines.
 set autoindent
 
 " Enable smart indent.
 set smartindent
 
-" Set width of tab character.
+" Indent using N spaces.
 set tabstop=4
 
-" Expand tab to spaces.
+" Convert tab to spaces.
 set expandtab
 
-" タブを置き換えるスペースの数
+" When shifting, indent using N spaces.
 set shiftwidth=4
 
-" Enable smart tab.
+" Insert "tabstop" number of spaces when the "tab" key is pressed.
 set smarttab
 
-" 変更中のファイルでも保存しないで他のファイルを表示
+" Hide files in the background instead of closing them.
 set hidden
 
-" BOMを付加しない
+" Disable prepend BOM to the file.
 set nobomb
 
-" Enable spell check
+" Enable spell check.
 " set spell
-
-" Remove trailing spaces on save.
-autocmd BufWritePre * :%s/\s\+$//e
 
 "--------------------------------------------------------------------
 " File settings.
@@ -194,4 +191,7 @@ filetype plugin indent on
 "--------------------------------------------------------------------
 " Other settings
 "--------------------------------------------------------------------
+
+" Remove trailing spaces on save.
+autocmd BufWritePre * :%s/\s\+$//e
 
