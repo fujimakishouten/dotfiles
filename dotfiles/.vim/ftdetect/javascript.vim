@@ -1,1 +1,0 @@
-../bundle/vim-javascript-syntax/ftdetect/javascript.vim

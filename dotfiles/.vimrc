@@ -1,92 +1,89 @@
 "====================================================================
-" gvimrc
+" .vimrc
 "====================================================================
 
 "--------------------------------------------------------------------
-" 全般的な設定
+" General settings
 "--------------------------------------------------------------------
 
-" viとの互換性をとらない（vimの独自機能を使用する）
-set nocompatible
+" Save command and search history.
+set history=256
 
-" コマンド・検索パターンを履歴に残す
-set history=25 "25件まで
+" Clipboard settings.
+set clipboard^=unnamed,unnamedplus
 
-" クリップボードの動作設定
-set clipboard=unnamed
-
-" カーソルを行頭・行末で止まらないようにする
+" Automatically move to previous/next line when press left/rigth key.
 set whichwrap=b,s,h,l,<,>,[,]
 
-" 選択範囲がヴィジュアルモードになることを抑止
+" Disable automatic visual mode on mouse select.
 set mouse-=a
 
 " 画面に収まらずにスクロールしてしまう出力をmoreで表示する
 set more
 
-" Vimを終了した後にコンソール画面の内容が復元される
-"set restorescreen
-
-" モードラインを有効にする
+" Enable modeline.
 set modeline
 
-" Thanks for flying Vim
+" Thanks for flying Vim.
 set notitle
 
 "--------------------------------------------------------------------
-" 検索の設定
+" Search settings
 "--------------------------------------------------------------------
 
-" 大文字・小文字の区別をしない
+" Search ignore case.
 set ignorecase
 
-" 検索文字列に大文字が含まれている場合は大文字・小文字を区別する
+" Case sensitive search when pattern contains an upper and lower case.
 set smartcase
 
-" 検索時に最後まで行ったら最初に戻る
+" Search wraps around to the beginning when reaches end of file
 set wrapscan
 
-" インクリメンタルサーチを行わない
+" Disable incremental search
 set noincsearch
 
 "--------------------------------------------------------------------
-" 見た目の設定
+" Appearance settings
 "--------------------------------------------------------------------
 
-" 行番号を表示する
+" Show line number.
 set number
 
-" 編集している行のハイライト
+" Highlight current line.
 set cursorline
 
-" タイトルをウィンドウ枠に表示する
+" Show file name on window title bar.
 set title
 
-" ルーラーを表示しない
+" Hide ruler.
 set noruler
 
-" 入力中のコマンドをステータスに表示する
+" Show command.
 set showcmd
 
-" 対応する括弧を表示する
+" Highlight matching braces.
 set showmatch
 
-" ステータスラインを常に表示する
+" Always show status line.
 set laststatus=2
 
-" ステータスラインに表示する項目の設定
+" Status line format.
 set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']['.&ft.']'}\ %F%=%l,%c%V%8P
 
-" シンタックスハイライトを有効にする
+" Enable syntax highlight.
 syntax on
 
-" カラースキームを指定する
+" Enable true color.
+"set termguicolors
+
+" Set color scheme.
 colorscheme desert
 
-" 検索結果文字列のハイライトを有効にする
+" Enable Highlight search pattern matches.
 set hlsearch
 
-" モード表示
+" Show mode.
 set showmode
 
 " 補完候補をコマンドラインのすぐ上の行に表示
@@ -95,48 +92,48 @@ set wildmenu
 " 補完モードの設定
 set wildmode=full
 
-" 長い行を折り返さない
+" Disable word wrap.
 set nowrap
 
 " テキストの表示の方法を変える
 set display=lastline
 
-" タブを表示
+" Display tab character.
 set lcs=tab:>.,eol:$,trail:_,extends:\
 
-" 全角スペースを表示
+" Display ideographic space character.
 highlight JpSpace cterm=underline ctermfg=Blue guifg=Blue
 au BufRead,BufNew * match JpSpace /　/
 
 " 全角記号の幅
 set ambiwidth=double
 
-" 折りたたみを行わない
+" Disable automatically folding.
 set foldmethod=manual
 
 "--------------------------------------------------------------------
-" 編集・整形の設定
+" Edit and shaping settings.
 "--------------------------------------------------------------------
 
-" Backspaceキーの挙動を定義する
+" Set backspace key
 set backspace=indent,eol,start
 
-" オートインデントを有効にする
-set autoindent " この設定いらないかも
+" Enable auto indent.
+set autoindent
 
-" スマートインデントを有効にする
+" Enable smart indent.
 set smartindent
 
-" タブ文字の見た目の幅を設定する
+" Set width of tab character.
 set tabstop=4
 
-" タブを空白に置き換える
+" Expand tab to spaces.
 set expandtab
 
 " タブを置き換えるスペースの数
 set shiftwidth=4
 
-" タブの動作設定
+" Enable smart tab.
 set smarttab
 
 " 変更中のファイルでも保存しないで他のファイルを表示
@@ -145,26 +142,26 @@ set hidden
 " BOMを付加しない
 set nobomb
 
-" スペルチェックを有効にする
+" Enable spell check
 " set spell
 
-" 保存時に行末のスペースを削除する
+" Remove trailing spaces on save.
 autocmd BufWritePre * :%s/\s\+$//e
 
 "--------------------------------------------------------------------
-" ファイルの設定
+" File settings.
 "--------------------------------------------------------------------
 
-" バックアップファイルを作成しない
+" Disable create backup.
 set nobackup
 
-" ファイル保存ダイアログの初期ディレクトリ
+" Initial directory of save file dialog.
 set browsedir=buffer
 
-" 前回終了時のカーソル位置を記憶する
+" Remind cursor position on exit.
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
 
-" 自動補完
+" Enable auto complete.
 autocmd FileTYpe c set omnifunc=ccomplete#Complete
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
@@ -174,64 +171,27 @@ autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 
 "--------------------------------------------------------------------
-" 日本語の設定
+" Encoding settings.
 "--------------------------------------------------------------------
 
-" ファイルエンコード
+" File encode.
 set encoding=utf-8
 set termencoding=utf-8
 set fileencoding=utf-8
 set fileencodings=ucs-bom,utf-8,utf-16,utf-16le,utf-32,utf31-le,ucs2,ucs2-le,ucs-4,ucs-4le,iso-2022-jp,euc-jp,cp932,latin1
 
-" 改行コード
+" Newline.
 set fileformat=unix
 set fileformats=unix,dos,mac
 
 "--------------------------------------------------------------------
-" プラグイン
+" Plugin settings
 "--------------------------------------------------------------------
 
 filetype on
 filetype plugin indent on
 
 "--------------------------------------------------------------------
-" その他
+" Other settings
 "--------------------------------------------------------------------
-
-" スペルチェック
-"map ^T :w!<CR>:!aspell check %<CR>:e! %<CR>
-
-" Ctrl+P
-set runtimepath^=~/.vim/bundle/ctrlp.vim
-
-"--------------------------------------------------------------------
-"プログラミング
-"--------------------------------------------------------------------
-
-" PHP の補完
-autocmd   FileType php,ctp :set dictionary=~/.vim/dict/php.dict
-highlight Pmenu ctermbg=4
-highlight PmenuSel ctermbg=1
-highlight PMenuSbar ctermbg=4
-
-" 保存時に php 構文チェック
-" autocmd BufWritePost *.php !php -l %
-
-" Javascript　構文チェック
-" autocmd FileType javascript noremap <buffer> <up> :<C-u>!/usr/local/bin/gjslint %<cr>
-
-" Javascript
-" Simple-Javascript-Indenter
-let g:SimpleJsIndenter_BriefMode = 1
-let g:SimpleJsIndenter_CaseIndentLevel = -1
-
-" Syntax file for jQuery
-au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
-
-" jscomplete-vim
-" dom  : Adding DOM keywords completion.
-" moz  : Adding Mozilla JavaScript keywords completion.
-" xpcom: Adding Mozilla XPCOM component keywords completion.
-" es6th: Adding ECMAScript 6th keywords completion.
-let g:jscomplete_use = ['dom', 'es6th']
 
