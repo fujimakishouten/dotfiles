@@ -1,1 +1,1 @@
-../.vimrc
+/Users/kazuma.fujimaki/.vimrc
