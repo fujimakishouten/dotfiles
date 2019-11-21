@@ -1,4 +1,4 @@
-# Language                                                                                                                                                      
+# Language
 export LANGUAGE=en_GB.UTF-8
 export LANG=en_GB.UTF-8
 export LC_ALL=en_GB.UTF-8
@@ -88,7 +88,7 @@ esac
 
 # SSH
 if [ -n "$SSH_CONNECTION" ]; then
-    if [ -n "$DISPLAY" ] && [ -z "$TMUX" ] && [ -z "$WINDOW" ]; then                                                                                                             
+    if [ -n "$DISPLAY" ] && [ -z "$TMUX" ] && [ -z "$WINDOW" ]; then
         if [ -f /usr/bin/fcitx ]; then
             export XMODIFIERS="@im=fcitx"
             export DefaultIMModule=fcitx
@@ -144,6 +144,7 @@ if type go > /dev/null 2>&1; then
         mkdir -p $GOPATH/bin $GOPATH/pkg $GOPATH/src
     fi
 
+    export GO111MODULE=on
     export GOBIN=$GOPATH/bin
     export PATH=$PATH:$GOBIN
 fi
