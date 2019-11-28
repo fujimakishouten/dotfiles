@@ -50,6 +50,18 @@ zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' formats '[%b]'
 zstyle ':vcs_info:*' actionformats '[%b|%a]'
 
+# Key bindings
+if type peco > /dev/null 2>&1; then
+    function peco_history_selection() {
+        BUFFER=$(history -n 1 | peco | read -l LINE && commandline $LINE)
+        CURSOR=$#BUFFER
+        zle reset-prompt
+    }
+    zle -N peco_history_selection
+    bindkey '^R' peco_history_selection
+fi
+
+# Prompt
 precmd() {
     vcs_info
     RPROMPT=${vcs_info_msg_0_}
@@ -125,20 +137,6 @@ esac
 #        ;;
 #esac
 
-# SSH
-if [ -n "$SSH_CONNECTION" ]; then
-    if [ -n "$DISPLAY" ] && [ -z "$TMUX" ] && [ -z "$WINDOW" ]; then
-        if [ -f /usr/bin/fcitx ]; then
-            export XMODIFIERS="@im=fcitx"
-            export DefaultIMModule=fcitx
-            export GTK_IM_MODULE=fcitx
-            export QT_IM_MODULE=fcitx
-
-            fcitx -dr
-        fi
-    fi
-fi
-
 # Others
 eval "$(direnv hook zsh)"
 export DOCKER_BUILDKIT=1
@@ -159,7 +157,21 @@ if [ -d /opt/apache/apache-drill/bin ]; then
     export PATH=$PATH:/opt/apache/apache-drill/bin
 fi
 
-# Python
+## SSH
+if [ -n "$SSH_CONNECTION" ]; then
+    if [ -n "$DISPLAY" ] && [ -z "$TMUX" ] && [ -z "$WINDOW" ]; then
+        if [ -f /usr/bin/fcitx ]; then
+            export XMODIFIERS="@im=fcitx"
+            export DefaultIMModule=fcitx
+            export GTK_IM_MODULE=fcitx
+            export QT_IM_MODULE=fcitx
+
+            fcitx -dr
+        fi
+    fi
+fi
+
+## Python
 export PYTHONIOENCODING=UTF-8
 export WORKON_HOME=$HOME/.virtualenvs
 export PYENV_ROOT=$HOME/.pyenv
@@ -174,7 +186,7 @@ if [ -d $PYENV_ROOT/bin ]; then
     fi
 fi
 
-# Go
+## Go
 if type go > /dev/null 2>&1; then
     if [ -z "$GOPATH" ]; then
         export GOPATH=$HOME/go
@@ -189,14 +201,14 @@ if type go > /dev/null 2>&1; then
     export PATH=$PATH:$GOBIN
 fi
 
-# OCaml
+## OCaml
 if [ -d $HOME/.opam/opam-init ]; then
     if [ -f $HOME/.opam/opam-init/init.zsh ]; then
         . $HOME/.opam/opam-init/init.zsh
     fi
 fi
 
-# JavaScript
+## JavaScript
 if [ -d /opt/nave/bin ]; then
     export PATH=$PATH:/opt/nave/bin
     export NODE_LATEST_VERSION=$(nave latest)
@@ -215,7 +227,7 @@ if [ -d $HOME/.nodebrew/current/bin ]; then
     export PATH=$PATH:$HOME/.nodebrew/current/bin
 fi
 
-# PHP
+## PHP
 if [ -d /opt/composer ]; then
     export PATH=$PATH:/opt/composer
 fi
@@ -228,24 +240,24 @@ if [ -d $HOME/.phpenv ]; then
     eval "$(phpenv init -)"
 fi
 
-# Kotlin
+## Kotlin
 if [ -d /opt/jetbrains/kotlin-native/bin ]; then
     export PATH=$PATH:/opt/jetbrains/kotlin-native/bin
 elif [ -d /opt/jetbrains/kotlinc/bin ]; then
     export PATH=$PATH:/opt/jetbrains/kotlinc/bin
 fi
 
-# Swift
+## Swift
 if [ -d /opt/apple/swift/usr/bin ]; then
     export PATH=$PATH:/opt/apple/swift/usr/bin
 fi
 
-# .NET Core
+## .NET Core
 if [ -d $HOME/dotnet ]; then
     export PATH=$PATH:$HOME/dotnet
 fi
 
-# cocos2d-x
+## cocos2d-x
 if [ -d /opt/cocos2d-x/cocos2d-x ]; then
     # Add environment variable COCOS_CONSOLE_ROOT for cocos2d-x
     if [ -d /opt/cocos2d-x/cocos2d-x/tools/cocos2d-console/bin ]; then

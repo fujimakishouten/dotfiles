@@ -12,6 +12,11 @@ if test -d $HOME/.local/bin
     set -x PATH $PATH $HOME/.local/bin
 end
 
+## Key bindings
+function fish_user_key_bindings
+    bind \cr peco_select_history
+end
+
 # Prompt
 ## Fish git prompt
 set -x __fish_git_prompt_color_branch black
@@ -95,7 +100,21 @@ if test -d /opt/apache/apache-drill/bin
     set -x PATH $PATH /opt/apache/apache-drill/bin
 end
 
-# Python
+## SSH
+if test -n "$SSH_CONNECTION"
+    if test -n "$DISPLAY" and test -z "$TMUX" and test -z "$WINDOW"
+        if type fcitx > /dev/null ^&1
+            set -x XMODIFIERS "@im=fcitx"
+            set -x DefaultIMModule fcitx
+            set -x GTK_IM_MODULE fcitx
+            set -x QT_IM_MODULE fcitx
+
+            fcitx -dr
+        end
+    end
+end
+
+## Python
 set -x PYTHONIOENCODING UTF-8
 set -x WORKON_HOME $HOME/.virtualenvs
 set -x PYENV_ROOT $HOME/.pyenv
@@ -110,7 +129,7 @@ if test -d $PYENV_ROOT/bin
     end
 end
 
-# Go
+## Go
 if type go > /dev/null ^&1
     if test -z $GOPATH
         set -x GOPATH $HOME/go
@@ -125,14 +144,14 @@ if type go > /dev/null ^&1
     set -x PATH $PATH $GOBIN
 end
 
-# OCaml
+## OCaml
 if test -d $HOME/.opam/opam-init
     if test -f $HOME/.opam/opam-init/init.fish
         . $HOME/.opam/opam-init/init.fish
     end
 end
 
-# JavaScript
+## JavaScript
 if test -d /opt/nave/bin
     set -x PATH $PATH /opt/nave/bin
     set -x NODE_LATEST_VERSION (nave latest)
@@ -151,7 +170,7 @@ if test -d $HOME/.nodebrew/current/bin
     PATH $PATH $HOME/.nodebrew/current/bin
 end
 
-# PHP
+## PHP
 if test -d /opt/composer
     set -x PATH $PATH /opt/composer
 end
@@ -164,24 +183,24 @@ if test -d $HOME/.phpenv
     eval "(phpenv init -)"
 end
 
-# Kotlin
+## Kotlin
 if test -d /opt/jetbrains/kotlin-native/bin
     set -x PATH $PATH /opt/jetbrains/kotlin-native/bin
 else if test -d /opt/jetbrains/kotlinc/bin
     set -x PATH $PATH /opt/jetbrains/kotlinc/bin
 end
 
-# Swift
+## Swift
 if test -d /opt/apple/swift/usr/bin
     set -x PATH $PATH /opt/apple/swift/usr/bin
 end
 
-# .NET Core
+## .NET Core
 if test -d $HOME/dotnet
     set -x PATH $PATH $HOME/dotnet
 end
 
-# cocos2d-x
+## cocos2d-x
 if test -d /opt/cocos2d-x/cocos2d-x
     if test -d /opt/cocos2d-x/cocos2d-x/tools/cocos2d-console/bin
         set -x COCOS_CONSOLE_ROOT /opt/cocos2d-x/cocos2d-x/tools/cocos2d-console/bin
