@@ -53,10 +53,10 @@ zstyle ':vcs_info:*' actionformats '[%b|%a]'
 # Key bindings
 if type peco > /dev/null 2>&1; then
     function peco_history_selection() {
-        BUFFER=$(history -n 1 | peco | read -l LINE && commandline $LINE)
+        BUFFER=$(history -n 1 | tail -r  | awk '!a[$0]++' | peco)
         CURSOR=$#BUFFER
         zle reset-prompt
-    }
+   }
     zle -N peco_history_selection
     bindkey '^R' peco_history_selection
 fi
@@ -138,7 +138,6 @@ esac
 #esac
 
 # Others
-eval "$(direnv hook zsh)"
 export DOCKER_BUILDKIT=1
 if type nvim > /dev/null 2>&1; then
     export SVN_EDITOR=$(/usr/bin/env which nvim)
