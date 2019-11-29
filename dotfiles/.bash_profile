@@ -19,14 +19,19 @@ fi
 
 # Key bindings
 if type peco > /dev/null 2>&1; then
+    if type tac > /dev/null 2>&1; then
+        TAC="tac"
+    else
+        TAC="tail -r"
+    fi
+
     peco_history_selection() {
-        declare BUFFER=$(history | peco | read -l LINE && commandline $LINE)
+        declare BUFFER=$(history | eval $TAC | awk '!a[$0]++' | peco)
         READLINE_LINE="${BUFFER}"
         READLINE_POINT=${#BUFFER}
     }
     bind -x '"\C-r": peco_history_selection'
 fi
-
 
 # Aliases
 case "${OSTYPE}" in
@@ -46,13 +51,13 @@ case "${OSTYPE}" in
         alias  vld="php -d vld.active=1 -d vld.execute=0 -f"
 
         if type nvim > /dev/null 2>&1; then
-            alias vi="$(/usr/bin/env which nvim)"
-            alias vim="$(/usr/bin/env which nvim)"
-            alias view="$(/usr/bin/env which nvim) -R"
+            alias vi="nvim"
+            alias vim="nvim"
+            alias view="nvim -R"
         fi
 
         if type rlwrap > /dev/null 2>&1; then
-            alias ocaml="$(/usr/bin/env which rlwrap) ocaml"
+            alias ocaml="rlwrap ocaml"
         fi
         ;;
     darwin*)
@@ -79,13 +84,13 @@ case "${OSTYPE}" in
         fi
 
         if type nvim > /dev/null 2>&1; then
-            alias vi="$(/usr/bin/env which nvim)"
-            alias vim="$(/usr/bin/env which nvim)"
-            alias view="$(/usr/bin/env which nvim) -R"
+            alias vi="nvim"
+            alias vim="nvim"
+            alias view="nvim -R"
         fi
 
         if type rlwrap > /dev/null 2>&1; then
-            alias ocaml="$(/usr/bin/env which rlwrap) ocaml"
+            alias ocaml="rlwrap ocaml"
         fi
         ;;
 esac
@@ -100,14 +105,14 @@ esac
 # Others
 export DOCKER_BUILDKIT=1
 if type nvim > /dev/null 2>&1; then
-    export SVN_EDITOR=$(/usr/bin/which nvim)
+    export SVN_EDITOR=nvim
 elif type vim > /dev/null 2&1; then
-    export SVN_EDITOR=$(/usr/bin/which vim)
+    export SVN_EDITOR=vim
 elif type vi > /dev/null 2&1; then
-    export SVN_EDITOR=$(/usr/bin/which vi)
+    export SVN_EDITOR=vi
 fi
 if type direnv > /dev/null 2>&1; then
-    eval "$(/usr/bin/env direnv hook bash)"
+    eval "$(direnv hook bash)"
 fi
 if [ -d /opt/hashicorp/packer ]; then
     export PATH=$PATH:/opt/hashicorp/packer
@@ -119,7 +124,7 @@ fi
 ## SSH
 if [ -n "$SSH_CONNECTION" ]; then
     if [ -n "$DISPLAY" ] && [ -z "$TMUX" ] && [ -z "$WINDOW" ]; then
-        if [ -f /usr/bin/fcitx ]; then
+        if type fcitx > /dev/null 2>&1; then
             export XMODIFIERS="@im=fcitx"
             export DefaultIMModule=fcitx
             export GTK_IM_MODULE=fcitx

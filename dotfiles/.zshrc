@@ -50,17 +50,6 @@ zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' formats '[%b]'
 zstyle ':vcs_info:*' actionformats '[%b|%a]'
 
-# Key bindings
-if type peco > /dev/null 2>&1; then
-    function peco_history_selection() {
-        BUFFER=$(history -n 1 | tail -r  | awk '!a[$0]++' | peco)
-        CURSOR=$#BUFFER
-        zle reset-prompt
-   }
-    zle -N peco_history_selection
-    bindkey '^R' peco_history_selection
-fi
-
 # Prompt
 precmd() {
     vcs_info
@@ -87,14 +76,24 @@ case "${OSTYPE}" in
         alias  vld="php -d vld.active=1 -d vld.execute=0 -f"
 
         if type nvim > /dev/null 2>&1; then
-            alias vi="$(/usr/bin/env which nvim)"
-            alias vim="$(/usr/bin/env which nvim)"
-            alias view="$(/usr/bin/env which nvim) -R"
+            alias vi="nvim"
+            alias vim="nvim"
+            alias view="nvim -R"
         fi
 
         if type rlwrap > /dev/null 2>&1; then
-            alias ocaml="$(/usr/bin/env which rlwrap) ocaml"
+            alias ocaml="rlwrap ocaml"
         fi
+
+        if type peco > /dev/null 2>&1; then
+            function peco_history_selection() {
+                BUFFER=$(history -n 1 | tac | awk '!a[$0]++' | peco)
+                CURSOR=$#BUFFER
+                zle clear-screen
+            }
+            zle -N peco_history_selection
+            bindkey '^R' peco_history_selection
+	fi
         ;;
     darwin*)
         export LESS="--chop-long-lines --ignore-case --line-numbers --long-prompt --raw-control-chars"
@@ -119,13 +118,23 @@ case "${OSTYPE}" in
         fi
 
         if type nvim > /dev/null 2>&1; then
-            alias vi="$(/usr/bin/env which nvim)"
-            alias vim="$(/usr/bin/env which nvim)"
-            alias view="$(/usr/bin/env which nvim) -R"
+            alias vi="nvim"
+            alias vim="nvim"
+            alias view="nvim -R"
         fi
 
         if type rlwrap > /dev/null 2>&1; then
-            alias ocaml="$(/usr/bin/env which rlwrap) ocaml"
+            alias ocaml="rlwrap ocaml"
+        fi
+
+        if type peco > /dev/null 2>&1; then
+            function peco_history_selection() {
+                BUFFER=$(history -n 1 | tail -r | awk '!a[$0]++' | peco)
+                CURSOR=$#BUFFER
+                zle reset-prompt
+            }
+            zle -N peco_history_selection
+            bindkey '^R' peco_history_selection
         fi
         ;;
 esac
@@ -140,14 +149,14 @@ esac
 # Others
 export DOCKER_BUILDKIT=1
 if type nvim > /dev/null 2>&1; then
-    export SVN_EDITOR=$(/usr/bin/env which nvim)
+    export SVN_EDITOR=nvim
 elif type vim > /dev/null 2&1; then
-    export SVN_EDITOR=$(/usr/bin/env which vim)
+    export SVN_EDITOR=vim
 elif type vi > /dev/null 2&1; then
-    export SVN_EDITOR=$(/usr/bin/env which vi)
+    export SVN_EDITOR=vi
 fi
 if type direnv > /dev/null 2>&1; then
-    eval "$(/usr/bin/env direnv hook zsh)"
+    eval "$(direnv hook zsh)"
 fi
 if [ -d /opt/hashicorp/packer ]; then
     export PATH=$PATH:/opt/hashicorp/packer
@@ -159,7 +168,7 @@ fi
 ## SSH
 if [ -n "$SSH_CONNECTION" ]; then
     if [ -n "$DISPLAY" ] && [ -z "$TMUX" ] && [ -z "$WINDOW" ]; then
-        if [ -f /usr/bin/fcitx ]; then
+        if type fcitx > /dev/null 2>&1; then
             export XMODIFIERS="@im=fcitx"
             export DefaultIMModule=fcitx
             export GTK_IM_MODULE=fcitx

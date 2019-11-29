@@ -13,8 +13,10 @@ if test -d $HOME/.local/bin
 end
 
 ## Key bindings
-function fish_user_key_bindings
-    bind \cr peco_select_history
+if type peco > /dev/null ^&1
+    function fish_user_key_bindings
+        bind \cr peco_select_history
+    end
 end
 
 # Prompt
@@ -39,13 +41,13 @@ switch (uname)
         alias vld "php -d vld.active=1 -d vld.execute=0 -f"
 
         if type nvim > /dev/null ^&1
-            alias vi "/usr/bin/env nvim"
-            alias vim "/usr/bin/env nvim"
-            alias view "/usr/bin/env nvim -R"
+            alias vi "nvim"
+            alias vim "nvim"
+            alias view "nvim -R"
         end
 
         if type rlwrap > /dev/null ^&1
-            alias ocaml "/usr/bin/rlwrap ocaml"
+            alias ocaml "rlwrap ocaml"
         end
 
     case "Darwin"
@@ -71,27 +73,27 @@ switch (uname)
         end
 
         if type nvim > /dev/null ^&1
-            alias vi "/usr/bin/env nvim"
-            alias vim "/usr/bin/env nvim"
-            alias view "/usr/bin/env nvim -R"
+            alias vi "nvim"
+            alias vim "nvim"
+            alias view "nvim -R"
         end
 
         if type rlwrap > /dev/null ^&1
-            alias ocaml "/usr/bin/rlwrap ocaml"
+            alias ocaml "rlwrap ocaml"
         end
 end
 
 # Others
 set -x DOCKER_BUILDKIT 1
 if type nvim > /dev/null ^&1
-    set -x SVN_EDITOR (which nvim)
+    set -x SVN_EDITOR nvim
 else if type vim > /dev/null ^&1
-    set -x SVN_EDITOR (which vim)
+    set -x SVN_EDITOR vim
 else if type vi > /dev/null ^&1
-    set -x SVN_EDITOR (which vi)
+    set -x SVN_EDITOR vi
 end
 if type direnv > /dev/null ^&1
-    eval (/usr/bin/env direnv hook fish)
+    eval (direnv hook fish)
 end
 if test -d /opt/hashicorp/packer
     set -x PATH $PATH /opt/hashicorp/packer
