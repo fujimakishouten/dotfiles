@@ -87,7 +87,7 @@ case "${OSTYPE}" in
 
         if type peco > /dev/null 2>&1; then
             function peco_history_selection() {
-                BUFFER=$(history -n 1 | tac | awk '!a[$0]++' | peco)
+                BUFFER=$(history -n 1 | tac | awk '!a[$0]++' | peco | sed 's/\\n/\n/g')
                 CURSOR=$#BUFFER
                 zle clear-screen
             }
@@ -129,7 +129,7 @@ case "${OSTYPE}" in
 
         if type peco > /dev/null 2>&1; then
             function peco_history_selection() {
-                BUFFER=$(history -n 1 | tail -r | awk '!a[$0]++' | peco)
+                BUFFER=$(history -n 1 | tail -r | awk '!a[$0]++' | peco | sed 's/\\n/\n/g')
                 CURSOR=$#BUFFER
                 zle reset-prompt
             }
