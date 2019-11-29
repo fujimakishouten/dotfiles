@@ -1,5 +1,6 @@
 function peco_select_history
-    history | peco --query $argv | read -l line && commandline $line
+    history | awk '!a[$0]++' | peco
+
     commandline -f repaint
 end
 
