@@ -47,7 +47,11 @@ case "${OSTYPE}" in
         alias  ls="ls --color=auto"
         alias  mysql="mysql --auto-rehash"
         alias  screen="screen -U"
-        alias  tmux="tmux -2"
+        if type direnv > /dev/null 2>&1; then
+            alias tmux="direnv exec / tmux"
+        else
+            alias  tmux="tmux -2"
+        fi
 
         alias  vld="php -d vld.active=1 -d vld.execute=0 -f"
 
@@ -72,7 +76,11 @@ case "${OSTYPE}" in
         alias  ls="ls -FG"
         alias  mysql="mysql --auto-rehash"
         alias  screen="screen -U"
-        alias  tmux="tmux -2"
+        if type direnv > /dev/null 2>&1; then
+            alias tmux="direnv exec / tmux"
+        else
+            alias  tmux="tmux -2"
+        fi
 
         alias  php6=python3
         alias  vld="php -d vld.active=1 -d vld.execute=0 -f"

@@ -36,7 +36,11 @@ switch (uname)
         alias ls "ls --color=auto"
         alias mysql "mysql --auto-rehash"
         alias screen "screen -U"
-        alias tmux "tmux -2"
+        if type direnv > /dev/null ^&1
+            alias tmux "direnv exec / tmux"
+        else
+            alias tmux "tmux -2"
+        end
 
         alias vld "php -d vld.active=1 -d vld.execute=0 -f"
 
@@ -61,7 +65,11 @@ switch (uname)
         alias ls "ls -FG"
         alias mysql "mysql --auto-rehash"
         alias screen "screen -U"
-        alias tmux "tmux -2"
+        if type direnv > /dev/null ^&1
+            alias tmux "direnv exec / tmux"
+        else
+            alias tmux "tmux -2"
+        end
 
         alias vld "php -d vld.active=1 -d vld.execute=0 -f"
 
