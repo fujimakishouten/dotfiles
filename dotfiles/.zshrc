@@ -58,6 +58,39 @@ precmd() {
 
 PROMPT="%n@%M:%/%% "
 
+# Key bindings
+if type peco > /dev/null 2>&1; then
+    if type tac > /dev/null 2>&1; then
+        TAC="tac"
+    else
+        TAC="tail -r"
+    fi
+
+    function peco_history_selection() {
+        LF=$'\\\x0A'
+        BUFFER=$(history -n 1 | eval $TAC | awk '!a[$0]++' | peco | sed 's/\\n/'$LF'/g')
+        CURSOR=$#BUFFER
+        zle reset-prompt
+    }
+    zle -N peco_history_selection
+    bindkey '^R' peco_history_selection
+fi
+
+if type pet > /dev/null 2>&1; then
+    function prev() {
+        PREV=$(fc -lrn | head -n 1)
+        /bin/sh -c "pet new $(printf %q "$PREV")"
+    }
+
+    function pet_select() {
+        BUFFER=$(pet search --query "$LBUFFER")
+        CURSOR=$#BUFFER
+        zle redisplay
+    }
+    zle -N pet_select
+    bindkey '^P' pet_select
+fi
+
 # Aliases
 case "${OSTYPE}" in
     linux*)
@@ -79,6 +112,10 @@ case "${OSTYPE}" in
 
         alias  vld="php -d vld.active=1 -d vld.execute=0 -f"
 
+        if [ -d $HOME/Android/sdk ]; then
+            export ANDROID_HOME=$HOME/Android/sdk
+        fi
+
         if type nvim > /dev/null 2>&1; then
             alias vi="nvim"
             alias vim="nvim"
@@ -88,17 +125,6 @@ case "${OSTYPE}" in
         if type rlwrap > /dev/null 2>&1; then
             alias ocaml="rlwrap ocaml"
         fi
-
-        if type peco > /dev/null 2>&1; then
-            function peco_history_selection() {
-                LF=$'\\\x0A'
-                BUFFER=$(history -n 1 | tac | awk '!a[$0]++' | peco | sed 's/\\n/'"$LF"'/g')
-                CURSOR=$#BUFFER
-                zle clear-screen
-            }
-            zle -N peco_history_selection
-            bindkey '^R' peco_history_selection
-	fi
         ;;
     darwin*)
         export LESS="--chop-long-lines --ignore-case --line-numbers --long-prompt --raw-control-chars"
@@ -126,6 +152,10 @@ case "${OSTYPE}" in
             export PATH=/sw/sbin:$PATH
         fi
 
+        if [ -d $HOME/Library/Android/sdk ]; then
+            export ANDROID_HOME=$HOME/Library/Android/sdk
+        fi
+
         if type nvim > /dev/null 2>&1; then
             alias vi="nvim"
             alias vim="nvim"
@@ -134,17 +164,6 @@ case "${OSTYPE}" in
 
         if type rlwrap > /dev/null 2>&1; then
             alias ocaml="rlwrap ocaml"
-        fi
-
-        if type peco > /dev/null 2>&1; then
-            function peco_history_selection() {
-                LF=$'\\\x0A'
-                BUFFER=$(history -n 1 | tail -r | awk '!a[$0]++' | peco | sed 's/\\n/'$LF'/g')
-                CURSOR=$#BUFFER
-                zle reset-prompt
-            }
-            zle -N peco_history_selection
-            bindkey '^R' peco_history_selection
         fi
         ;;
 esac
@@ -165,12 +184,15 @@ elif type vim > /dev/null 2&1; then
 elif type vi > /dev/null 2&1; then
     export SVN_EDITOR=vi
 fi
+
 if type direnv > /dev/null 2>&1; then
     eval "$(direnv hook zsh)"
 fi
+
 if [ -d /opt/hashicorp/packer ]; then
     export PATH=$PATH:/opt/hashicorp/packer
 fi
+
 if [ -d /opt/apache/apache-drill/bin ]; then
     export PATH=$PATH:/opt/apache/apache-drill/bin
 fi
@@ -190,7 +212,10 @@ if [ -n "$SSH_CONNECTION" ]; then
 fi
 
 ## Python
+export PYTHONUTF8=1
+export PYTHONDEVMODE=1
 export PYTHONIOENCODING=UTF-8
+export PYTHONWARNINGS=default
 export WORKON_HOME=$HOME/.virtualenvs
 export PYENV_ROOT=$HOME/.pyenv
 if [ -f /etc/bash_completion.d/virtualenvwrapper ]; then
@@ -273,6 +298,21 @@ fi
 ## .NET Core
 if [ -d $HOME/dotnet ]; then
     export PATH=$PATH:$HOME/dotnet
+fi
+
+## Android
+if [ -n $ANDROID_HOME ]; then
+    export ANDROID_SDK_ROOT=$ANDROID_HOME
+
+    if [ -d $ANDROID_SDK_ROOT/tools ]; then
+        export PATH=$PATH:$ANDROID_SDK_ROOT/tools
+    fi
+    if [ -d $ANDROID_SDK_ROOT/platform-tools ]; then
+        export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
+    fi
+    if [ -d $ANDROID_SDK_ROOT/ndk ]; then
+        export NDK_ROOT=$ANDROID_SDK_ROOT/ndk/ndk
+    fi
 fi
 
 ## cocos2d-x

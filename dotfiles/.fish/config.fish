@@ -16,6 +16,7 @@ end
 if type peco > /dev/null ^&1
     function fish_user_key_bindings
         bind \cr peco_select_history
+        bind \cs pet-select
     end
 end
 
@@ -43,6 +44,10 @@ switch (uname)
         end
 
         alias vld "php -d vld.active=1 -d vld.execute=0 -f"
+
+        if test -d $HOME/Android/sdk
+            set -x ANDROID_HOME $HOME/Android/sdk
+        end
 
         if type nvim > /dev/null ^&1
             alias vi "nvim"
@@ -78,6 +83,10 @@ switch (uname)
         end
         if test -d /sw/sbin
             set -x PATH /sw/sbin $PATH
+        end
+
+        if test -d $HOME/Library/Android/sdk
+            set -x ANDROID_HOME $HOME/Library/Android/sdk
         end
 
         if type nvim > /dev/null ^&1
@@ -208,6 +217,20 @@ end
 ## .NET Core
 if test -d $HOME/dotnet
     set -x PATH $PATH $HOME/dotnet
+end
+
+## Android
+if test -n $ANDROID_HOME
+    set -x ANDROID_SDK_ROOT $ANDROID_HOME
+    if test -d $ANDROID_SDK_ROOT/tools
+        set -x PATH $PATH $ANDROID_SDK_ROOT/tools
+    end
+    if test -d $ANDROID_SDK_ROOT/platform-tools
+        set -x PATH $PATH $ANDROID_SDK_ROOT/platform-tools
+    end
+    if test -d $ANDROID_SDK_ROOT/ndk
+        set -x NDK_ROOT $ANDROID_SDK_ROOT/ndk
+    end
 end
 
 ## cocos2d-x

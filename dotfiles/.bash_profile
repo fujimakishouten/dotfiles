@@ -25,13 +25,27 @@ if type peco > /dev/null 2>&1; then
         TAC="tail -r"
     fi
 
-    peco_history_selection() {
+    function peco_history_selection {
 	LF=$'\\\x0A'
         declare BUFFER=$(history | eval $TAC | awk '!a[$0]++' | peco | cut -d' ' -f4- | sed 's/\\n/'"$LF"'/g')
         READLINE_LINE="${BUFFER}"
         READLINE_POINT=${#BUFFER}
     }
     bind -x '"\C-r": peco_history_selection'
+fi
+
+if type pet > /dev/null 2>&1; then
+    function prev() {
+        PREV=$(echo $(history | tail -n2 | head -n1) | sed 's/[0-9]* //')
+        /bin/sh -c "pet new $(printf %q "$PREV")"
+    }
+
+    function pet-select() {
+        BUFFER=$(pet search --query "$READLINE_LINE")
+        READLINE_LINE=$BUFFER
+        READLINE_POINT=${#BUFFER}
+    }
+    bind -x '"\C-p": pet-select'
 fi
 
 # Aliases
