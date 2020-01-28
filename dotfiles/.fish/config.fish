@@ -109,12 +109,19 @@ else if type vim > /dev/null ^&1
 else if type vi > /dev/null ^&1
     set -x SVN_EDITOR vi
 end
+
 if type direnv > /dev/null ^&1
     eval (direnv hook fish)
 end
+
+if type anyenv > /dev/null ^&1
+    eval (anyenv init - fish | source)
+end
+
 if test -d /opt/hashicorp/packer
     set -x PATH $PATH /opt/hashicorp/packer
 end
+
 if test -d /opt/apache/apache-drill/bin
     set -x PATH $PATH /opt/apache/apache-drill/bin
 end
@@ -134,19 +141,14 @@ if test -n "$SSH_CONNECTION"
 end
 
 ## Python
+set -x PYTHONUTF8 1
+set -x PYTHONDEVMODE 1
 set -x PYTHONIOENCODING UTF-8
-set -x WORKON_HOME $HOME/.virtualenvs
-set -x PYENV_ROOT $HOME/.pyenv
-if test -f /etc/bash_completion.d/virtualenvwrapper
+set -x PYTHONWARNINGS default
+set -x WORKON_HOME=$HOME/.virtualenvs
+if [ -f /etc/bash_completion.d/virtualenvwrapper ]; then
     . /etc/bash_completion.d/virtualenvwrapper
-end
-if test -d $PYENV_ROOT/bin
-    set -x PATH $PATH $PYENV_ROOT/bin
-    eval "(pyenv init -)"
-    if test -d $PYENV_ROOT/plugins/pyenv-virtualenv
-        eval "(pyenv virtualenv-init -)"
-    end
-end
+fi
 
 ## Go
 if type go > /dev/null ^&1
