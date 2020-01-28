@@ -189,6 +189,10 @@ if type direnv > /dev/null 2>&1; then
     eval "$(direnv hook zsh)"
 fi
 
+if type anyenv > /dev/null 2>&1; then
+    eval "$(anyenv init -)"
+fi
+
 if [ -d /opt/hashicorp/packer ]; then
     export PATH=$PATH:/opt/hashicorp/packer
 fi
@@ -217,16 +221,8 @@ export PYTHONDEVMODE=1
 export PYTHONIOENCODING=UTF-8
 export PYTHONWARNINGS=default
 export WORKON_HOME=$HOME/.virtualenvs
-export PYENV_ROOT=$HOME/.pyenv
 if [ -f /etc/bash_completion.d/virtualenvwrapper ]; then
     . /etc/bash_completion.d/virtualenvwrapper
-fi
-if [ -d $PYENV_ROOT/bin ]; then
-    export PATH=$PATH:$PYENV_ROOT/bin
-    eval "$(pyenv init -)"
-    if [ -d $PYENV_ROOT/plugins/pyenv-virtualenv ]; then
-        eval "$(pyenv virtualenv-init -)"
-    fi
 fi
 
 ## Go
