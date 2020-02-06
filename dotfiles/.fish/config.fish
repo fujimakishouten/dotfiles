@@ -61,7 +61,7 @@ switch (uname)
         end
     case "Darwin"
         alias ls "ls -FG"
-        for DIRECTORY in coreutils findutils gawk gnu-sed gnu-tar gnu-which grep
+        for DIRECTORY in coreutils findutils gawk gnu-getopt gnu-sed gnu-tar gnu-which grep moreutils
             if test -d /usr/local/opt/$DIRECTORY/libexec/gnubin
                 set -x PATH /usr/local/opt/$DIRECTORY/libexec/gnubin $PATH
                 if test $DIRECTORY = "coreutils"

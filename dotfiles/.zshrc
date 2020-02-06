@@ -129,7 +129,7 @@ case "${OSTYPE}" in
         ;;
     darwin*)
         alias  ls="ls -FG"
-        for DIRECTORY in coreutils findutils gawk gnu-sed gnu-tar gnu-which grep
+        for DIRECTORY in coreutils findutils gawk gnu-getopt gnu-sed gnu-tar gnu-which grep moreutils
         do
             if [ -d /usr/local/opt/$DIRECTORY/libexec/gnubin ]; then
                 export PATH=/usr/local/opt/$DIRECTORY/libexec/gnubin:$PATH
