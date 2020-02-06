@@ -49,55 +49,55 @@ if type pet > /dev/null 2>&1; then
 fi
 
 # Aliases
+export LESS="--chop-long-lines --ignore-case --line-numbers --long-prompt --raw-control-chars"
+alias  diff="colordiff"
+alias  egrep="egrep --color=auto"
+alias  emacs="emacs -nw"
+alias  fgrep="fgrep --color=auto"
+alias  grep="grep --color=auto"
+alias  mysql="mysql --auto-rehash"
+alias  screen="screen -U"
+
+if type direnv > /dev/null 2>&1; then
+    alias tmux="direnv exec / tmux"
+else
+    alias  tmux="tmux -2"
+fi
+
+alias  vld="php -d vld.active=1 -d vld.execute=0 -f"
+
+if type nvim > /dev/null 2>&1; then
+    alias vi="nvim"
+    alias vim="nvim"
+    alias view="nvim -R"
+fi
+
+if type rlwrap > /dev/null 2>&1; then
+    alias ocaml="rlwrap ocaml"
+fi
+
+# OS type specifled
 case "${OSTYPE}" in
     linux*)
-        export LESS="--raw-control-chars"
-
-        alias  diff="colordiff"
-        alias  egrep="egrep --color=auto"
-        alias  emacs="emacs -nw"
-        alias  fgrep="fgrep --color=auto"
-        alias  grep="grep --color=auto"
         alias  ls="ls --color=auto"
-        alias  mysql="mysql --auto-rehash"
-        alias  screen="screen -U"
-        if type direnv > /dev/null 2>&1; then
-            alias tmux="direnv exec / tmux"
-        else
-            alias  tmux="tmux -2"
-        fi
-
-        alias  vld="php -d vld.active=1 -d vld.execute=0 -f"
-
-        if type nvim > /dev/null 2>&1; then
-            alias vi="nvim"
-            alias vim="nvim"
-            alias view="nvim -R"
-        fi
-
-        if type rlwrap > /dev/null 2>&1; then
-            alias ocaml="rlwrap ocaml"
+        if [ -d $HOME/Android/sdk ]; then
+            export ANDROID_HOME=$HOME/Android/sdk
         fi
         ;;
     darwin*)
-        export LESS="--raw-control-chars"
-
-        alias  diff="colordiff"
-        alias  egrep="egrep --color=auto"
-        alias  emacs="emacs -nw"
-        alias  fgrep="fgrep --color=auto"
-        alias  grep="grep --color=auto"
         alias  ls="ls -FG"
-        alias  mysql="mysql --auto-rehash"
-        alias  screen="screen -U"
-        if type direnv > /dev/null 2>&1; then
-            alias tmux="direnv exec / tmux"
-        else
-            alias  tmux="tmux -2"
-        fi
-
-        alias  php6=python3
-        alias  vld="php -d vld.active=1 -d vld.execute=0 -f"
+        for DIRECTORY in coreutils findutils gawk gnu-sed gnu-tar gnu-which grep
+        do
+            if [ -d /usr/local/opt/$DIRECTORY/libexec/gnubin ]; then
+                export PATH=/usr/local/opt/$DIRECTORY/libexec/gnubin:$PATH
+                if [ $DIRECTORY = "coreutils" ]; then
+                    alias ls="ls --color=auto"
+                fi
+            fi
+            if [ -d /usr/local/opt/$DIRECTORY/libexec/gnuman ]; then
+                export MANPATH=/usr/local/opt/$DIRECTORY/libexec/gnuman:$MANPATH
+            fi
+        done
 
         if [ -d /sw/bin ]; then
             export PATH=/sw/bin:$PATH
@@ -106,15 +106,10 @@ case "${OSTYPE}" in
             export PATH=/sw/sbin:$PATH
         fi
 
-        if type nvim > /dev/null 2>&1; then
-            alias vi="nvim"
-            alias vim="nvim"
-            alias view="nvim -R"
+        if [ -d $HOME/Library/Android/sdk ]; then
+            export ANDROID_HOME=$HOME/Library/Android/sdk
         fi
 
-        if type rlwrap > /dev/null 2>&1; then
-            alias ocaml="rlwrap ocaml"
-        fi
         ;;
 esac
 
