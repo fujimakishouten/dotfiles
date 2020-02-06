@@ -25,58 +25,53 @@ end
 set -x __fish_git_prompt_color_branch black
 
 # Alias
+set -x LESS "--raw-control-chars"
+alias diff "colordiff"
+alias egrep "egrep --color=auto"
+alias emacs "emacs -nw"
+alias fgrep "fgrep --color=auto"
+alias grep "grep --color=auto"
+alias mysql "mysql --auto-rehash"
+alias screen "screen -U"
+
+if type direnv > /dev/null ^&1
+     alias tmux "direnv exec / tmux"
+else
+    alias tmux "tmux -2"
+end
+
+alias vld "php -d vld.active=1 -d vld.execute=0 -f"
+
+if type nvim > /dev/null ^&1
+    alias vi "nvim"
+    alias vim "nvim"
+    alias view "nvim -R"
+end
+
+if type rlwrap > /dev/null ^&1
+    alias ocaml "rlwrap ocaml"
+end
+
 switch (uname)
     case "Linux"
-        set -x LESS "--raw-control-chars"
-
-        alias diff "colordiff"
-        alias egrep "egrep --color=auto"
-        alias emacs "emacs -nw"
-        alias fgrep "fgrep --color=auto"
-        alias grep "grep --color=auto"
         alias ls "ls --color=auto"
-        alias mysql "mysql --auto-rehash"
-        alias screen "screen -U"
-        if type direnv > /dev/null ^&1
-            alias tmux "direnv exec / tmux"
-        else
-            alias tmux "tmux -2"
-        end
-
-        alias vld "php -d vld.active=1 -d vld.execute=0 -f"
 
         if test -d $HOME/Android/sdk
             set -x ANDROID_HOME $HOME/Android/sdk
         end
-
-        if type nvim > /dev/null ^&1
-            alias vi "nvim"
-            alias vim "nvim"
-            alias view "nvim -R"
-        end
-
-        if type rlwrap > /dev/null ^&1
-            alias ocaml "rlwrap ocaml"
-        end
-
     case "Darwin"
-        set -x LESS "--raw-control-chars"
-
-        alias diff "colordiff"
-        alias egrep "egrep --color=auto"
-        alias emacs "emacs -nw"
-        alias fgrep "fgrep --color=auto"
-        alias grep "grep --color=auto"
         alias ls "ls -FG"
-        alias mysql "mysql --auto-rehash"
-        alias screen "screen -U"
-        if type direnv > /dev/null ^&1
-            alias tmux "direnv exec / tmux"
-        else
-            alias tmux "tmux -2"
+        for DIRECTORY in coreutils findutils gawk gnu-sed gnu-tar gnu-which grep
+            if test -d /usr/local/opt/$DIRECTORY/libexec/gnubin
+                set -x PATH /usr/local/opt/$DIRECTORY/libexec/gnubin $PATH
+                if test $DIRECTORY = "coreutils"
+                    alias ls "ls --color=auto"
+                end
+            end
+            if test -d /usr/local/opt/$DIRECTORY/libexec/gnuman
+                set -x MANPATH /usr/local/opt/$DIRECTORY/libexec/gnuman $MANPATH
+            end
         end
-
-        alias vld "php -d vld.active=1 -d vld.execute=0 -f"
 
         if test -d /sw/bin
             set -x PATH /sw/bin $PATH
@@ -87,16 +82,6 @@ switch (uname)
 
         if test -d $HOME/Library/Android/sdk
             set -x ANDROID_HOME $HOME/Library/Android/sdk
-        end
-
-        if type nvim > /dev/null ^&1
-            alias vi "nvim"
-            alias vim "nvim"
-            alias view "nvim -R"
-        end
-
-        if type rlwrap > /dev/null ^&1
-            alias ocaml "rlwrap ocaml"
         end
 end
 
@@ -145,10 +130,10 @@ set -x PYTHONUTF8 1
 set -x PYTHONDEVMODE 1
 set -x PYTHONIOENCODING UTF-8
 set -x PYTHONWARNINGS default
-set -x WORKON_HOME=$HOME/.virtualenvs
-if [ -f /etc/bash_completion.d/virtualenvwrapper ]; then
+set -x WORKON_HOME $HOME/.virtualenvs
+if test -f /etc/bash_completion.d/virtualenvwrapper
     . /etc/bash_completion.d/virtualenvwrapper
-fi
+end
 
 ## Go
 if type go > /dev/null ^&1

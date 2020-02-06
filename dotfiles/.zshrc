@@ -138,7 +138,7 @@ case "${OSTYPE}" in
                 fi
             fi
             if [ -d /usr/local/opt/$DIRECTORY/libexec/gnuman ]; then
-                export MANPATH=/usr/local/opt/$DIRECTORY/libexec/gnuman:$PATH
+                export MANPATH=/usr/local/opt/$DIRECTORY/libexec/gnuman:$MANPATH
             fi
         done
 
