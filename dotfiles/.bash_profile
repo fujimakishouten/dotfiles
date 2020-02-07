@@ -86,7 +86,7 @@ case "${OSTYPE}" in
         ;;
     darwin*)
         alias  ls="ls -FG"
-        for DIRECTORY in coreutils findutils gawk gnu-getopt gnu-sed gnu-tar gnu-which grep moreutils
+        for DIRECTORY in coreutils findutils gawk gnu-getopt gnu-sed gnu-tar gnu-time gnu-which grep moreutils
         do
             if [ -d /usr/local/opt/$DIRECTORY/libexec/gnubin ]; then
                 export PATH=/usr/local/opt/$DIRECTORY/libexec/gnubin:$PATH
@@ -130,20 +130,25 @@ elif type vi > /dev/null 2&1; then
     export SVN_EDITOR=vi
 fi
 
-if type direnv > /dev/null 2>&1; then
-    eval "$(direnv hook bash)"
-fi
-
-if type anyenv > /dev/null 2>&1; then
-    eval "$(anyenv init -)"
-fi
-
 if [ -d /opt/hashicorp/packer ]; then
     export PATH=$PATH:/opt/hashicorp/packer
 fi
 
 if [ -d /opt/apache/apache-drill/bin ]; then
     export PATH=$PATH:/opt/apache/apache-drill/bin
+fi
+
+# direnv
+if type direnv > /dev/null 2>&1; then
+    eval "$(direnv hook bash)"
+fi
+
+# anyenv
+if [ -d /opt/anyenv/bin ]; then
+    export PATH=$PATH:/opt/anyenv
+fi
+if type anyenv > /dev/null 2>&1; then
+    eval "$(anyenv init -)"
 fi
 
 ## SSH

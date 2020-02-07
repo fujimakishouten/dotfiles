@@ -61,7 +61,7 @@ switch (uname)
         end
     case "Darwin"
         alias ls "ls -FG"
-        for DIRECTORY in coreutils findutils gawk gnu-getopt gnu-sed gnu-tar gnu-which grep moreutils
+        for DIRECTORY in coreutils findutils gawk gnu-getopt gnu-sed gnu-tar gnu-time gnu-which grep moreutils
             if test -d /usr/local/opt/$DIRECTORY/libexec/gnubin
                 set -x PATH /usr/local/opt/$DIRECTORY/libexec/gnubin $PATH
                 if test $DIRECTORY = "coreutils"
@@ -95,20 +95,25 @@ else if type vi > /dev/null ^&1
     set -x SVN_EDITOR vi
 end
 
-if type direnv > /dev/null ^&1
-    eval (direnv hook fish)
-end
-
-if type anyenv > /dev/null ^&1
-    eval (anyenv init - fish | source)
-end
-
 if test -d /opt/hashicorp/packer
     set -x PATH $PATH /opt/hashicorp/packer
 end
 
 if test -d /opt/apache/apache-drill/bin
     set -x PATH $PATH /opt/apache/apache-drill/bin
+end
+
+# direnv
+if type direnv > /dev/null ^&1
+    eval (direnv hook fish)
+end
+
+# anyenv
+if test -d /opt/anyenv/bin
+    set -x PATH $PATH /opt/anyenv/bin
+end
+if type anyenv > /dev/null ^&1
+    eval (anyenv init - fish | source)
 end
 
 ## SSH
