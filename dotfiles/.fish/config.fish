@@ -13,7 +13,7 @@ if test -d $HOME/.local/bin
 end
 
 ## Key bindings
-if type peco > /dev/null ^&1
+if type peco > /dev/null 2>&1
     function fish_user_key_bindings
         bind \cr peco_select_history
         bind \cs pet-select
@@ -34,7 +34,7 @@ alias grep "grep --color=auto"
 alias mysql "mysql --auto-rehash"
 alias screen "screen -U"
 
-if type direnv > /dev/null ^&1
+if type direnv > /dev/null 2>&1
      alias tmux "direnv exec / tmux"
 else
     alias tmux "tmux -2"
@@ -42,13 +42,13 @@ end
 
 alias vld "php -d vld.active=1 -d vld.execute=0 -f"
 
-if type nvim > /dev/null ^&1
+if type nvim > /dev/null 2>&1
     alias vi "nvim"
     alias vim "nvim"
     alias view "nvim -R"
 end
 
-if type rlwrap > /dev/null ^&1
+if type rlwrap > /dev/null 2>&1
     alias ocaml "rlwrap ocaml"
 end
 
@@ -87,11 +87,11 @@ end
 
 # Others
 set -x DOCKER_BUILDKIT 1
-if type nvim > /dev/null ^&1
+if type nvim > /dev/null 2>&1
     set -x SVN_EDITOR nvim
-else if type vim > /dev/null ^&1
+else if type vim > /dev/null 2>&1
     set -x SVN_EDITOR vim
-else if type vi > /dev/null ^&1
+else if type vi > /dev/null 2>&1
     set -x SVN_EDITOR vi
 end
 
@@ -104,7 +104,7 @@ if test -d /opt/apache/apache-drill/bin
 end
 
 # direnv
-if type direnv > /dev/null ^&1
+if type direnv > /dev/null 2>&1
     eval (direnv hook fish)
 end
 
@@ -112,14 +112,14 @@ end
 if test -d /opt/anyenv/bin
     set -x PATH $PATH /opt/anyenv/bin
 end
-if type anyenv > /dev/null ^&1
+if type anyenv > /dev/null 2>&1
     eval (anyenv init - fish | source)
 end
 
 ## SSH
 if test -n "$SSH_CONNECTION"
     if test -n "$DISPLAY" and test -z "$TMUX" and test -z "$WINDOW"
-        if type fcitx > /dev/null ^&1
+        if type fcitx > /dev/null 2>&1
             set -x XMODIFIERS "@im=fcitx"
             set -x DefaultIMModule fcitx
             set -x GTK_IM_MODULE fcitx
@@ -141,7 +141,7 @@ if test -f /etc/bash_completion.d/virtualenvwrapper
 end
 
 ## Go
-if type go > /dev/null ^&1
+if type go > /dev/null 2>&1
     if test -z $GOPATH
         set -x GOPATH $HOME/go
     end

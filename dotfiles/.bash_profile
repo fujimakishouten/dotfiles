@@ -12,9 +12,21 @@ if [ -d $HOME/.local/bin ]; then
     export PATH=$PATH:$HOME/.local/bin
 fi
 
-# bash
+# Bash
 if [ -f /etc/bash_completion ]; then
- . /etc/bash_completion
+    . /etc/bash_completion
+elif [ -f /usr/local/etc/bash_completion ]; then
+    . /usr/local/etc/bash_completion
+fi
+
+# Prompt
+if type __git_ps1 > /dev/null 2>&1; then
+    precmd() {
+        RPROMPT=$(__git_ps1)
+        printf "%*s" $(($COLUMNS - ${#PROMPT} - 1)) $RPROMPT
+    }
+
+    PS1='$(tput sc; precmd; tput rc)\u@\H:$(pwd)% '
 fi
 
 # Key bindings
