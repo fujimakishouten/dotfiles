@@ -78,7 +78,7 @@ syntax on
 "set termguicolors
 
 " Change color scheme.
-colorscheme desert
+colorscheme seashell 
 
 " Enable search highlighting.
 set hlsearch

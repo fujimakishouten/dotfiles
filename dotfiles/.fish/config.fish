@@ -85,6 +85,17 @@ switch (uname)
         end
 end
 
+# Command line alternatives
+if type bat > /dev/null 2>&1
+    alias cat="bat"
+end
+if type exa > /dev/null 2>&1
+    alias ls="exa"
+end
+if type rg > /dev/null 2>&1
+    alias grep="rg"
+end
+
 # Others
 set -x DOCKER_BUILDKIT 1
 if type nvim > /dev/null 2>&1

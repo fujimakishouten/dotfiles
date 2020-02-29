@@ -125,6 +125,18 @@ case "${OSTYPE}" in
         ;;
 esac
 
+# Command line alternatives
+if type bat > /dev/null 2>&1; then
+    alias cat="bat"
+fi
+if type exa > /dev/null 2>&1; then
+    alias ls="exa"
+fi
+if type rg > /dev/null 2>&1; then
+    alias grep="rg"
+fi
+
+# SSH
 #case "${UID}" in
 #    *)
 #        [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
