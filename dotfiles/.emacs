@@ -25,12 +25,42 @@
   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
   ;(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
   (package-initialize)
+  (unless package-archive-contents (package-refresh-contents))
+
+  ;; Auto install packages
+  (unless (package-installed-p 'auto-complete) (package-install 'auto-complete))
+  (unless (package-installed-p 'editorconfig) (package-install 'editorconfig))
+  (unless (package-installed-p 'elp) (package-install 'elp))
+  (unless (package-installed-p 'emmet-mode) (package-install 'emmet-mode))
+  (unless (package-installed-p 'espresso-theme) (package-install 'espresso-theme))
+  (unless (package-installed-p 'exec-path-from-shell) (package-install 'exec-path-from-shell))
+  (unless (package-installed-p 'f) (package-install 'f))
+  (unless (package-installed-p 'flycheck) (package-install 'flycheck))
+  (unless (package-installed-p 'flycheck-kotlin) (package-install 'flycheck-kotlin))
+  (unless (package-installed-p 'flycheck-ocaml) (package-install 'flycheck-ocaml))
+  (unless (package-installed-p 'fuzzy) (package-install 'fuzzy))
+  (unless (package-installed-p 'ggtags) (package-install 'ggtags))
+  (unless (package-installed-p 'go-mode) (package-install 'go-mode))
+  (unless (package-installed-p 'js2-mode) (package-install 'js2-mode))
+  (unless (package-installed-p 'json-mode) (package-install 'json-mode))
+  (unless (package-installed-p 'kotlin-mode) (package-install 'kotlin-mode))
+  (unless (package-installed-p 'linum) (package-install 'linum))
+  (unless (package-installed-p 'markdown-mode+) (package-install 'markdown-mode+))
+  (unless (package-installed-p 'multi-web-mode) (package-install 'multi-web-mode))
+  (unless (package-installed-p 'php-mode) (package-install 'php-mode))
+  (unless (package-installed-p 'py-autopep8) (package-install 'py-autopep8))
+  (unless (package-installed-p 'python-mode) (package-install 'python-mode))
+  (unless (package-installed-p 'swiper) (package-install 'swiper))
+  (unless (package-installed-p 'tuareg) (package-install 'tuareg))
+  (unless (package-installed-p 'typescript-mode) (package-install 'typescript-mode))
+  (unless (package-installed-p 'web-mode) (package-install 'web-mode))
+  (unless (package-installed-p 'yaml-mode) (package-install 'yaml-mode))
 )
 
 
-;; Environments
+;; environment
 (autoload 'exec-path-from-shell "exec-path-from-shell" nil t)
-;(exec-path-from-shell-initialize)
+(exec-path-from-shell-initialize)
 
 
 ;; Language
@@ -46,6 +76,9 @@
 
 
 ;; Display
+;; Theme
+(load-theme 'espresso t)
+
 ;; Window size and colors
 (if window-system
     (setq default-frame-alist
@@ -104,7 +137,7 @@
 (setq lazy-lock nil)
 (setq jit-lock t)
 (setq search-highlight t)
-; (setq hilit-background-mode 'light) ; Light theme
+(setq hilit-background-mode 'light) ; Light theme
 ; (setq hilit-background-mode 'dark) ; Dark theme
 
 ;; Show matching brackets
@@ -124,7 +157,7 @@
 (setq-default indent-tab-width 4)
 (setq-default c-basic-offset 4)
 (setq tab-stop-list
-  '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80 84 88 92 96 100 104 108  112 116 120 124 128))
+  '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72 76 80 84 88 92 96 100 104 108  112 116 120 124 128 132 136 140 144 148 152 156 160 164 168 172 176 180 184 188 192 196 200 204 208 212 216 220 224 228 232 236 240 244 248 252 256))
 (setq indent-line-function 'indent-relative-maybe)
 
 ;; Display tabs and spaces
@@ -277,7 +310,6 @@
 (add-to-list 'auto-mode-alist '("\\.ml[iylp]?$" . tuareg-mode))
 
 
-
 ;; Go
 (autoload 'go-mode "go-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.go$" . go-mode))
@@ -339,6 +371,7 @@
 (autoload 'yaml-mode "yaml-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.ya?ml$" . yaml-mode))
 
+
 ;; Packages
 ;;     Install:
 ;;         M-x package-refresh-contents
@@ -350,8 +383,37 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   (quote
-    (flycheck-kotlin kotlin-mode flycheck-ocaml tuareg yaml-mode web-mode typescript-mode swiper python-mode py-autopep8 php-mode multi-web-mode markdown-mode+ json-mode js2-mode go-mode fuzzy flycheck f exec-path-from-shell espresso-theme emmet-mode elpy editorconfig-core editorconfig auto-complete))))
+    (quote
+      (auto-complete
+       editorconfig
+       elp
+       emmet-mode
+       espresso-theme
+       exec-path-from-shell
+       f
+       flycheck
+       flycheck-kotlin
+       flycheck-ocaml
+       fuzzy
+       ggtags
+       go-mode
+       js2-mode
+       json-mode
+       kotlin-mode
+       markdown-mode+
+       multi-web-mode
+       php-mode
+       py-autopep8
+       python-mode
+       swiper
+       tuareg
+       typescript-mode
+       web-mode
+       yaml-mode
+      )
+    )
+  )
+ )
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
