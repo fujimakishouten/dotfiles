@@ -41,6 +41,7 @@
   (unless (package-installed-p 'fuzzy) (package-install 'fuzzy))
   (unless (package-installed-p 'ggtags) (package-install 'ggtags))
   (unless (package-installed-p 'go-mode) (package-install 'go-mode))
+  (unless (package-installed-p 'hemisu-theme) (package-install 'hemisu-theme))
   (unless (package-installed-p 'js2-mode) (package-install 'js2-mode))
   (unless (package-installed-p 'json-mode) (package-install 'json-mode))
   (unless (package-installed-p 'kotlin-mode) (package-install 'kotlin-mode))
@@ -77,7 +78,7 @@
 
 ;; Display
 ;; Theme
-(load-theme 'espresso t)
+(load-theme 'hemisu-light t)
 
 ;; Window size and colors
 (if window-system
@@ -397,6 +398,7 @@
        fuzzy
        ggtags
        go-mode
+       hemisu-theme
        js2-mode
        json-mode
        kotlin-mode
