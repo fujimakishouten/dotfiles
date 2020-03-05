@@ -81,7 +81,7 @@ syntax on
 set background=light
 
 " Change color scheme.
-colorscheme kalisi
+colorscheme hemisu
 
 " Enable search highlighting.
 set hlsearch
