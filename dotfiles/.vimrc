@@ -75,7 +75,7 @@ set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']['.&ft.']'}
 syntax on
 
 " Enable true color.
-set termguicolors
+"set termguicolors
 
 " Set background color.
 set background=light
