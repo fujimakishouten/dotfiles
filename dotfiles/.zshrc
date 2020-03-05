@@ -123,6 +123,11 @@ fi
 case "${OSTYPE}" in
     linux*)
         alias  ls="ls --color=auto"
+
+        if [ -f /usr/share/zsh-syntax-highlighting ]; then
+            . /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+        fi
+
         if [ -d $HOME/Android/sdk ]; then
             export ANDROID_HOME=$HOME/Android/sdk
         fi
@@ -141,6 +146,10 @@ case "${OSTYPE}" in
                 export MANPATH=/usr/local/opt/$DIRECTORY/libexec/gnuman:$MANPATH
             fi
         done
+
+        if [ -f /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+            . /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+        fi
 
         if [ -d /sw/bin ]; then
             export PATH=/sw/bin:$PATH
