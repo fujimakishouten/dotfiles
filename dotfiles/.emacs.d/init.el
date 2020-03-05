@@ -198,6 +198,7 @@
 (setq enable-double-n-syntax t)    ; Input "ん" by "nn"
 
 ;; Keybind
+(require 'redo+)
 (global-set-key (kbd "C-c <left>")  'windmove-left)
 (global-set-key (kbd "C-c <right>") 'windmove-right)
 (global-set-key (kbd "C-c <up>")    'windmove-up)
@@ -205,7 +206,7 @@
 (global-set-key (kbd "M-g") 'goto-line)           ; M-g => M-x goto-line
 (global-set-key (kbd "C-r") 'replace-string)
 (global-set-key (kbd "C-M-r") 'replace-regexp)
-
+(global-set-key (kbd "M-/") 'redo)
 
 ;; Save and backup
 ;; Buckup:
@@ -383,38 +384,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-    (quote
-      (auto-complete
-       editorconfig
-       elp
-       emmet-mode
-       espresso-theme
-       exec-path-from-shell
-       f
-       flycheck
-       flycheck-kotlin
-       flycheck-ocaml
-       fuzzy
-       ggtags
-       go-mode
-       hemisu-theme
-       js2-mode
-       json-mode
-       kotlin-mode
-       markdown-mode+
-       multi-web-mode
-       php-mode
-       py-autopep8
-       python-mode
-       swiper
-       tuareg
-       typescript-mode
-       web-mode
-       yaml-mode
-      )
-    )
-  )
- )
+   (quote
+    (auto-complete editorconfig elp emmet-mode espresso-theme exec-path-from-shell f flycheck flycheck-kotlin flycheck-ocaml fuzzy ggtags go-mode hemisu-theme js2-mode json-mode kotlin-mode markdown-mode+ multi-web-mode php-mode py-autopep8 python-mode swiper tuareg typescript-mode web-mode yaml-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
