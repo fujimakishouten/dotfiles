@@ -205,7 +205,6 @@
 (global-set-key (kbd "M-g") 'goto-line)           ; M-g => M-x goto-line
 (global-set-key (kbd "C-r") 'replace-string)
 (global-set-key (kbd "C-M-r") 'replace-regexp)
-(global-set-key (kbd "C-/") 'undo)
 
 
 ;; Save and backup
