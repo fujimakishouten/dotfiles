@@ -124,7 +124,7 @@ case "${OSTYPE}" in
     linux*)
         alias  ls="ls --color=auto"
 
-        if [ -f /usr/share/zsh-syntax-highlighting ]; then
+        if [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
             . /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
         fi
 
