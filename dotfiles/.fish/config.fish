@@ -87,7 +87,7 @@ end
 
 # Command line alternatives
 if type bat > /dev/null 2>&1
-    alias cat="bat"
+    alias cat='bat --plain --pager never --theme "Monokai Extended Light"'
 end
 if type exa > /dev/null 2>&1
     alias ls="exa"

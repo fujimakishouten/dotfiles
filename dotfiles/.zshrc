@@ -167,7 +167,7 @@ esac
 
 # Command line alternatives
 if type bat > /dev/null 2>&1; then
-    alias cat="bat"
+    alias cat='bat --plain --pager never --theme "Monokai Extended Light"'
 fi
 if type exa > /dev/null 2>&1; then
     alias ls="exa"
