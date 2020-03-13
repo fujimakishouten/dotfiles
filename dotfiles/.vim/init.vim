@@ -1,1 +1,0 @@
-/Users/kazuma.fujimaki/.vimrc
