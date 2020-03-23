@@ -22,7 +22,7 @@ end
 
 # Prompt
 ## Fish git prompt
-set -x __fish_git_prompt_color_branch black
+set -x __fish_git_prompt_color_branch $fish_color_normal
 
 # Alias
 set -x LESS "--raw-control-chars"
@@ -96,38 +96,7 @@ if type rg > /dev/null 2>&1
     alias grep="rg"
 end
 
-# Others
-set -x DOCKER_BUILDKIT 1
-if type nvim > /dev/null 2>&1
-    set -x SVN_EDITOR nvim
-else if type vim > /dev/null 2>&1
-    set -x SVN_EDITOR vim
-else if type vi > /dev/null 2>&1
-    set -x SVN_EDITOR vi
-end
-
-if test -d /opt/hashicorp/packer
-    set -x PATH $PATH /opt/hashicorp/packer
-end
-
-if test -d /opt/apache/apache-drill/bin
-    set -x PATH $PATH /opt/apache/apache-drill/bin
-end
-
-# direnv
-if type direnv > /dev/null 2>&1
-    eval (direnv hook fish)
-end
-
-# anyenv
-if test -d /opt/anyenv/bin
-    set -x PATH $PATH /opt/anyenv/bin
-end
-if type anyenv > /dev/null 2>&1
-    eval (anyenv init - fish | source)
-end
-
-## SSH
+# SSH
 if test -n "$SSH_CONNECTION"
     if test -n "$DISPLAY" and test -z "$TMUX" and test -z "$WINDOW"
         if type fcitx > /dev/null 2>&1
@@ -139,6 +108,46 @@ if test -n "$SSH_CONNECTION"
             fcitx -dr
         end
     end
+end
+
+# Applications
+set -x DOCKER_BUILDKIT 1
+if type nvim > /dev/null 2>&1
+    set -x SVN_EDITOR nvim
+else if type vim > /dev/null 2>&1
+    set -x SVN_EDITOR vim
+else if type vi > /dev/null 2>&1
+    set -x SVN_EDITOR vi
+end
+
+## direnv
+if type direnv > /dev/null 2>&1
+    eval (direnv hook fish)
+end
+
+## anyenv
+if test -d /opt/anyenv/bin
+    set -x PATH $PATH /opt/anyenv/bin
+end
+if type anyenv > /dev/null 2>&1
+    eval (anyenv init - fish | source)
+end
+
+## thefuck
+if type thefuck > /dev/null 2>&1
+    set PYTHONWARNINGS ignore
+    eval (thefuck --alias | source)
+    set PYTHONWARNINGS default
+end
+
+## HashiCorp Packer
+if test -d /opt/hashicorp/packer
+    set -x PATH $PATH /opt/hashicorp/packer
+end
+
+## Apache Drill
+if test -d /opt/apache/apache-drill/bin
+    set -x PATH $PATH /opt/apache/apache-drill/bin
 end
 
 ## Python

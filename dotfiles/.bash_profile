@@ -137,45 +137,6 @@ if type rg > /dev/null 2>&1; then
 fi
 
 # SSH
-#case "${UID}" in
-#    *)
-#        [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
-#            PROMPT="%{^[[37m%}${HOST%%.*} ${PROMPT}"
-#        ;;
-#esac
-
-# Others
-export DOCKER_BUILDKIT=1
-if type nvim > /dev/null 2>&1; then
-    export SVN_EDITOR=nvim
-elif type vim > /dev/null 2&1; then
-    export SVN_EDITOR=vim
-elif type vi > /dev/null 2&1; then
-    export SVN_EDITOR=vi
-fi
-
-if [ -d /opt/hashicorp/packer ]; then
-    export PATH=$PATH:/opt/hashicorp/packer
-fi
-
-if [ -d /opt/apache/apache-drill/bin ]; then
-    export PATH=$PATH:/opt/apache/apache-drill/bin
-fi
-
-# direnv
-if type direnv > /dev/null 2>&1; then
-    eval "$(direnv hook bash)"
-fi
-
-# anyenv
-if [ -d /opt/anyenv/bin ]; then
-    export PATH=$PATH:/opt/anyenv
-fi
-if type anyenv > /dev/null 2>&1; then
-    eval "$(anyenv init -)"
-fi
-
-## SSH
 if [ -n "$SSH_CONNECTION" ]; then
     if [ -n "$DISPLAY" ] && [ -z "$TMUX" ] && [ -z "$WINDOW" ]; then
         if type fcitx > /dev/null 2>&1; then
@@ -187,6 +148,52 @@ if [ -n "$SSH_CONNECTION" ]; then
             fcitx -dr
         fi
     fi
+
+#    case "${EUID:-${UID}}" in
+#        *)
+#            PS1="\[\e[32m\]${PS1}\[\e[0m\]"
+#        ;;
+#    esac
+fi
+
+# Applications
+export DOCKER_BUILDKIT=1
+if type nvim > /dev/null 2>&1; then
+    export SVN_EDITOR=nvim
+elif type vim > /dev/null 2&1; then
+    export SVN_EDITOR=vim
+elif type vi > /dev/null 2&1; then
+    export SVN_EDITOR=vi
+fi
+
+## direnv
+if type direnv > /dev/null 2>&1; then
+    eval "$(direnv hook bash)"
+fi
+
+## anyenv
+if [ -d /opt/anyenv/bin ]; then
+    export PATH=$PATH:/opt/anyenv
+fi
+if type anyenv > /dev/null 2>&1; then
+    eval "$(anyenv init -)"
+fi
+
+## thefuck
+if type thefuck > /dev/null 2>&1; then
+    PYTHONWARNINGS=ignore
+    eval $(thefuck --alias)
+    PYTHONWARNINGS=default
+fi
+
+## HashiCorp Packer
+if [ -d /opt/hashicorp/packer ]; then
+    export PATH=$PATH:/opt/hashicorp/packer
+fi
+
+## Apache Drill
+if [ -d /opt/apache/apache-drill/bin ]; then
+    export PATH=$PATH:/opt/apache/apache-drill/bin
 fi
 
 ## Python
