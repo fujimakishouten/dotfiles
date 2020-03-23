@@ -98,7 +98,7 @@ end
 
 # SSH
 if test -n "$SSH_CONNECTION"
-    if test -n "$DISPLAY" and test -z "$TMUX" and test -z "$WINDOW"
+    if test -n "$DISPLAY"; and test -z "$TMUX"; and -z "$WINDOW"
         if type fcitx > /dev/null 2>&1
             set -x XMODIFIERS "@im=fcitx"
             set -x DefaultIMModule fcitx
