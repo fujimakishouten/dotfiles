@@ -1,11 +1,13 @@
 function fish_prompt
-    test $SSH_TTY
-    and printf (set_color red)$USER(set_color brwhite)'@'(set_color yellow)(prompt_hostname)' '
-    test $USER = 'root'
-    and echo (set_color red)"#"
+#    if test -n "$SSH_TTY"
+#        switch (id --user)
+#            case '*'
+#                printf "%s" (set_color green)
+#        end
+#    end
 
     # Main
-    printf "%s@%s:%s%% " $USER (prompt_hostname) (pwd)
+    printf "%s@%s:%s%% %s" $USER (prompt_hostname) (pwd) (set_color normal)
 end
 
 function fish_right_prompt
