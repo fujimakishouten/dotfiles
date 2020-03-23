@@ -34,6 +34,7 @@ setopt hist_ignore_all_dups
 setopt hist_ignore_dups
 setopt hist_no_store
 setopt hist_verify
+setopt list_types
 setopt magic_equal_subst
 setopt multios
 setopt no_beep
