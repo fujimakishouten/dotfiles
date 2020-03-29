@@ -13,6 +13,14 @@ if [ -d $HOME/.local/bin ]; then
 fi
 
 # zsh
+if [ -f $HOME/.zshrc.zwc ]; then
+    if [ $HOME/.zshrc -nt $HOME/.zshrc.zwc ]; then
+        zcompile $HOME/.zshrc
+    fi
+else
+    zcompile $HOME/.zshrc
+fi
+
 HISTFILE=$HOME/.zsh_history
 HISTSIZE=100000
 SAVEHIST=100000
