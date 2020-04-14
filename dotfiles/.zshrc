@@ -33,20 +33,27 @@ colors
 compinit -u
 
 setopt append_history
+setopt auto_param_keys
 setopt auto_pushd
 setopt complete_aliases
 setopt complete_in_word
 setopt correct
+setopt extended_glob
 setopt extended_history
+setopt glob
+setopt glob_complete
+setopt globdots
 setopt hist_ignore_all_dups
 setopt hist_ignore_dups
 setopt hist_no_store
+setopt hist_save_no_dups
 setopt hist_verify
 setopt list_types
 setopt magic_equal_subst
 setopt multios
 setopt no_beep
 setopt nolistbeep
+setopt magic_equal_subst
 setopt numeric_glob_sort
 setopt print_eight_bit
 setopt prompt_subst
@@ -55,6 +62,8 @@ setopt share_history
 
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*:default' menu select=1
+zstyle ':completion::complete:*' use-cache true
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' formats '[%b]'
 zstyle ':vcs_info:*' actionformats '[%b|%a]'
@@ -170,7 +179,6 @@ case "${OSTYPE}" in
         if [ -d $HOME/Library/Android/sdk ]; then
             export ANDROID_HOME=$HOME/Library/Android/sdk
         fi
-
         ;;
 esac
 
@@ -179,7 +187,7 @@ if type bat > /dev/null 2>&1; then
     alias cat='bat --plain --pager never --theme "Monokai Extended Light"'
 fi
 if type exa > /dev/null 2>&1; then
-    alias ls="exa"
+    alias ls="exa --group"
 fi
 if type rg > /dev/null 2>&1; then
     alias grep="rg"
