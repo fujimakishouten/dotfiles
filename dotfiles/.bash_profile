@@ -160,9 +160,9 @@ fi
 export DOCKER_BUILDKIT=1
 if type nvim > /dev/null 2>&1; then
     export SVN_EDITOR=nvim
-elif type vim > /dev/null 2&1; then
+elif type vim > /dev/null 2>&1; then
     export SVN_EDITOR=vim
-elif type vi > /dev/null 2&1; then
+elif type vi > /dev/null 2>&1; then
     export SVN_EDITOR=vi
 fi
 
