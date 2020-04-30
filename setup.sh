@@ -9,9 +9,6 @@ set -Ceu
 cd `dirname $0`
 DIRECTORY=`pwd`
 
-if [ ! -d $HOME/.config/nvim ]; then
-    mkdir -p $HOME/.config/nvim
-fi
 if [ ! -d $HOME/.config/fish ]; then
     mkdir -p $HOME/.config/fish
 fi
