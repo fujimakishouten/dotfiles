@@ -23,8 +23,9 @@ do
 done
 
 # neovim
-ln -ins $HOME/.vim $HOME/.config/nvim
 ln -ins $HOME/.vimrc $HOME/.config/nvim/init.vim
+ln -ins $HOME/.vim/colors $HOME/.config/nvim
+ln -ins $HOME/.vim/dict $HOME/.config/nvim
 
 # fish
 ln -ins $HOME/.fish/config.fish $HOME/.config/fish
