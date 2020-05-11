@@ -39,7 +39,7 @@ if type peco > /dev/null 2>&1; then
 
     function peco_history_selection {
 	LF=$'\\\x0A'
-        declare BUFFER=$(history | eval $TAC | awk '!a[$0]++' | peco | cut -d' ' -f4- | sed 's/\\n/'"$LF"'/g')
+        declare BUFFER=$(history | eval $TAC | awk '!a[$0]++' | peco | cut -d' ' -f5- | sed 's/\\n/'"$LF"'/g')
         READLINE_LINE="${BUFFER}"
         READLINE_POINT=${#BUFFER}
     }
