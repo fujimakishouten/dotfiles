@@ -329,6 +329,11 @@ if [ -d /opt/apple/swift/usr/bin ]; then
     export PATH=$PATH:/opt/apple/swift/usr/bin
 fi
 
+## Rust
+if [ -d $HOME/.cargo/bin ]; then
+    export PATH=$PATH:$HOME/.cargo/bin
+fi
+
 ## .NET Core
 if [ -d $HOME/dotnet ]; then
     export PATH=$PATH:$HOME/dotnet

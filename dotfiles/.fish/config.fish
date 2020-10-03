@@ -226,6 +226,11 @@ if test -d /opt/apple/swift/usr/bin
     set -x PATH $PATH /opt/apple/swift/usr/bin
 end
 
+## Rust
+if test -d $HOME/.cargo/bin
+    set -x PATH $PATH $HOME/.cargo/bin
+end
+
 ## .NET Core
 if test -d $HOME/dotnet
     set -x PATH $PATH $HOME/dotnet
