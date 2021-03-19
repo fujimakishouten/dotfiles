@@ -142,6 +142,10 @@ case "${OSTYPE}" in
     linux*)
         alias  ls="ls --color=auto"
 
+        if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+            . /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+        fi
+
         if [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
             . /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
         fi
@@ -164,6 +168,10 @@ case "${OSTYPE}" in
                 export MANPATH=/usr/local/opt/$DIRECTORY/libexec/gnuman:$MANPATH
             fi
         done
+
+        if [ -f /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+            . /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+        fi
 
         if [ -f /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
             . /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
