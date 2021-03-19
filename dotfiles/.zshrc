@@ -125,8 +125,6 @@ else
     alias  tmux="tmux -2"
 fi
 
-alias  vld="php -d vld.active=1 -d vld.execute=0 -f"
-
 if type nvim > /dev/null 2>&1; then
     alias vi="nvim"
     alias vim="nvim"
@@ -140,8 +138,6 @@ fi
 # OS type specifled
 case "${OSTYPE}" in
     linux*)
-        alias  ls="ls --color=auto"
-
         if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
             . /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
         fi
@@ -150,11 +146,25 @@ case "${OSTYPE}" in
             . /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
         fi
 
+        alias  ls="ls --color=auto"
+
+        if [ -f /usr/share/autojump/autojump.zsh ]; then
+            . /usr/share/autojump/autojump.zsh
+        fi
+
         if [ -d $HOME/Android/sdk ]; then
             export ANDROID_HOME=$HOME/Android/sdk
         fi
         ;;
     darwin*)
+        if [ -f /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+            . /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+        fi
+
+        if [ -f /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+            . /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+        fi
+
         alias  ls="ls -FG"
         for DIRECTORY in coreutils findutils gawk gnu-getopt gnu-sed gnu-tar gnu-time gnu-which grep moreutils
         do
@@ -169,12 +179,8 @@ case "${OSTYPE}" in
             fi
         done
 
-        if [ -f /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
-            . /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-        fi
-
-        if [ -f /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
-            . /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+        if [ -f /usr/local/share/autojump/autojump.zsh ]; then
+            . /usr/local/share/autojump/autojump.zsh
         fi
 
         if [ -d /sw/bin ]; then
@@ -313,16 +319,14 @@ if [ -d $HOME/.nodebrew/current/bin ]; then
 fi
 
 ## PHP
-if [ -d /opt/composer ]; then
-    export PATH=$PATH:/opt/composer
-fi
-if [ -d /opt/virtphp ]; then
-    export PATH=$PATH:/opt/virtphp
-fi
-if [ -d $HOME/.phpenv ]; then
-    export PHPENV_ROOT=$HOME/.phpenv
-    export PATH=$PATH:$PHPENV_ROOT/bin
-    eval "$(phpenv init -)"
+if type php > /dev/null 2>&1; then
+    alias  vld="php -d vld.active=1 -d vld.execute=0 -f"
+    if [ -d /opt/composer ]; then
+        export PATH=$PATH:/opt/composer
+    fi
+    if [ -d /opt/virtphp ]; then
+        export PATH=$PATH:/opt/virtphp
+    fi
 fi
 
 ## Kotlin

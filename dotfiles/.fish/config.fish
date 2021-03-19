@@ -40,8 +40,6 @@ else
     alias tmux "tmux -2"
 end
 
-alias vld "php -d vld.active=1 -d vld.execute=0 -f"
-
 if type nvim > /dev/null 2>&1
     alias vi "nvim"
     alias vim "nvim"
@@ -55,6 +53,10 @@ end
 switch (uname)
     case "Linux"
         alias ls "ls --color=auto"
+
+        if test -f /usr/share/autojump/autojump.fish ]; then
+          . /usr/share/autojump/autojump.fish
+        end
 
         if test -d $HOME/Android/sdk
             set -x ANDROID_HOME $HOME/Android/sdk
@@ -71,6 +73,10 @@ switch (uname)
             if test -d /usr/local/opt/$DIRECTORY/libexec/gnuman
                 set -x MANPATH /usr/local/opt/$DIRECTORY/libexec/gnuman $MANPATH
             end
+        end
+
+        if test -f /usr/share/autojump/autojump.fish
+          . /usr/share/autojump/autojump.fish
         end
 
         if test -d /sw/bin
@@ -90,7 +96,7 @@ if type bat > /dev/null 2>&1
     alias cat='bat --plain --pager never --theme "Monokai Extended Light"'
 end
 if type exa > /dev/null 2>&1
-    alias ls="exa"
+    alias ls="exa --group"
 end
 if type rg > /dev/null 2>&1
     alias grep="rg"
@@ -202,16 +208,14 @@ if test -d $HOME/.nodebrew/current/bin
 end
 
 ## PHP
-if test -d /opt/composer
-    set -x PATH $PATH /opt/composer
-end
-if test -d /opt/virtphp
-    set -x PATH $PATH /opt/virtphp
-end
-if test -d $HOME/.phpenv
-    set -x PHPENV_ROOT $HOME/.phpenv
-    set -x PATH $PATH $PHPENV_ROOT/bin
-    eval "(phpenv init -)"
+if type go > /dev/null 2>&1
+    alias vld "php -d vld.active=1 -d vld.execute=0 -f"
+    if test -d /opt/composer
+        set -x PATH $PATH /opt/composer
+    end
+    if test -d /opt/virtphp
+        set -x PATH $PATH /opt/virtphp
+    end
 end
 
 ## Kotlin

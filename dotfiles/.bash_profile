@@ -92,6 +92,10 @@ fi
 case "${OSTYPE}" in
     linux*)
         alias  ls="ls --color=auto"
+        if [ -f /usr/share/autojump/autojump.bash ]; then
+            . /usr/share/autojump/autojump.bash
+        fi
+
         if [ -d $HOME/Android/sdk ]; then
             export ANDROID_HOME=$HOME/Android/sdk
         fi
@@ -110,6 +114,10 @@ case "${OSTYPE}" in
                 export MANPATH=/usr/local/opt/$DIRECTORY/libexec/gnuman:$MANPATH
             fi
         done
+
+        if [ -f /usr/local/share/autojump/autojump.bash ]; then
+            . /usr/local/share/autojump/autojump.bash
+        fi
 
         if [ -d /sw/bin ]; then
             export PATH=/sw/bin:$PATH
@@ -130,7 +138,7 @@ if type bat > /dev/null 2>&1; then
     alias cat='bat --plain --pager never --theme "Monokai Extended Light"'
 fi
 if type exa > /dev/null 2>&1; then
-    alias ls="exa"
+    alias ls="exa --group"
 fi
 if type rg > /dev/null 2>&1; then
     alias grep="rg"
@@ -248,16 +256,14 @@ if [ -d $HOME/.nodebrew/current/bin ]; then
 fi
 
 ## PHP
-if [ -d /opt/composer ]; then
-    export PATH=$PATH:/opt/composer
-fi
-if [ -d /opt/virtphp ]; then
-    export PATH=$PATH:/opt/virtphp
-fi
-if [ -d $HOME/.phpenv ]; then
-    export PHPENV_ROOT=$HOME/.phpenv
-    export PATH=$PATH:$PHPENV_ROOT/bin
-    eval "$(phpenv init -)"
+if type php > /dev/null 2>&1; then
+    alias  vld="php -d vld.active=1 -d vld.execute=0 -f"
+    if [ -d /opt/composer ]; then
+        export PATH=$PATH:/opt/composer
+    fi
+    if [ -d /opt/virtphp ]; then
+        export PATH=$PATH:/opt/virtphp
+    fi
 fi
 
 ## Kotlin
@@ -282,6 +288,21 @@ if [ -d $HOME/dotnet ]; then
     export PATH=$PATH:$HOME/dotnet
 fi
 
+## Android
+if [ -n $ANDROID_HOME ]; then
+    export ANDROID_SDK_ROOT=$ANDROID_HOME
+
+    if [ -d $ANDROID_SDK_ROOT/tools ]; then
+        export PATH=$PATH:$ANDROID_SDK_ROOT/tools
+    fi
+    if [ -d $ANDROID_SDK_ROOT/platform-tools ]; then
+        export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
+    fi
+    if [ -d $ANDROID_SDK_ROOT/ndk ]; then
+        export NDK_ROOT=$ANDROID_SDK_ROOT/ndk/ndk
+    fi
+fi
+
 ## cocos2d-x
 if [ -d /opt/cocos2d-x/cocos2d-x ]; then
     # Add environment variable COCOS_CONSOLE_ROOT for cocos2d-x
@@ -302,4 +323,3 @@ if [ -d /opt/cocos2d-x/cocos2d-x ]; then
         export PATH=$ANT_ROOT:$PATH
     fi
 fi
-
