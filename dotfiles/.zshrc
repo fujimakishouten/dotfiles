@@ -29,6 +29,7 @@ autoload -Uz colors
 autoload -Uz compinit
 autoload -Uz vcs_info
 autoload -Uz zed
+autoload -Uz zmv
 colors
 compinit -u
 
