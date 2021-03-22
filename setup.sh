@@ -15,6 +15,12 @@ fi
 if [ ! -d $HOME/.config/fish ]; then
     mkdir -p $HOME/.config/fish
 fi
+if [ ! -d $HOME/.local/share/nvim/site ]; then
+    mkdir -p $HOME/.local/share/nvim/site
+fi
+if [ ! -d $HOME/.vim/pack ]; then
+    mkdir -p $HOME/.vim/pack
+fi
 
 for FILE in `find $DIRECTORY/dotfiles -maxdepth 1 | egrep -v ^"$DIRECTORY"/dotfiles$`
 do
@@ -26,6 +32,7 @@ done
 ln -ins $HOME/.vimrc $HOME/.config/nvim/init.vim
 ln -ins $HOME/.vim/colors $HOME/.config/nvim
 ln -ins $HOME/.vim/dict $HOME/.config/nvim
+ln -ins $HOME/.vim/pack $HOME/.local/share/nvim/site/pack
 
 # fish
 ln -ins $HOME/.fish/config.fish $HOME/.config/fish
