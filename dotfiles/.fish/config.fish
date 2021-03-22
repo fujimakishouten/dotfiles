@@ -79,6 +79,10 @@ switch (uname)
           . /usr/share/autojump/autojump.fish
         end
 
+        if test -d /usr/local/sbin
+            set -x PATH $PATH /usr/local/sbin
+        end
+
         if test -d /sw/bin
             set -x PATH /sw/bin $PATH
         end

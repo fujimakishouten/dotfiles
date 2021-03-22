@@ -183,6 +183,10 @@ case "${OSTYPE}" in
             . /usr/local/share/autojump/autojump.zsh
         fi
 
+        if [ -d /usr/local/sbin ]; then
+            export PATH=$PATH:/usr/local/sbin
+        fi
+
         if [ -d /sw/bin ]; then
             export PATH=/sw/bin:$PATH
         fi

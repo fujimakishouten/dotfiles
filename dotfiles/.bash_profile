@@ -76,8 +76,6 @@ else
     alias  tmux="tmux -2"
 fi
 
-alias  vld="php -d vld.active=1 -d vld.execute=0 -f"
-
 if type nvim > /dev/null 2>&1; then
     alias vi="nvim"
     alias vim="nvim"
@@ -117,6 +115,10 @@ case "${OSTYPE}" in
 
         if [ -f /usr/local/share/autojump/autojump.bash ]; then
             . /usr/local/share/autojump/autojump.bash
+        fi
+
+        if [ -d /usr/local/sbin ]; then
+            export PATH=$PATH:/usr/local/sbin
         fi
 
         if [ -d /sw/bin ]; then
