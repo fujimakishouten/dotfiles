@@ -112,10 +112,12 @@ fi
 
 # Aliases
 export LESS="--chop-long-lines --ignore-case --line-numbers --long-prompt --raw-control-chars"
+alias  ctop="ctop -i"
 alias  diff="colordiff"
 alias  egrep="egrep --color=auto"
 alias  emacs="emacs -nw"
 alias  fgrep="fgrep --color=auto"
+alias  glances="glances --theme-white"
 alias  grep="grep --color=auto"
 alias  mysql="mysql --auto-rehash"
 alias  screen="screen -U"
@@ -139,10 +141,15 @@ fi
 # OS type specifled
 case "${OSTYPE}" in
     linux*)
+        if [ -d /usr/share/zsh-completions ]; then
+            for FILE in $(find /usr/share/zsh-completions -type f -follow)
+            do
+                . "$FILE"
+            done
+        fi
         if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
             . /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
         fi
-
         if [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
             . /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
         fi
@@ -158,10 +165,15 @@ case "${OSTYPE}" in
         fi
         ;;
     darwin*)
+        if [ -d /usr/share/zsh-completions ]; then
+            for FILE in $(find /usr/local/share/zsh-completions -type f -follow)
+            do
+                . "$FILE"
+            done
+        fi
         if [ -f /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
             . /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
         fi
-
         if [ -f /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
             . /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
         fi
@@ -391,4 +403,3 @@ if [ -d /opt/cocos2d-x/cocos2d-x ]; then
         export PATH=$ANT_ROOT:$PATH
     fi
 fi
-

@@ -12,23 +12,6 @@ if [ -d $HOME/.local/bin ]; then
     export PATH=$PATH:$HOME/.local/bin
 fi
 
-# Bash
-if [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-elif [ -f /usr/local/etc/bash_completion ]; then
-    . /usr/local/etc/bash_completion
-fi
-
-# Prompt
-if type __git_ps1 > /dev/null 2>&1; then
-    precmd() {
-        RPROMPT=$(__git_ps1)
-        printf "%*s" $(($COLUMNS - ${#PROMPT} - 1)) $RPROMPT
-    }
-
-    PS1='$(tput sc; precmd; tput rc)\u@\H:$(pwd)% '
-fi
-
 # Key bindings
 if type peco > /dev/null 2>&1; then
     if type tac > /dev/null 2>&1; then
@@ -62,10 +45,12 @@ fi
 
 # Aliases
 export LESS="--chop-long-lines --ignore-case --line-numbers --long-prompt --raw-control-chars"
+alias  ctop="ctop -i"
 alias  diff="colordiff"
 alias  egrep="egrep --color=auto"
 alias  emacs="emacs -nw"
 alias  fgrep="fgrep --color=auto"
+alias  glances="glances --theme-white"
 alias  grep="grep --color=auto"
 alias  mysql="mysql --auto-rehash"
 alias  screen="screen -U"
@@ -73,7 +58,7 @@ alias  screen="screen -U"
 if type direnv > /dev/null 2>&1; then
     alias tmux="direnv exec / tmux"
 else
-    alias  tmux="tmux -2"
+    alias tmux="tmux -2"
 fi
 
 if type nvim > /dev/null 2>&1; then
@@ -90,6 +75,13 @@ fi
 case "${OSTYPE}" in
     linux*)
         alias  ls="ls --color=auto"
+        if [ /etc/bash_completion.d ]; then
+            for FILE in $(find /etc/bash_completion.d -type f -follow)
+            do
+                . "$FILE"
+            done
+        fi
+
         if [ -f /usr/share/autojump/autojump.bash ]; then
             . /usr/share/autojump/autojump.bash
         fi
@@ -99,6 +91,13 @@ case "${OSTYPE}" in
         fi
         ;;
     darwin*)
+        if [ /etc/bash_completion.d ]; then
+            for FILE in $(find /usr/local/etc/bash_completion.d -type f -follow)
+            do
+                . "$FILE"
+            done
+        fi
+
         alias  ls="ls -FG"
         for DIRECTORY in coreutils findutils gawk gnu-getopt gnu-sed gnu-tar gnu-time gnu-which grep moreutils
         do
@@ -134,6 +133,16 @@ case "${OSTYPE}" in
 
         ;;
 esac
+
+# Prompt
+if type __git_ps1 > /dev/null 2>&1; then
+    precmd() {
+        RPROMPT=$(__git_ps1)
+        printf "%*s" $(($COLUMNS - ${#PROMPT} - 1)) $RPROMPT
+    }
+    PS1='$(tput sc; precmd; tput rc)${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    #PS1='$(tput sc; precmd; tput rc)\u@\H:$(pwd)% '
+fi
 
 # Command line alternatives
 if type bat > /dev/null 2>&1; then

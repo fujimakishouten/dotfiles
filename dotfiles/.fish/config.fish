@@ -26,10 +26,12 @@ set -x __fish_git_prompt_color_branch $fish_color_normal
 
 # Alias
 set -x LESS "--raw-control-chars"
+alias ctop "ctop -i"
 alias diff "colordiff"
 alias egrep "egrep --color=auto"
 alias emacs "emacs -nw"
 alias fgrep "fgrep --color=auto"
+alias glances "glances --theme-white"
 alias grep "grep --color=auto"
 alias mysql "mysql --auto-rehash"
 alias screen "screen -U"
@@ -273,4 +275,3 @@ if test -d /opt/cocos2d-x/cocos2d-x
         set -x PATH $ANT_ROOT $PATH
     end
 end
-
