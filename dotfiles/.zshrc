@@ -214,7 +214,9 @@ case "${OSTYPE}" in
 esac
 
 # Command line alternatives
-if type bat > /dev/null 2>&1; then
+if type batcat > /dev/null 2>&1; then
+    alias cat='batcat --plain --pager never --theme "Monokai Extended Light"'
+elif type bat > /dev/null 2>&1; then
     alias cat='bat --plain --pager never --theme "Monokai Extended Light"'
 fi
 if type exa > /dev/null 2>&1; then
