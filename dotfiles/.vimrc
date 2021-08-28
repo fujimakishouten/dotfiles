@@ -75,13 +75,16 @@ set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']['.&ft.']'}
 syntax on
 
 " Enable true color.
-"set termguicolors
+set termguicolors
 
 " Set background color.
 set background=light
 
+" Ayu color scheme setting.
+let ayucolor="light"
+
 " Change color scheme.
-colorscheme hemisu
+colorscheme ayu
 
 " Enable search highlighting.
 set hlsearch
