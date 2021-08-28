@@ -9,17 +9,11 @@ set -Ceu
 cd `dirname $0`
 DIRECTORY=`pwd`
 
-if [ ! -d $HOME/.config/nvim ]; then
-    mkdir -p $HOME/.config/nvim
-fi
 if [ ! -d $HOME/.config/fish ]; then
     mkdir -p $HOME/.config/fish
 fi
 if [ ! -d $HOME/.local/share/nvim/site ]; then
     mkdir -p $HOME/.local/share/nvim/site
-fi
-if [ ! -d $HOME/.vim/pack ]; then
-    mkdir -p $HOME/.vim/pack
 fi
 
 for FILE in `find $DIRECTORY/dotfiles -maxdepth 1 | egrep -v ^"$DIRECTORY"/dotfiles$`
@@ -28,15 +22,16 @@ do
     ln -ins  $FILE $HOME/$BASENAME
 done
 
-# neovim
-ln -ins $HOME/.vimrc $HOME/.config/nvim/init.vim
-ln -ins $HOME/.vim/colors $HOME/.config/nvim
-ln -ins $HOME/.vim/dict $HOME/.config/nvim
-ln -ins $HOME/.vim/pack $HOME/.local/share/nvim/site/pack
-
 # fish
 ln -ins $HOME/.fish/config.fish $HOME/.config/fish
 ln -ins $HOME/.fish/functions $HOME/.config/fish
+
+# neovim
+ln -ins $HOME/.vim $HOME/.config/nvim
+ln -ins $HOME/.vim/pack $HOME/.local/share/nvim/site/pack
+
+# vim
+ln -ins $HOME/.vim/init.vim $HOME/.vimrc
 
 
 
