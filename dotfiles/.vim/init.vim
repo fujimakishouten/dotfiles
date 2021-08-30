@@ -75,7 +75,7 @@ set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']['.&ft.']'}
 syntax on
 
 " Enable true color.
-set termguicolors
+" set termguicolors
 
 " Set background color.
 set background=light
@@ -200,4 +200,7 @@ filetype plugin indent on
 
 " Remove trailing spaces on save.
 autocmd BufWritePre * :%s/\s\+$//e
+
+" Fix paste bug triggered by the above inoremaps
+set t_BE=
 
