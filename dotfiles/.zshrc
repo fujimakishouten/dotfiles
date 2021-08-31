@@ -179,7 +179,7 @@ case "${OSTYPE}" in
         fi
 
         alias  ls="ls -FG"
-        for DIRECTORY in coreutils findutils gawk gnu-getopt gnu-sed gnu-tar gnu-time gnu-which grep moreutils
+        for DIRECTORY in coreutils findutils gawk gnu-sed gnu-tar gnu-time gnu-which grep
         do
             if [ -d /usr/local/opt/$DIRECTORY/libexec/gnubin ]; then
                 export PATH=/usr/local/opt/$DIRECTORY/libexec/gnubin:$PATH
@@ -189,6 +189,12 @@ case "${OSTYPE}" in
             fi
             if [ -d /usr/local/opt/$DIRECTORY/libexec/gnuman ]; then
                 export MANPATH=/usr/local/opt/$DIRECTORY/libexec/gnuman:$MANPATH
+            fi
+        done
+        for DIRECTORY in gnu-getopt moreutils
+        do
+            if [ -d /usr/local/opt/$DIRECTORY/bin ]; then
+                export PATH=/usr/local/opt/$DIRECTORY/bin:$PATH
             fi
         done
 
