@@ -154,6 +154,10 @@ fi
 if type rg > /dev/null 2>&1; then
     alias grep="rg"
 fi
+if type hexyl > /dev/null 2>&1; then
+    alias hexdump="hexyl"
+    alias od="hexyl"
+fi
 
 # SSH
 if [ -n "$SSH_CONNECTION" ]; then

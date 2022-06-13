@@ -107,6 +107,10 @@ end
 if type rg > /dev/null 2>&1
     alias grep="rg"
 end
+if type hexyl > /dev/null 2>&1
+    alias hexdump="hexyl"
+    alias od="hexyl"
+end
 
 # SSH
 if test -n "$SSH_CONNECTION"
