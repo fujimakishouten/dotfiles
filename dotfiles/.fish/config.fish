@@ -92,6 +92,10 @@ switch (uname)
             set -x PATH /sw/sbin $PATH
         end
 
+        if test -f "$(brew --prefix asdf)/libexec/asdf.fish"
+            source "$(brew --prefix asdf)/libexec/asdf.fish"
+        end
+
         if test -d $HOME/Library/Android/sdk
             set -x ANDROID_HOME $HOME/Library/Android/sdk
         end

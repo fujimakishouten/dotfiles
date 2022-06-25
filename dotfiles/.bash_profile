@@ -127,6 +127,10 @@ case "${OSTYPE}" in
             export PATH=/sw/sbin:$PATH
         fi
 
+        if [ -f "$(brew --prefix asdf)/libexec/asdf.sh" ]; then
+            . "$(brew --prefix asdf)/libexec/asdf.sh"
+        fi
+
         if [ -d $HOME/Library/Android/sdk ]; then
             export ANDROID_HOME=$HOME/Library/Android/sdk
         fi
