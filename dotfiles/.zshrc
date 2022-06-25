@@ -279,6 +279,11 @@ if type anyenv > /dev/null 2>&1; then
     eval "$(anyenv init -)"
 fi
 
+## asdf
+if [ -f /opt/asdf/asdf.sh ]; then
+    . /opt/asdf/asdf.sh
+fi
+
 ## thefuck
 if type thefuck > /dev/null 2>&1; then
     PYTHONWARNINGS=ignore

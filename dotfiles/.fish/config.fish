@@ -149,6 +149,11 @@ if type anyenv > /dev/null 2>&1
     eval (anyenv init - fish | source)
 end
 
+## asdf
+if test -f /opt/asdf/asdf.fish
+    source /opt/asdf/asdf.fish
+end
+
 ## thefuck
 if type thefuck > /dev/null 2>&1
     set PYTHONWARNINGS ignore
