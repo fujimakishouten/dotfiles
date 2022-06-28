@@ -75,24 +75,29 @@ fi
 case "${OSTYPE}" in
     linux*)
         alias  ls="ls --color=auto"
-        if [ /etc/bash_completion.d ]; then
+        if [ "/etc/bash_completion.d" ]; then
             for FILE in $(find /etc/bash_completion.d -type f -follow)
             do
                 . "$FILE"
             done
         fi
 
-        if [ -f /usr/share/autojump/autojump.bash ]; then
-            . /usr/share/autojump/autojump.bash
+        if [ -f "/usr/share/autojump/autojump.bash" ]; then
+            . "/usr/share/autojump/autojump.bash"
         fi
 
-        if [ -d $HOME/Android/sdk ]; then
-            export ANDROID_HOME=$HOME/Android/sdk
+        if [ -d "$HOME/Android/sdk" ]; then
+            export ANDROID_HOME="$HOME/Android/sdk"
         fi
         ;;
     darwin*)
-        if [ /etc/bash_completion.d ]; then
-            for FILE in $(find /usr/local/etc/bash_completion.d -type f -follow)
+        BASE_PATH="/usr"
+        if type brew > /dev/null 2>&1; then
+            BASE_PATH="$(brew --prefix)"
+        fi
+
+        if [ "$BASE_PATH/etc/bash_completion.d" ]; then
+            for FILE in $(find "$BASE_PATH/etc/bash_completion.d" -type f -follow)
             do
                 . "$FILE"
             done
@@ -101,40 +106,43 @@ case "${OSTYPE}" in
         alias  ls="ls -FG"
         for DIRECTORY in coreutils findutils gawk gnu-getopt gnu-sed gnu-tar gnu-time gnu-which grep make moreutils
         do
-            if [ -d /usr/local/opt/$DIRECTORY/libexec/gnubin ]; then
-                export PATH=/usr/local/opt/$DIRECTORY/libexec/gnubin:$PATH
-                if [ $DIRECTORY = "coreutils" ]; then
+            if [ -d "$BASE_PATH/opt/$DIRECTORY/libexec/gnubin" ]; then
+                export PATH="$BASE_PATH/opt/$DIRECTORY/libexec/gnubin":$PATH
+                if [ "$DIRECTORY" = "coreutils" ]; then
                     alias ls="ls --color=auto"
                 fi
             fi
-            if [ -d /usr/local/opt/$DIRECTORY/libexec/gnuman ]; then
-                export MANPATH=/usr/local/opt/$DIRECTORY/libexec/gnuman:$MANPATH
+            if [ -d "$BASE_PATH/opt/$DIRECTORY/libexec/gnuman" ]; then
+                export MANPATH="$BASE_PATH/opt/$DIRECTORY/libexec/gnuman":$MANPATH
             fi
         done
 
-        if [ -f /usr/local/share/autojump/autojump.bash ]; then
-            . /usr/local/share/autojump/autojump.bash
+        if [ -f "$BASE_PATH/share/autojump/autojump.bash" ]; then
+            . "$BASE_PATH/share/autojump/autojump.bash"
         fi
 
-        if [ -d /usr/local/sbin ]; then
-            export PATH=$PATH:/usr/local/sbin
+        if [ -d "/usr/local/sbin" ]; then
+            export PATH=$PATH:"/usr/local/sbin"
         fi
 
-        if [ -d /sw/bin ]; then
-            export PATH=/sw/bin:$PATH
+        if [ -d "/sw/bin" ]; then
+            export PATH="/sw/bin":$PATH
         fi
-        if [ -d /sw/sbin ]; then
-            export PATH=/sw/sbin:$PATH
-        fi
-
-        if [ -f "$(brew --prefix asdf)/libexec/asdf.sh" ]; then
-            . "$(brew --prefix asdf)/libexec/asdf.sh"
+        if [ -d "/sw/sbin" ]; then
+            export PATH="/sw/sbin":$PATH
         fi
 
-        if [ -d $HOME/Library/Android/sdk ]; then
-            export ANDROID_HOME=$HOME/Library/Android/sdk
+        if [ -f "$BASE_PATH/opt/asdf/libexec/asdf.sh" ]; then
+            . "$BASE_PATH/opt/asdf/libexec/asdf.sh"
         fi
 
+        if [ -d "$BASE_PATH/opt/mysql-client/bin" ]; then
+            export PATH="$BASE_PATH/opt/mysql-client/bin":$PATH
+        fi
+
+        if [ -d "$HOME/Library/Android/sdk" ]; then
+            export ANDROID_HOME="$HOME/Library/Android/sdk"
+        fi
         ;;
 esac
 
@@ -144,8 +152,8 @@ if type __git_ps1 > /dev/null 2>&1; then
         RPROMPT=$(__git_ps1)
         printf "%*s" $(($COLUMNS - ${#PROMPT} - 1)) $RPROMPT
     }
-    PS1='$(tput sc; precmd; tput rc)${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-    #PS1='$(tput sc; precmd; tput rc)\u@\H:$(pwd)% '
+    #PS1='$(tput sc; precmd; tput rc)${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1='$(tput sc; precmd; tput rc)\u@\H:$(pwd)% '
 fi
 
 # Command line alternatives
@@ -153,7 +161,7 @@ if type bat > /dev/null 2>&1; then
     alias cat='bat --plain --pager never --theme "Monokai Extended Light"'
 fi
 if type exa > /dev/null 2>&1; then
-    alias ls="exa --group"
+    alias ls="exa --group --icons"
 fi
 if type rg > /dev/null 2>&1; then
     alias grep="rg"
@@ -347,3 +355,4 @@ if [ -d /opt/cocos2d-x/cocos2d-x ]; then
         export PATH=$ANT_ROOT:$PATH
     fi
 fi
+

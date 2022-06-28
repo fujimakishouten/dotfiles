@@ -56,48 +56,57 @@ switch (uname)
     case "Linux"
         alias ls "ls --color=auto"
 
-        if test -f /usr/share/autojump/autojump.fish
-          . /usr/share/autojump/autojump.fish
+        if test -f "/usr/share/autojump/autojump.fish"
+          . "/usr/share/autojump/autojump.fish"
         end
 
-        if test -d $HOME/Android/sdk
-            set -x ANDROID_HOME $HOME/Android/sdk
+        if test -d "$HOME/Android/sdk"
+            set -x ANDROID_HOME "$HOME/Android/sdk"
         end
     case "Darwin"
+        set BASE_PATH /usr
+        if type brew > /dev/null 2>&1
+            set BASE_PATH $(brew --prefix)
+        end
+
         alias ls "ls -FG"
         for DIRECTORY in coreutils findutils gawk gnu-getopt gnu-sed gnu-tar gnu-time gnu-which grep make moreutils
-            if test -d /usr/local/opt/$DIRECTORY/libexec/gnubin
-                set -x PATH /usr/local/opt/$DIRECTORY/libexec/gnubin $PATH
-                if test $DIRECTORY = "coreutils"
+            if test -d "$BASE_PATH/opt/$DIRECTORY/libexec/gnubin"
+                set -x PATH "$BASE_PATH/opt/$DIRECTORY/libexec/gnubin" $PATH
+                if test "$DIRECTORY" = "coreutils"
                     alias ls "ls --color=auto"
                 end
             end
-            if test -d /usr/local/opt/$DIRECTORY/libexec/gnuman
-                set -x MANPATH /usr/local/opt/$DIRECTORY/libexec/gnuman $MANPATH
+            if test -d "$BASE_PATH/opt/$DIRECTORY/libexec/gnuman"
+                set -x MANPATH "$BASE_PATH/opt/$DIRECTORY/libexec/gnuman" $MANPATH
             end
         end
 
-        if test -f /usr/share/autojump/autojump.fish
-          . /usr/share/autojump/autojump.fish
+        if test -f "$BASE_PATH/share/autojump/autojump.fish"
+          . "$BASE_PATH/share/autojump/autojump.fish"
         end
 
-        if test -d /usr/local/sbin
-            set -x PATH $PATH /usr/local/sbin
+        if test -d "/usr/local/sbin"
+            set -x PATH $PATH "/usr/local/sbin"
         end
 
-        if test -d /sw/bin
-            set -x PATH /sw/bin $PATH
+        if test -d "/sw/bin"
+            set -x PATH "/sw/bin" $PATH
         end
-        if test -d /sw/sbin
-            set -x PATH /sw/sbin $PATH
-        end
-
-        if test -f "$(brew --prefix asdf)/libexec/asdf.fish"
-            source "$(brew --prefix asdf)/libexec/asdf.fish"
+        if test -d "/sw/sbin"
+            set -x PATH "/sw/sbin" $PATH
         end
 
-        if test -d $HOME/Library/Android/sdk
-            set -x ANDROID_HOME $HOME/Library/Android/sdk
+        if test -f "$BASE_PATH/opt/asdf/libexec/asdf.fish"
+            source "$BASE_PATH/opt/asdf/libexec/asdf.fish"
+        end
+
+        if test -d "$BASE_PATH/opt/mysql-client/bin"
+            set -x PATH "$BASE_PATH/opt/mysql-client/bin" $PATH
+        end
+
+        if test -d "$HOME/Library/Android/sdk"
+            set -x ANDROID_HOME "$HOME/Library/Android/sdk"
         end
 end
 
@@ -106,7 +115,7 @@ if type bat > /dev/null 2>&1
     alias cat='bat --plain --pager never --theme "Monokai Extended Light"'
 end
 if type exa > /dev/null 2>&1
-    alias ls="exa --group"
+    alias ls="exa --group --icons"
 end
 if type rg > /dev/null 2>&1
     alias grep="rg"
@@ -288,3 +297,4 @@ if test -d /opt/cocos2d-x/cocos2d-x
         set -x PATH $ANT_ROOT $PATH
     end
 end
+

@@ -66,8 +66,8 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*:default' menu select=1
 zstyle ':completion::complete:*' use-cache true
 zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:*' formats '[%b]'
-zstyle ':vcs_info:*' actionformats '[%b|%a]'
+zstyle ':vcs_info:*' formats '(%b)'
+zstyle ':vcs_info:*' actionformats '(%b|%a)'
 
 # Prompt
 precmd() {
@@ -139,86 +139,91 @@ if type rlwrap > /dev/null 2>&1; then
 fi
 
 # OS type specifled
+
+
 case "${OSTYPE}" in
     linux*)
-        if [ -d /usr/share/zsh-completions ]; then
-            for FILE in $(find /usr/share/zsh-completions -type f -follow)
-            do
-                . "$FILE"
-            done
+        if [ -d "/usr/share/zsh-completions" ]; then
+            export FPATH=$FPATH:"/usr/share/zsh-completions"
         fi
-        if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
-            . /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+        if [ -f "/usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
+            . "/usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
         fi
-        if [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
-            . /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+        if [ -f "/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
+            . "/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
         fi
 
         alias  ls="ls --color=auto"
 
-        if [ -f /usr/share/autojump/autojump.zsh ]; then
-            . /usr/share/autojump/autojump.zsh
+        if [ -f "/usr/share/autojump/autojump.zsh" ]; then
+            . "/usr/share/autojump/autojump.zsh"
         fi
 
-        if [ -d $HOME/Android/sdk ]; then
-            export ANDROID_HOME=$HOME/Android/sdk
+        if [ -d "$HOME/Android/sdk" ]; then
+            export ANDROID_HOME="$HOME/Android/sdk"
         fi
         ;;
     darwin*)
-        if [ -d /usr/share/zsh-completions ]; then
-            for FILE in $(find /usr/local/share/zsh-completions -type f -follow)
-            do
-                . "$FILE"
-            done
+        BASE_PATH="/usr"
+        if type brew > /dev/null 2>&1; then
+            BASE_PATH="$(brew --prefix)"
         fi
-        if [ -f /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
-            . /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+        if [ -d "$BASE_PATH/share/zsh-completions" ]; then
+            export FPATH=$FPATH:"$BASE_PATH/share/zsh-completions"
         fi
-        if [ -f /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
-            . /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+        if [ -f "$BASE_PATH/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
+            . "$BASE_PATH/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+        fi
+        if [ -f "$BASE_PATH/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
+            . "$BASE_PATH/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
         fi
 
         alias  ls="ls -FG"
         for DIRECTORY in coreutils findutils gawk gnu-getopt gnu-sed gnu-tar gnu-time gnu-which grep make moreutils
         do
-            if [ -d /usr/local/opt/$DIRECTORY/libexec/gnubin ]; then
-                export PATH=/usr/local/opt/$DIRECTORY/libexec/gnubin:$PATH
-                if [ $DIRECTORY = "coreutils" ]; then
+            if [ -d "$BASE_PATH/opt/$DIRECTORY/libexec/gnubin" ]; then
+                export PATH="$BASE_PATH/opt/$DIRECTORY/libexec/gnubin":$PATH
+                if [ "$DIRECTORY" = "coreutils" ]; then
                     alias ls="ls --color=auto"
                 fi
             fi
-            if [ -d /usr/local/opt/$DIRECTORY/libexec/gnuman ]; then
-                export MANPATH=/usr/local/opt/$DIRECTORY/libexec/gnuman:$MANPATH
+            if [ -d "$BASE_PATH/opt/$DIRECTORY/libexec/gnuman" ]; then
+                export MANPATH="$BASE_PATH/opt/$DIRECTORY/libexec/gnuman":$MANPATH
             fi
         done
         for DIRECTORY in gnu-getopt moreutils
         do
-            if [ -d /usr/local/opt/$DIRECTORY/bin ]; then
-                export PATH=/usr/local/opt/$DIRECTORY/bin:$PATH
+            if [ -d "$BASE_PATH/opt/$DIRECTORY/bin" ]; then
+                export PATH="$BASE_PATH/opt/$DIRECTORY/bin":$PATH
             fi
         done
 
-        if [ -f /usr/local/share/autojump/autojump.zsh ]; then
-            . /usr/local/share/autojump/autojump.zsh
+        if [ -f "$BASE_PATH/share/autojump/autojump.zsh" ]; then
+            . "$BASE_PATH/share/autojump/autojump.zsh"
         fi
 
-        if [ -d /usr/local/sbin ]; then
-            export PATH=$PATH:/usr/local/sbin
+        if [ -d "/usr/local/sbin" ]; then
+            export PATH=$PATH:"/usr/local/sbin"
         fi
 
-        if [ -d /sw/bin ]; then
-            export PATH=/sw/bin:$PATH
+        if [ -d "/sw/bin" ]; then
+            export PATH="/sw/bin":$PATH
         fi
-        if [ -d /sw/sbin ]; then
-            export PATH=/sw/sbin:$PATH
-        fi
-
-        if [ -f "$(brew --prefix asdf)/libexec/asdf.sh" ]; then
-            . "$(brew --prefix asdf)/libexec/asdf.sh"
+        if [ -d "/sw/sbin" ]; then
+            export PATH="/sw/sbin":$PATH
         fi
 
-        if [ -d $HOME/Library/Android/sdk ]; then
-            export ANDROID_HOME=$HOME/Library/Android/sdk
+        if [ -f "$BASE_PATH/opt/asdf/libexec/asdf.sh" ]; then
+            . "$BASE_PATH/opt/asdf/libexec/asdf.sh"
+        fi
+
+        if [ -d "$BASE_PATH/opt/mysql-client/bin" ]; then
+            export PATH="$BASE_PATH/opt/mysql-client/bin":$PATH
+        fi
+
+        if [ -d "$HOME/Library/Android/sdk" ]; then
+            export ANDROID_HOME="$HOME/Library/Android/sdk"
         fi
         ;;
 esac
@@ -230,7 +235,7 @@ elif type bat > /dev/null 2>&1; then
     alias cat='bat --plain --pager never --theme "Monokai Extended Light"'
 fi
 if type exa > /dev/null 2>&1; then
-    alias ls="exa --group"
+    alias ls="exa --group --icons"
 fi
 if type rg > /dev/null 2>&1; then
     alias grep="rg"
@@ -424,3 +429,4 @@ if [ -d /opt/cocos2d-x/cocos2d-x ]; then
         export PATH=$ANT_ROOT:$PATH
     fi
 fi
+
