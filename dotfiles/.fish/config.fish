@@ -15,8 +15,9 @@ end
 ## Key bindings
 if type peco > /dev/null 2>&1
     function fish_user_key_bindings
-        bind \cr peco_select_history
-        bind \cs pet-select
+        bind \cr peco_select
+        bind \cp pet_select
+        bind \cg ghq_select
     end
 end
 

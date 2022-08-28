@@ -20,13 +20,13 @@ if type peco > /dev/null 2>&1; then
         TAC="tail -r"
     fi
 
-    function peco_history_selection {
+    function peco_select {
 	LF=$'\\\x0A'
         declare BUFFER=$(history | eval $TAC | awk '!a[$0]++' | peco | cut -d' ' -f5- | sed 's/\\n/'"$LF"'/g')
         READLINE_LINE="${BUFFER}"
         READLINE_POINT=${#BUFFER}
     }
-    bind -x '"\C-r": peco_history_selection'
+    bind -x '"\C-r": peco_select'
 fi
 
 if type pet > /dev/null 2>&1; then
@@ -35,12 +35,22 @@ if type pet > /dev/null 2>&1; then
         /bin/sh -c "pet new $(printf %q "$PREV")"
     }
 
-    function pet-select() {
+    function pet_select() {
         BUFFER=$(pet search --query "$READLINE_LINE")
         READLINE_LINE=$BUFFER
         READLINE_POINT=${#BUFFER}
     }
-    bind -x '"\C-p": pet-select'
+    bind -x '"\C-p": pet_select'
+fi
+
+if type ghq > /dev/null 2>&1 && type peco > /dev/null 2>&1; then
+    function ghq_select() {
+        BUFFER=$(ghq list --full-path | peco --query "$LBUFFER")
+        if [ -n "$BUFFER" ]; then
+            command cd "$BUFFER"
+        fi
+    }
+    bind -x '"\C-g": ghq_select'
 fi
 
 # Aliases

@@ -85,14 +85,14 @@ if type peco > /dev/null 2>&1; then
         TAC="tail -r"
     fi
 
-    function peco_history_selection() {
+    function peco_select() {
         LF=$'\\\x0A'
         BUFFER=$(history -n 1 | eval $TAC | awk '!a[$0]++' | peco | sed 's/\\n/'$LF'/g')
         CURSOR=$#BUFFER
         zle reset-prompt
     }
-    zle -N peco_history_selection
-    bindkey '^R' peco_history_selection
+    zle -N peco_select
+    bindkey '^R' peco_select
 fi
 
 if type pet > /dev/null 2>&1; then
@@ -108,6 +108,19 @@ if type pet > /dev/null 2>&1; then
     }
     zle -N pet_select
     bindkey '^P' pet_select
+fi
+
+if type ghq > /dev/null 2>&1 && type peco > /dev/null 2>&1; then
+    function ghq_select() {
+        GHQ_SOURCE=$(ghq list --full-path | peco --query "$LBUFFER")
+        if [ -n "$GHQ_SOURCE" ]; then
+            BUFFER='cd "'$GHQ_SOURCE'"'
+            zle accept-line
+        fi
+        zle -R -c
+    }
+    zle -N ghq_select
+    bindkey '^G' ghq_select
 fi
 
 # Aliases
