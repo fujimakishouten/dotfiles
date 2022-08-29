@@ -65,6 +65,10 @@ switch (uname)
             set -x ANDROID_HOME "$HOME/Android/sdk"
         end
     case "Darwin"
+        if test -f "/opt/homebrew/bin/brew"
+            eval (/opt/homebrew/bin/brew shellenv)
+        end
+
         set BASE_PATH /usr
         if type brew > /dev/null 2>&1
             set BASE_PATH $(brew --prefix)
