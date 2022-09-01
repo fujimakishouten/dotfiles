@@ -118,7 +118,7 @@ case "${OSTYPE}" in
         fi
 
         alias  ls="ls -FG"
-        for DIRECTORY in coreutils findutils gawk gnu-getopt gnu-sed gnu-tar gnu-time gnu-which grep make moreutils
+        for DIRECTORY in coreutils findutils gawk gnu-sed gnu-tar gnu-time gnu-which grep make moreutils
         do
             if [ -d "$BASE_PATH/opt/$DIRECTORY/libexec/gnubin" ]; then
                 export PATH="$BASE_PATH/opt/$DIRECTORY/libexec/gnubin":$PATH
@@ -128,6 +128,12 @@ case "${OSTYPE}" in
             fi
             if [ -d "$BASE_PATH/opt/$DIRECTORY/libexec/gnuman" ]; then
                 export MANPATH="$BASE_PATH/opt/$DIRECTORY/libexec/gnuman":$MANPATH
+            fi
+        done
+		for DIRECTORY in gnu-getopt whois
+        do
+            if [ -d "$BASE_PATH/opt/$DIRECTORY/bin" ]; then
+                export PATH="$BASE_PATH/opt/$DIRECTORY/bin":$PATH
             fi
         done
 

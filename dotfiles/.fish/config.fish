@@ -86,6 +86,11 @@ switch (uname)
                 set -x MANPATH "$BASE_PATH/opt/$DIRECTORY/libexec/gnuman" $MANPATH
             end
         end
+        for DIRECTORY in gnu-getopt whois
+            if test -d "$BASE_PATH/opt/$DIRECTORY/bin"
+                set -x PATH "$BASE_PATH/opt/$DIRECTORY/bin" $PATH
+            end
+        end
 
         if test -f "$BASE_PATH/share/autojump/autojump.fish"
           . "$BASE_PATH/share/autojump/autojump.fish"
