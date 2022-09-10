@@ -177,7 +177,12 @@ if test -f /opt/asdf/asdf.fish
     source /opt/asdf/asdf.fish
 end
 
-## thefuck
+## ghq
+if test -d /opt/ghq/ghq
+    set -x PATH $PATH /opt/ghq/ghq
+end
+
+### thefuck
 if type thefuck > /dev/null 2>&1
     set PYTHONWARNINGS ignore
     eval (thefuck --alias | source)

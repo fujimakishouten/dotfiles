@@ -239,6 +239,11 @@ if [ -f /opt/asdf/asdf.sh ]; then
     . /opt/asdf/asdf.sh
 fi
 
+## ghq
+if [ -d /opt/ghq/ghq ]; then
+    export PATH=$PATH:/opt/ghq/ghq
+fi
+
 ## thefuck
 if type thefuck > /dev/null 2>&1; then
     PYTHONWARNINGS=ignore
