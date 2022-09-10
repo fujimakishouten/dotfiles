@@ -194,6 +194,11 @@ if test -d /opt/apache/apache-drill/bin
     set -x PATH $PATH /opt/apache/apache-drill/bin
 end
 
+## Real-ESRGAN
+if test -d /opt/realesrgan/realesrgan
+    set -x PATH $PATH /opt/realesrgan/realesrgan
+end
+
 ## Python
 set -x PYTHONUTF8 1
 set -x PYTHONDEVMODE 1

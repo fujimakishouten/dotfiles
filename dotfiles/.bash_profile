@@ -256,6 +256,11 @@ if [ -d /opt/apache/apache-drill/bin ]; then
     export PATH=$PATH:/opt/apache/apache-drill/bin
 fi
 
+## Real-ESRGAN
+if [ -d /opt/realesrgan/realesrgan ]; then
+    export PATH=$PATH:/opt/realesrgan/realesrgan
+fi
+
 ## Python
 export PYTHONUTF8=1
 export PYTHONDEVMODE=1
