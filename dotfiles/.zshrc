@@ -239,6 +239,10 @@ case "${OSTYPE}" in
             export PATH="$BASE_PATH/opt/mysql-client/bin":$PATH
         fi
 
+        if [ -d "$HOME/.docker/bin" ]; then
+            export PATH="$PATH:$HOME/.docker/bin"
+        fi
+
         if [ -d "$HOME/Library/Android/sdk" ]; then
             export ANDROID_HOME="$HOME/Library/Android/sdk"
         fi
