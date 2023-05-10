@@ -33,6 +33,7 @@ autoload -Uz zmv
 colors
 compinit -u
 
+setopt aliases
 setopt append_history
 setopt auto_param_keys
 setopt auto_pushd

@@ -12,6 +12,9 @@ if [ -d $HOME/.local/bin ]; then
     export PATH=$PATH:$HOME/.local/bin
 fi
 
+# bash
+shopt -s expand_aliases
+
 # Key bindings
 if type peco > /dev/null 2>&1; then
     if type tac > /dev/null 2>&1; then
