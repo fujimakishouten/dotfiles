@@ -124,6 +124,9 @@ end
 if type bat > /dev/null 2>&1
     alias cat='bat --plain --pager never --theme "Monokai Extended Light"'
 end
+if type delta > /dev/null 2>&1
+    alias delta='delta --line-numbers --navigate --side-by-side --syntax-theme "OneHalfLight"'
+end
 if type exa > /dev/null 2>&1
     alias ls="exa --group --icons"
 end
@@ -133,6 +136,10 @@ end
 if type hexyl > /dev/null 2>&1
     alias hexdump="hexyl"
     alias od="hexyl"
+end
+if type zoxide > /dev/null 2>&1
+    zoxide init fish | source
+    alias cd="z"
 end
 
 # SSH

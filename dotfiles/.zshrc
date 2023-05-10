@@ -256,6 +256,9 @@ if type batcat > /dev/null 2>&1; then
 elif type bat > /dev/null 2>&1; then
     alias cat='bat --plain --pager never --theme "Monokai Extended Light"'
 fi
+if type delta > /dev/null 2>&1; then
+    alias delta='delta --line-numbers --navigate --side-by-side --syntax-theme "OneHalfLight"'
+fi
 if type exa > /dev/null 2>&1; then
     alias ls="exa --group --icons"
 fi
@@ -265,6 +268,10 @@ fi
 if type hexyl > /dev/null 2>&1; then
     alias hexdump="hexyl"
     alias od="hexyl"
+fi
+if type zoxide > /dev/null 2>&1; then
+    eval "$(zoxide init zsh)"
+    alias cd="z"
 fi
 
 # SSH
