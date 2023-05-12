@@ -130,12 +130,15 @@ end
 if type exa > /dev/null 2>&1
     alias ls="exa --group --icons"
 end
-if type rg > /dev/null 2>&1
-    alias grep="rg"
-end
 if type hexyl > /dev/null 2>&1
     alias hexdump="hexyl"
     alias od="hexyl"
+end
+if type rg > /dev/null 2>&1
+    alias grep="rg"
+end
+if type tuc > /dev/null 2>&1
+    alias cut="tuc"
 end
 if type zoxide > /dev/null 2>&1
     zoxide init fish | source

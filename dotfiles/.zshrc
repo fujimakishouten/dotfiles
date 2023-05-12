@@ -262,12 +262,15 @@ fi
 if type exa > /dev/null 2>&1; then
     alias ls="exa --group --icons"
 fi
-if type rg > /dev/null 2>&1; then
-    alias grep="rg"
-fi
 if type hexyl > /dev/null 2>&1; then
     alias hexdump="hexyl"
     alias od="hexyl"
+fi
+if type rg > /dev/null 2>&1; then
+    alias grep="rg"
+fi
+if type tuc > /dev/null 2>&1; then
+    alias cut="tuc"
 fi
 if type zoxide > /dev/null 2>&1; then
     eval "$(zoxide init zsh)"
