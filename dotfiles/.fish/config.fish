@@ -137,6 +137,12 @@ end
 if type rg > /dev/null 2>&1
     alias grep="rg"
 end
+if type runiq > /dev/null 2>&1
+    alias uniq="runiq"
+end
+if type sp > /dev/null 2>&1
+    alias sort="sp"
+end
 if type tuc > /dev/null 2>&1
     alias cut="tuc"
 end

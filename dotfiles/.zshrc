@@ -269,6 +269,12 @@ fi
 if type rg > /dev/null 2>&1; then
     alias grep="rg"
 fi
+if type runiq > /dev/null 2>&1; then
+    alias uniq="runiq"
+fi
+if type sp > /dev/null 2>&1; then
+    alias sort="sp"
+fi
 if type tuc > /dev/null 2>&1; then
     alias cut="tuc"
 fi
