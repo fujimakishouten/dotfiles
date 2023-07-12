@@ -206,10 +206,11 @@ if type tuc > /dev/null 2>&1; then
     alias cut="cut"
 fi
 if type zoxide > /dev/null 2>&1; then
-    eval "$(zoxide init bash)"
+    if ! (type z > /dev/null 2>&1); then
+        eval "$(zoxide init bash)"
+    fi
     alias cd="z"
 fi
-
 
 # SSH
 if [ -n "$SSH_CONNECTION" ]; then
@@ -243,7 +244,9 @@ fi
 
 ## direnv
 if type direnv > /dev/null 2>&1; then
-    eval "$(direnv hook bash)"
+    if ! (type _direnv_hook > /dev/null 2>&1); then
+        eval "$(direnv hook bash)"
+    fi
 fi
 
 ## anyenv
@@ -266,9 +269,11 @@ fi
 
 ## thefuck
 if type thefuck > /dev/null 2>&1; then
-    PYTHONWARNINGS=ignore
-    eval $(thefuck --alias)
-    PYTHONWARNINGS=default
+    if ! (type _direnv_hook > /dev/null 2>&1); then
+        PYTHONWARNINGS=ignore
+        eval $(thefuck --alias)
+        PYTHONWARNINGS=default
+    fi
 fi
 
 ## HashiCorp Packer

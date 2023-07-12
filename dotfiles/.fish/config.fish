@@ -147,7 +147,9 @@ if type tuc > /dev/null 2>&1
     alias cut="tuc"
 end
 if type zoxide > /dev/null 2>&1
-    zoxide init fish | source
+    if ! type z > /dev/null 2>&1
+        zoxide init fish | source
+    end
     alias cd="z"
 end
 
@@ -177,7 +179,9 @@ end
 
 ## direnv
 if type direnv > /dev/null 2>&1
-    eval (direnv hook fish)
+    if ! type _direnv_hook > /dev/null 2>&1
+        eval (direnv hook fish)
+    end
 end
 
 ## anyenv
@@ -200,9 +204,11 @@ end
 
 ### thefuck
 if type thefuck > /dev/null 2>&1
-    set PYTHONWARNINGS ignore
-    eval (thefuck --alias | source)
-    set PYTHONWARNINGS default
+    if type fuck > /dev/null 2>&1
+        set PYTHONWARNINGS ignore
+        eval (thefuck --alias | source)
+        set PYTHONWARNINGS default
+    end
 end
 
 ## HashiCorp Packer
