@@ -109,6 +109,7 @@ switch (uname)
 
         if test -f "$BASE_PATH/opt/asdf/libexec/asdf.fish"
             source "$BASE_PATH/opt/asdf/libexec/asdf.fish"
+            set -x ASDF_GOLANG_MOD_VERSION_ENABLED true
         end
 
         if test -d "$BASE_PATH/opt/mysql-client/bin"
@@ -195,6 +196,7 @@ end
 ## asdf
 if test -f /opt/asdf/asdf.fish
     source /opt/asdf/asdf.fish
+    set -x ASDF_GOLANG_MOD_VERSION_ENABLED true
 end
 
 ## ghq

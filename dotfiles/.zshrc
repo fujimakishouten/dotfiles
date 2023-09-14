@@ -234,6 +234,7 @@ case "${OSTYPE}" in
 
         if [ -f "$BASE_PATH/opt/asdf/libexec/asdf.sh" ]; then
             . "$BASE_PATH/opt/asdf/libexec/asdf.sh"
+            export ASDF_GOLANG_MOD_VERSION_ENABLED=true
         fi
 
         if [ -d "$BASE_PATH/opt/mysql-client/bin" ]; then
@@ -333,6 +334,7 @@ fi
 ## asdf
 if [ -f /opt/asdf/asdf.sh ]; then
     . /opt/asdf/asdf.sh
+    export ASDF_GOLANG_MOD_VERSION_ENABLED=true
 fi
 
 ## ghq
