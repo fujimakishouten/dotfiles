@@ -88,7 +88,8 @@ if type peco > /dev/null 2>&1; then
 
     function peco_select() {
         LF=$'\\\x0A'
-        BUFFER=$(history -n 1 | eval $TAC | awk '!a[$0]++' | peco | sed 's/\\n/'$LF'/g')
+        #BUFFER=$(history -n 1 | eval $TAC | awk '!a[$0]++' | peco | sed 's/\\n/'$LF'/g')
+        BUFFER=$(history -n 1 | awk '!a[$0]++' | fzf --ansi --cycle --header-first --no-separator --no-sort --tac --color light --layout reverse --tabstop 4 | sed 's/\\n/'$LF'/g')
         CURSOR=$#BUFFER
         zle reset-prompt
     }
