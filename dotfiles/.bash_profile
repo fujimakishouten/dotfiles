@@ -187,8 +187,8 @@ fi
 if type delta > /dev/null 2>&1; then
     alias delta='delta --line-numbers --navigate --side-by-side --syntax-theme "OneHalfLight"'
 fi
-if type exa > /dev/null 2>&1; then
-    alias ls="exa --group --icons"
+if type eza > /dev/null 2>&1; then
+    alias ls="eza --group --icons"
 fi
 if type hexyl > /dev/null 2>&1; then
     alias hexdump="hexyl"

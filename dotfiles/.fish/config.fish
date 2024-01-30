@@ -128,8 +128,8 @@ end
 if type delta > /dev/null 2>&1
     alias delta='delta --line-numbers --navigate --side-by-side --syntax-theme "OneHalfLight"'
 end
-if type exa > /dev/null 2>&1
-    alias ls="exa --group --icons"
+if type eza > /dev/null 2>&1
+    alias ls="eza --group --icons"
 end
 if type hexyl > /dev/null 2>&1
     alias hexdump="hexyl"
