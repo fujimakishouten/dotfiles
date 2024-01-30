@@ -42,20 +42,24 @@ if type pet > /dev/null 2>&1; then
 
     function pet_select() {
         BUFFER=$(pet search --query "$READLINE_LINE")
-        READLINE_LINE=$BUFFER
+        READLINE_LINE=${BUFFER}
         READLINE_POINT=${#BUFFER}
     }
     bind -x '"\C-p": pet_select'
 fi
 
-if type ghq > /dev/null 2>&1 && type peco > /dev/null 2>&1; then
-    function ghq_select() {
-        BUFFER=$(ghq list --full-path | peco --query "$LBUFFER")
-        if [ -n "$BUFFER" ]; then
-            command cd "$BUFFER"
-        fi
-    }
-    bind -x '"\C-g": ghq_select'
+if type ghq > /dev/null 2>&1; then
+    if type fzf > /dev/null 2>&1; then
+        function ghq_select() {
+            GHQ_SOURCE=$(ghq list --full-path | fzf --ansi --cycle --header-first --no-separator --no-sort --color "light" --layout "reverse" --scheme "history" --tabstop 4 --query "$LEADLINE_LINE" --tiebreak "begin")
+            if [ "$GHQ_SOURCE" ]; then
+                BUFFER='cd "'$GHQ_SOURCE'"'
+                READLINE_LINE="${BUFFER}"
+                READLINE_POINT="${#BUFFER}"
+            fi
+        }
+        bind -x '"\C-g": ghq_select'
+    fi
 fi
 
 # Aliases

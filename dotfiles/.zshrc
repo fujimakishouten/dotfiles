@@ -104,23 +104,25 @@ if type pet > /dev/null 2>&1; then
     function pet_select() {
         BUFFER=$(pet search --query "$LBUFFER")
         CURSOR=$#BUFFER
-        zle redisplay
+        zle reset-prompt
     }
     zle -N pet_select
     bindkey '^P' pet_select
 fi
 
-if type ghq > /dev/null 2>&1 && type peco > /dev/null 2>&1; then
-    function ghq_select() {
-        GHQ_SOURCE=$(ghq list --full-path | peco --query "$LBUFFER")
-        if [ -n "$GHQ_SOURCE" ]; then
-            BUFFER='cd "'$GHQ_SOURCE'"'
-            zle accept-line
-        fi
-        zle -R -c
-    }
-    zle -N ghq_select
-    bindkey '^G' ghq_select
+if type ghq > /dev/null 2>&1; then
+    if type fzf > /dev/null 2>&1; then
+        function ghq_select() {
+            GHQ_SOURCE=$(ghq list --full-path | fzf --ansi --cycle --header-first --no-separator --no-sort --color "light" --layout "reverse" --scheme "history" --tabstop 4 --query "$LBUFFER" --tiebreak "begin")
+            if [ "$GHQ_SOURCE" ]; then
+                BUFFER='cd "'$GHQ_SOURCE'"'
+                CURSOR=$#BUFFER
+            fi
+            zle reset-prompt
+        }
+        zle -N ghq_select
+        bindkey '^G' ghq_select
+    fi
 fi
 
 # Aliases
