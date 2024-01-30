@@ -16,20 +16,19 @@ fi
 shopt -s expand_aliases
 
 # Key bindings
-if type peco > /dev/null 2>&1; then
+if type fzf > /dev/null 2>&1; then
     if type tac > /dev/null 2>&1; then
         TAC="tac"
     else
         TAC="tail -r"
     fi
 
-    function peco_select {
-	LF=$'\\\x0A'
-        declare BUFFER=$(history | eval $TAC | awk '!a[$0]++' | peco | cut -d' ' -f5- | sed 's/\\n/'"$LF"'/g')
+    function fzf_select {
+        declare BUFFER=$(history | sed 's/^ *[0-9]* *//' | $TAC | fzf --ansi --cycle --header-first --no-separator --no-sort --color "light" --layout "reverse" --scheme "history" --tabstop 4 --query "$LEADLINE_LINE" --tiebreak "begin")
         READLINE_LINE="${BUFFER}"
         READLINE_POINT=${#BUFFER}
     }
-    bind -x '"\C-r": peco_select'
+    bind -x '"\C-r": fzf_select'
 fi
 
 if type pet > /dev/null 2>&1; then
@@ -88,11 +87,8 @@ fi
 case "${OSTYPE}" in
     linux*)
         alias  ls="ls --color=auto"
-        if [ "/etc/bash_completion.d" ]; then
-            for FILE in $(find /etc/bash_completion.d -type f -follow)
-            do
-                . "$FILE"
-            done
+        if [ -f "/usr/share/bash-completion/bash_completion" ]; then
+            .  "/usr/share/bash-completion/bash_completion"
         fi
 
         if [ -f "/usr/share/autojump/autojump.bash" ]; then
@@ -113,11 +109,8 @@ case "${OSTYPE}" in
             BASE_PATH="$(brew --prefix)"
         fi
 
-        if [ "$BASE_PATH/etc/bash_completion.d" ]; then
-            for FILE in $(find "$BASE_PATH/etc/bash_completion.d" -type f -follow)
-            do
-                . "$FILE"
-            done
+        if [ -f "$BASE_PATH/etc/bash_completion" ]; then
+            . "$BASE_PATH/etc/bash_completion"
         fi
 
         alias  ls="ls -FG"

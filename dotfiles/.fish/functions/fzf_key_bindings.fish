@@ -1,0 +1,1 @@
+/Users/kazuma.fujimaki/.fzf/shell/key-bindings.fish

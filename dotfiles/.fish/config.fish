@@ -13,9 +13,9 @@ if test -d $HOME/.local/bin
 end
 
 ## Key bindings
-if type peco > /dev/null 2>&1
+if type fzf > /dev/null 2>&1
     function fish_user_key_bindings
-        bind \cr peco_select
+        bind \cr fzf_select
         bind \cp pet_select
         bind \cg ghq_select
     end
@@ -276,7 +276,7 @@ if test -d $HOME/.nvm
     . $HOME/.nvm/nvm.sh
 end
 if test -d $HOME/.nodebrew/current/bin
-    PATH $PATH $HOME/.nodebrew/current/bin
+    set -x PATH $PATH $HOME/.nodebrew/current/bin
 end
 
 ## PHP

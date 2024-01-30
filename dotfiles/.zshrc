@@ -79,22 +79,20 @@ precmd() {
 PROMPT="%n@%M:%/%% "
 
 # Key bindings
-if type peco > /dev/null 2>&1; then
+if type fzf > /dev/null 2>&1; then
     if type tac > /dev/null 2>&1; then
         TAC="tac"
     else
         TAC="tail -r"
     fi
 
-    function peco_select() {
-        LF=$'\\\x0A'
-        #BUFFER=$(history -n 1 | eval $TAC | awk '!a[$0]++' | peco | sed 's/\\n/'$LF'/g')
-        BUFFER=$(history -n 1 | awk '!a[$0]++' | fzf --ansi --cycle --header-first --no-separator --no-sort --tac --color light --layout reverse --tabstop 4 | sed 's/\\n/'$LF'/g')
+    function fzf_select() {
+        BUFFER=$(history -n 1 | $TAC | fzf --ansi --cycle --header-first --no-separator --no-sort --color "light" --layout "reverse" --scheme "history" --tabstop 4 --query "$LBUFFER" --tiebreak "begin")
         CURSOR=$#BUFFER
         zle reset-prompt
     }
-    zle -N peco_select
-    bindkey '^R' peco_select
+    zle -N fzf_select
+    bindkey '^R' fzf_select
 fi
 
 if type pet > /dev/null 2>&1; then
