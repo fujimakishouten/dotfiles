@@ -13,6 +13,9 @@ if [ -d $HOME/.local/bin ]; then
 fi
 
 # bash
+HISTSIZE=100000
+HISTCONTROL=erasedups
+
 shopt -s expand_aliases
 
 # Key bindings
