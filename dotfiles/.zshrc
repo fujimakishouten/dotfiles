@@ -136,12 +136,7 @@ alias  glances="glances --theme-white"
 alias  grep="grep --color=auto"
 alias  mysql="mysql --auto-rehash"
 alias  screen="screen -U"
-
-if type direnv > /dev/null 2>&1; then
-    alias tmux="direnv exec / tmux"
-else
-    alias  tmux="tmux -2"
-fi
+alias  tmux="tmux -2"
 
 if type nvim > /dev/null 2>&1; then
     alias vi="nvim"
@@ -154,8 +149,6 @@ if type rlwrap > /dev/null 2>&1; then
 fi
 
 # OS type specifled
-
-
 case "${OSTYPE}" in
     linux*)
         if [ -d "/usr/share/zsh-completions" ]; then
@@ -321,6 +314,7 @@ fi
 if type direnv > /dev/null 2>&1; then
     if ! (type _direnv_hook > /dev/null 2>&1); then
         eval "$(direnv hook zsh)"
+        alias tmux="direnv exec / tmux"
     fi
 fi
 
@@ -345,10 +339,9 @@ fi
 
 ## thefuck
 if type thefuck > /dev/null 2>&1; then
-    if ! (type _direnv_hook > /dev/null 2>&1); then
-        PYTHONWARNINGS=ignore
-        eval $(thefuck --alias)
-        PYTHONWARNINGS=default
+    if ! type fuck > /dev/null 2>&1; then
+        PYTHONWARNINGS=ignore eval $(thefuck --alias)
+        alias fuck="PYTHONWARNINGS=ignore fuck"
     fi
 fi
 

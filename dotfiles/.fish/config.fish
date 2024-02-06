@@ -36,12 +36,7 @@ alias glances "glances --theme-white"
 alias grep "grep --color=auto"
 alias mysql "mysql --auto-rehash"
 alias screen "screen -U"
-
-if type direnv > /dev/null 2>&1
-     alias tmux "direnv exec / tmux"
-else
-    alias tmux "tmux -2"
-end
+alias tmux "tmux -2"
 
 if type nvim > /dev/null 2>&1
     alias vi "nvim"
@@ -182,6 +177,7 @@ end
 if type direnv > /dev/null 2>&1
     if ! type _direnv_hook > /dev/null 2>&1
         eval (direnv hook fish)
+        alias tmux "direnv exec / tmux"
     end
 end
 
@@ -207,9 +203,8 @@ end
 ### thefuck
 if type thefuck > /dev/null 2>&1
     if type fuck > /dev/null 2>&1
-        set PYTHONWARNINGS ignore
-        eval (thefuck --alias | source)
-        set PYTHONWARNINGS default
+        PYTHONWARNINGS=ignore eval (thefuck --alias | source)
+        alias fuck "PYTHONWARNINGS=ignore fuck"
     end
 end
 
