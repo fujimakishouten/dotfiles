@@ -339,9 +339,10 @@ fi
 
 ## thefuck
 if type thefuck > /dev/null 2>&1; then
-    if ! type fuck > /dev/null 2>&1; then
-        PYTHONWARNINGS=ignore eval $(thefuck --alias)
-        alias fuck="PYTHONWARNINGS=ignore fuck"
+    if [ "$(command -v fuck | cut -c 1)" = "/" ]; then
+        PYTHONWARNINGS=ignore
+        eval $(thefuck --alias)
+        PYTHONWARNINGS=default
     fi
 fi
 

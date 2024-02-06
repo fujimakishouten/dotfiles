@@ -202,9 +202,8 @@ end
 
 ### thefuck
 if type thefuck > /dev/null 2>&1
-    if type fuck > /dev/null 2>&1
+    if test (command -v fuck | cut -c 1) = "/"
         PYTHONWARNINGS=ignore eval (thefuck --alias | source)
-        alias fuck "PYTHONWARNINGS=ignore fuck"
     end
 end
 
