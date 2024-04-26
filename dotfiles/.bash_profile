@@ -209,24 +209,24 @@ if type zoxide > /dev/null 2>&1; then
 fi
 
 # SSH
-if [ -n "$SSH_CONNECTION" ]; then
-    if [ -n "$DISPLAY" ] && [ -z "$TMUX" ] && [ -z "$WINDOW" ]; then
-        if type fcitx > /dev/null 2>&1; then
-            export XMODIFIERS="@im=fcitx"
-            export DefaultIMModule=fcitx
-            export GTK_IM_MODULE=fcitx
-            export QT_IM_MODULE=fcitx
-
-            fcitx -dr
-        fi
-    fi
-
+#if [ -n "$SSH_CONNECTION" ]; then
+#    if [ -n "$DISPLAY" ] && [ -z "$TMUX" ] && [ -z "$WINDOW" ]; then
+#        if type fcitx > /dev/null 2>&1; then
+#            export XMODIFIERS="@im=fcitx"
+#            export DefaultIMModule=fcitx
+#            export GTK_IM_MODULE=fcitx
+#            export QT_IM_MODULE=fcitx
+#
+#            fcitx -dr
+#        fi
+#    fi
+#
 #    case "${EUID:-${UID}}" in
 #        *)
 #            PS1="\[\e[32m\]${PS1}\[\e[0m\]"
 #        ;;
 #    esac
-fi
+#fi
 
 # Applications
 export DOCKER_BUILDKIT=1
@@ -302,7 +302,7 @@ fi
 ## Go
 if type go > /dev/null 2>&1; then
     if [ -z "$GOPATH" ]; then
-        export GOPATH=$HOME/go
+        export GOPATH=$HOME/.go
     fi
 
     if [ ! -d $GOPATH ]; then

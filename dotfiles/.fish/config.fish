@@ -150,18 +150,18 @@ if type zoxide > /dev/null 2>&1
 end
 
 # SSH
-if test -n "$SSH_CONNECTION"
-    if test -n "$DISPLAY"; and test -z "$TMUX"; and -z "$WINDOW"
-        if type fcitx > /dev/null 2>&1
-            set -x XMODIFIERS "@im=fcitx"
-            set -x DefaultIMModule fcitx
-            set -x GTK_IM_MODULE fcitx
-            set -x QT_IM_MODULE fcitx
-
-            fcitx -dr
-        end
-    end
-end
+#if test -n "$SSH_CONNECTION"
+#    if test -n "$DISPLAY"; and test -z "$TMUX"; and -z "$WINDOW"
+#        if type fcitx > /dev/null 2>&1
+#            set -x XMODIFIERS "@im=fcitx"
+#            set -x DefaultIMModule fcitx
+#            set -x GTK_IM_MODULE fcitx
+#            set -x QT_IM_MODULE fcitx
+#
+#            fcitx -dr
+#        end
+#    end
+#end
 
 # Applications
 set -x DOCKER_BUILDKIT 1
@@ -235,7 +235,7 @@ end
 ## Go
 if type go > /dev/null 2>&1
     if test -z $GOPATH
-        set -x GOPATH $HOME/go
+        set -x GOPATH $HOME/.go
     end
 
     if not test -d $GOPATH
