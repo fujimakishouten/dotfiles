@@ -351,7 +351,7 @@ if [ -d "$HOME/.nodebrew/current/bin" ]; then
 fi
 if [ -d "$HOME/.volta/bin" ]; then
     export VOLTA_HOME="$HOME/.volta"
-    export PATH="$VOLTA_HOME/bin"
+    export PATH="$PATH:$VOLTA_HOME/bin"
 fi
 
 ## PHP

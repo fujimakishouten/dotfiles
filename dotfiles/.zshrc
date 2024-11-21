@@ -207,6 +207,7 @@ case "${OSTYPE}" in
                 export MANPATH="$BASE_PATH/opt/$DIRECTORY/libexec/gnuman:$MANPATH"
             fi
         done
+
         for DIRECTORY in curl gnu-getopt whois
         do
             if [ -d "$BASE_PATH/opt/$DIRECTORY/bin" ]; then
@@ -417,7 +418,7 @@ if [ -d "$HOME/.nodebrew/current/bin" ]; then
 fi
 if [ -d "$HOME/.volta/bin" ]; then
     export VOLTA_HOME="$HOME/.volta"
-    export PATH="$VOLTA_HOME/bin"
+    export PATH="$PATH:$VOLTA_HOME/bin"
 fi
 
 ## PHP
