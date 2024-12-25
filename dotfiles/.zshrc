@@ -337,6 +337,11 @@ if type asdf > /dev/null 2>&1; then
     export ASDF_GOLANG_MOD_VERSION_ENABLED=true
 fi
 
+## mise
+if type mise > /dev/null 2>&1; then
+    eval "$(/opt/homebrew/bin/mise activate zsh)"
+fi
+
 ## ghq
 if [ -d "/opt/ghq/ghq" ]; then
     export PATH="$PATH:/opt/ghq/ghq"

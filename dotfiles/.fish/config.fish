@@ -56,7 +56,7 @@ switch (uname)
         alias ls "ls --color=auto"
 
         if test -f "/usr/share/autojump/autojump.fish"
-          source "/usr/share/autojump/autojump.fish"
+            source "/usr/share/autojump/autojump.fish"
         end
 
         if test -d "$HOME/Android/sdk"
@@ -91,7 +91,7 @@ switch (uname)
         end
 
         if test -f "$BASE_PATH/share/autojump/autojump.fish"
-          source "$BASE_PATH/share/autojump/autojump.fish"
+            source "$BASE_PATH/share/autojump/autojump.fish"
         end
 
         if test -d "/usr/local/sbin"
@@ -121,7 +121,7 @@ end
 # Command line alternatives
 if type batcat > /dev/null 2>&1
     alias cat='batcat --plain --pager never --theme "Monokai Extended Light"'
-else if bat > /dev/null 2>&1
+else if type bat > /dev/null 2>&1
     alias cat='bat --plain --pager never --theme "Monokai Extended Light"'
 end
 if type delta > /dev/null 2>&1
@@ -199,6 +199,11 @@ if test -f "/opt/asdf/asdf.fish"
 end
 if type asdf > /dev/null 2>&1
     set -x ASDF_GOLANG_MOD_VERSION_ENABLED true
+end
+
+## mise
+if type mise > /dev/null 2>&1
+    mise activate fish | source
 end
 
 ## ghq
@@ -326,7 +331,7 @@ if test -n "$ANDROID_HOME"
         set -x PATH "$PATH" "$ANDROID_SDK_ROOT/platform-tools"
     end
     if test -d "$ANDROID_SDK_ROOT/ndk"
-        set -x "NDK_ROOT $ANDROID_SDK_ROOT/ndk"
+        set -x NDK_ROOT "$ANDROID_SDK_ROOT/ndk"
     end
 end
 
@@ -345,4 +350,3 @@ if test -d "/opt/cocos2d-x/cocos2d-x"
         set -x PATH "$ANT_ROOT" "$PATH"
     end
 end
-
