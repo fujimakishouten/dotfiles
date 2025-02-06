@@ -336,7 +336,7 @@ fi
 
 ## mise
 if type mise > /dev/null 2>&1; then
-    eval "$(/opt/homebrew/bin/mise activate zsh)"
+    eval "$(mise activate zsh)"
 fi
 
 ## ghq
