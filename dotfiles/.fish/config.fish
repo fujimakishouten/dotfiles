@@ -105,10 +105,6 @@ switch (uname)
             set -x PATH "/sw/sbin" "$PATH"
         end
 
-        if test -f "$BASE_PATH/opt/asdf/libexec/asdf.fish"
-            source "$BASE_PATH/opt/asdf/libexec/asdf.fish"
-        end
-
         if test -d "$BASE_PATH/opt/mysql-client/bin"
             set -x PATH "$BASE_PATH/opt/mysql-client/bin" "$PATH"
         end
@@ -198,6 +194,11 @@ if test -f "/opt/asdf/asdf.fish"
     source "/opt/asdf/asdf.fish"
 end
 if type asdf > /dev/null 2>&1
+    if test -z "$ASDF_DATA_DIR"
+        set -x --prepend PATH "$HOME/.asdf/shims"
+    else
+        set -x --prepend PATH "$ASDF_DATA_DIR/shims"
+    end
     set -x ASDF_GOLANG_MOD_VERSION_ENABLED true
 end
 

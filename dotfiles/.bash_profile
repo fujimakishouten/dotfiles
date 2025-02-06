@@ -153,10 +153,6 @@ case "${OSTYPE}" in
             export PATH="/sw/sbin:$PATH"
         fi
 
-        if [ -f "$BASE_PATH/opt/asdf/libexec/asdf.sh" ]; then
-            . "$BASE_PATH/opt/asdf/libexec/asdf.sh"
-        fi
-
         if [ -d "$BASE_PATH/opt/mysql-client/bin" ]; then
             export PATH="$BASE_PATH/opt/mysql-client/bin:$PATH"
         fi
@@ -191,7 +187,7 @@ if type delta > /dev/null 2>&1; then
     alias delta='delta --line-numbers --navigate --side-by-side --syntax-theme "OneHalfLight"'
 fi
 if type eza > /dev/null 2>&1; then
-    alias ls="eza --group --icons"
+    alias ls="eza --group --icons"c
 fi
 if type hexyl > /dev/null 2>&1; then
     alias hexdump="hexyl"
@@ -267,6 +263,7 @@ if [ -f "/opt/asdf/asdf.sh" ]; then
     . "/opt/asdf/asdf.sh"
 fi
 if type asdf > /dev/null 2>&1; then
+    export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
     export ASDF_GOLANG_MOD_VERSION_ENABLED=true
 fi
 
@@ -427,4 +424,3 @@ if [ -d "/opt/cocos2d-x/cocos2d-x" ]; then
         export PATH="$ANT_ROOT:$PATH"
     fi
 fi
-
