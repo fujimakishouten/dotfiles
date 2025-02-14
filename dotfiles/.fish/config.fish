@@ -190,8 +190,8 @@ if type anyenv > /dev/null 2>&1
 end
 
 ## asdf
-if test -f "/opt/asdf/asdf.fish"
-    source "/opt/asdf/asdf.fish"
+if test -f "/opt/asdf/asdf"
+    set -x PATH "$PATH" "/opt/asdf"
 end
 if type asdf > /dev/null 2>&1
     if test -z "$ASDF_DATA_DIR"

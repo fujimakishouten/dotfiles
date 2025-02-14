@@ -259,8 +259,8 @@ if type anyenv > /dev/null 2>&1; then
 fi
 
 ## asdf
-if [ -f "/opt/asdf/asdf.sh" ]; then
-    . "/opt/asdf/asdf.sh"
+if [ -f "/opt/asdf/asdf" ]; then
+    export PATH="/opt/asdf:$PATH"
 fi
 if type asdf > /dev/null 2>&1; then
     export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
