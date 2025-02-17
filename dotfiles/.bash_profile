@@ -68,7 +68,6 @@ fi
 # Aliases
 export LESS="--chop-long-lines --ignore-case --line-numbers --long-prompt --raw-control-chars"
 alias  ctop="ctop -i"
-alias  diff="colordiff"
 alias  egrep="egrep --color=auto"
 alias  emacs="emacs -nw"
 alias  fgrep="fgrep --color=auto"
@@ -185,6 +184,9 @@ elif type bat > /dev/null 2>&1; then
 fi
 if type delta > /dev/null 2>&1; then
     alias delta='delta --line-numbers --navigate --side-by-side --syntax-theme "OneHalfLight"'
+fi
+if type colordiff > /dev/null 2>&1; then
+    alias  diff="colordiff"
 fi
 if type eza > /dev/null 2>&1; then
     alias ls="eza --group --icons"c

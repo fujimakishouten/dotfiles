@@ -31,7 +31,6 @@ set -x __fish_git_prompt_color_branch "$fish_color_normal"
 # Alias
 set -x LESS "--raw-control-chars"
 alias ctop "ctop -i"
-alias diff "colordiff"
 alias egrep "egrep --color=auto"
 alias emacs "emacs -nw"
 alias fgrep "fgrep --color=auto"
@@ -122,6 +121,9 @@ else if type bat > /dev/null 2>&1
 end
 if type delta > /dev/null 2>&1
     alias delta='delta --line-numbers --navigate --side-by-side --syntax-theme "OneHalfLight"'
+end
+if type colordiff > /dev/null 2>&1
+    alias diff "colordiff"
 end
 if type eza > /dev/null 2>&1
     alias ls="eza --group --icons"
