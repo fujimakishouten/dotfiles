@@ -80,8 +80,9 @@ config.colors = {
 
 ----------------------------------------------------------------------
 
-config.dpi = 72
+config.dpi = 96
 if string.find(wezterm.target_triple, "darwin") ~= nil then
+    config.dpi = 72
     config.dpi_by_screen = {
         ["Built-in Display"] = 144
     }

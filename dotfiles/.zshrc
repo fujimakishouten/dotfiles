@@ -153,6 +153,8 @@ fi
 # OS type specifled
 case "${OSTYPE}" in
     linux*)
+        alias  ls="ls --color=auto"
+
         if [ -d "/usr/share/zsh-completions" ]; then
             export FPATH=$FPATH:"/usr/share/zsh-completions"
         fi
@@ -163,8 +165,6 @@ case "${OSTYPE}" in
             . "/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
         fi
 
-        alias  ls="ls --color=auto"
-
         if [ -f "/usr/share/autojump/autojump.zsh" ]; then
             . "/usr/share/autojump/autojump.zsh"
         fi
@@ -174,6 +174,8 @@ case "${OSTYPE}" in
         fi
         ;;
     darwin*)
+        alias  ls="ls -FG"
+
         if [ -f "/opt/homebrew/bin/brew" ]; then
             eval "$(/opt/homebrew/bin/brew shellenv)"
         fi
@@ -193,7 +195,6 @@ case "${OSTYPE}" in
             . "$BASE_PATH/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
         fi
 
-        alias  ls="ls -FG"
         for DIRECTORY in coreutils findutils gawk gnu-sed gnu-tar gnu-time gnu-which grep make moreutils
         do
             if [ -d "$BASE_PATH/opt/$DIRECTORY/libexec/gnubin" ]; then

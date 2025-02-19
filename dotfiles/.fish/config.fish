@@ -62,6 +62,8 @@ switch (uname)
             set -x ANDROID_HOME "$HOME/Android/sdk"
         end
     case "Darwin"
+        alias ls "ls -FG"
+
         if test -f "/opt/homebrew/bin/brew"
             eval (/opt/homebrew/bin/brew shellenv)
         end
@@ -71,7 +73,6 @@ switch (uname)
             set BASE_PATH "$(brew --prefix)"
         end
 
-        alias ls "ls -FG"
         for DIRECTORY in coreutils findutils gawk gnu-getopt gnu-sed gnu-tar gnu-time gnu-which grep make moreutils
             if test -d "$BASE_PATH/opt/$DIRECTORY/libexec/gnubin"
                 set -x PATH "$BASE_PATH/opt/$DIRECTORY/libexec/gnubin" "$PATH"

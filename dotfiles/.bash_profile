@@ -91,6 +91,7 @@ fi
 case "${OSTYPE}" in
     linux*)
         alias  ls="ls --color=auto"
+
         if [ -f "/usr/share/bash-completion/bash_completion" ]; then
             .  "/usr/share/bash-completion/bash_completion"
         fi
@@ -104,6 +105,8 @@ case "${OSTYPE}" in
         fi
         ;;
     darwin*)
+        alias  ls="ls -FG"
+
         if [ -f "/opt/homebrew/bin/brew" ]; then
             eval "$(/opt/homebrew/bin/brew shellenv)"
         fi
@@ -117,7 +120,6 @@ case "${OSTYPE}" in
             . "$BASE_PATH/etc/bash_completion"
         fi
 
-        alias  ls="ls -FG"
         for DIRECTORY in coreutils findutils gawk gnu-sed gnu-tar gnu-time gnu-which grep make moreutils
         do
             if [ -d "$BASE_PATH/opt/$DIRECTORY/libexec/gnubin" ]; then
