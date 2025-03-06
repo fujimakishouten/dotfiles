@@ -23,7 +23,7 @@ local rows = 32
 
 config.automatically_reload_config = true
 
-config.exit_behavior = "CloseOnCleanExit"
+config.exit_behavior = "Close"
 config.use_fancy_tab_bar = true
 config.use_ime = true
 -- config.use_resize_increments = false
@@ -34,6 +34,8 @@ config.initial_rows = rows
 
 config.enable_scroll_bar = true
 config.scrollback_lines = 20000
+
+config.default_cwd = os.getenv("HOME")
 
 config.font = wezterm.font("VL NF")
 config.font_size = 18.0
@@ -80,12 +82,13 @@ config.colors = {
 
 ----------------------------------------------------------------------
 
-config.dpi = 96
 if string.find(wezterm.target_triple, "darwin") ~= nil then
     config.dpi = 72
     config.dpi_by_screen = {
         ["Built-in Display"] = 144
     }
+else
+    config.dpi = 96
 end
 
 ----------------------------------------------------------------------
