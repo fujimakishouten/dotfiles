@@ -9,7 +9,7 @@ if [ -d "/usr/games" ]; then
     export PATH="$PATH:/usr/games"
 fi
 if [ -d "$HOME/bin" ]; then
-    export PATH="$HOME/bin:$PATH"
+    export PATH="$PATH:$HOME/bin"
 fi
 if [ -d "$HOME/.local/bin" ]; then
     export PATH="$PATH:$HOME/.local/bin"
@@ -338,7 +338,10 @@ if [ -d "$HOME/.opam/opam-init" ]; then
 fi
 
 ## JavaScript
-if [ -d /opt/nave/bin ]; then
+if [ -d "$HOME/.bun/bin" ]; then
+    export PATH="$PATH:$HOME/.bun/bin"
+fi
+if [ -d "/opt/nave/bin" ]; then
     export PATH="$PATH:/opt/nave/bin"
     export NODE_LATEST_VERSION=$(nave latest)
 

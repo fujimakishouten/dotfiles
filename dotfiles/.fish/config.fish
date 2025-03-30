@@ -185,7 +185,7 @@ if type direnv > /dev/null 2>&1
 end
 
 ## anyenv
-if test -d /opt/anyenv/bin
+if test -d "/opt/anyenv/bin"
     set -x PATH $PATH /opt/anyenv/bin
 end
 if type anyenv > /dev/null 2>&1
@@ -270,6 +270,9 @@ if test -d "$HOME/.opam/opam-init"
 end
 
 ## JavaScript
+if test -d "$HOME/.bun/bin"
+    set -x PATH "$PATH" "$HOME/.bun/bin"
+end
 if test -d "/opt/nave/bin"
     set -x PATH "$PATH" "/opt/nave/bin"
     set -x NODE_LATEST_VERSION (nave latest)

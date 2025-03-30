@@ -273,6 +273,9 @@ if not (which go | is-empty) {
 ## OCaml
 
 ## JavaScript
+if ($"($env.HOME)/.bun/bin" | path exists) {
+    $env.PATH = ($env.PATH | append $"($env.HOME)/.bun/bin")
+}
 if ("/opt/nave/bin" | path exists) {
     $env.PATH = ($env.PATH | append "/opt/nave/bin")
     $env.NODE_LATEST_VERSION = (nave latest)
