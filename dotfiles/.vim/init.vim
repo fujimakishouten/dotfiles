@@ -158,9 +158,6 @@ set nobomb
 " Disable create backup.
 set nobackup
 
-" Initial directory of save file dialog.
-set browsedir=buffer
-
 " Remind cursor position on exit.
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
 
@@ -179,7 +176,6 @@ autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 
 " File encode.
 set encoding=utf-8
-set termencoding=utf-8
 set fileencoding=utf-8
 set fileencodings=ucs-bom,utf-8,utf-16,utf-16le,utf-32,utf31-le,ucs2,ucs2-le,ucs-4,ucs-4le,iso-2022-jp,euc-jp,cp932,latin1
 
