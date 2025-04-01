@@ -56,31 +56,8 @@ def vcs_info [] {
         ""
     }
 }
-
 $env.PROMPT_COMMAND = { prompt }
 $env.PROMPT_COMMAND_RIGHT = { vcs_info }
-
-# Alias
-$env.LESS = "--chop-long-lines --ignore-case --line-numbers --long-prompt --raw-control-chars"
-alias  ctop = ctop -i
-alias  egrep = egrep --color=auto
-alias  emacs = emacs -nw
-alias  fgrep = fgrep --color=auto
-alias  glances = glances --theme-white
-alias  grep = grep --color=auto
-alias  mysql = mysql --auto-rehash
-alias  screen = screen -U
-alias  tmux = tmux -2
-
-if not (which nvim | is-empty) {
-    alias vi = nvim
-    alias vim = nvim
-    alias view = nvim -R
-}
-
-if not (which rlwrap | is-empty) {
-    alias ocaml = rlwrap ocaml
-}
 
 # OS type specifled
 $env.OSTYPE = (sys host | get name)
@@ -91,7 +68,12 @@ if $env.OSTYPE =~ "linux" {
 }
 if $env.OSTYPE =~ "Darwin" {
     if ("/opt/homebrew/bin/brew" | path exists) {
-        load-env (/opt/homebrew/bin/brew shellenv | lines | parse "{name}={value}" | transpose -r)
+        let brew_env = (/opt/homebrew/bin/brew shellenv | lines |
+            filter {|line| $line =~ "^export " } |
+            str replace "export " "" |
+            parse "{name}={value}" |
+            update value {|r| $r.value | str replace --all '"' "" })
+        load-env ($brew_env | transpose -r -d)
     }
 
     $env.BASE_PATH = "/usr"
@@ -129,6 +111,10 @@ if $env.OSTYPE =~ "Darwin" {
         $env.PATH = ($env.PATH | append $"($env.BASE_PATH)/opt/mysql-client/bin" | uniq)
     }
 
+    if ($"($env.BASE_PATH)/opt/libpq/bin" | path exists) {
+        $env.PATH = ($env.PATH | append $"($env.BASE_PATH)/opt/libpq/bin" | uniq)
+    }
+
     if ($"($env.HOME)/.docker/bin" | path exists) {
         $env.PATH = ($env.PATH | append $"($env.HOME)/.docker/bin" | uniq)
     }
@@ -136,6 +122,28 @@ if $env.OSTYPE =~ "Darwin" {
     if ($"($env.HOME)/Library/Android/sdk" | path exists) {
         $env.ANDROID_HOME = $"($env.HOME)/Library/Android/sdk"
     }
+}
+
+# Alias
+$env.LESS = "--chop-long-lines --ignore-case --line-numbers --long-prompt --raw-control-chars"
+alias  ctop = ctop -i
+alias  egrep = egrep --color=auto
+alias  emacs = emacs -nw
+alias  fgrep = fgrep --color=auto
+alias  glances = glances --theme-white
+alias  grep = grep --color=auto
+alias  mysql = mysql --auto-rehash
+alias  screen = screen -U
+alias  tmux = tmux -2
+
+if not (which nvim | is-empty) {
+    alias vi = nvim
+    alias vim = nvim
+    alias view = nvim -R
+}
+
+if not (which rlwrap | is-empty) {
+    alias ocaml = rlwrap ocaml
 }
 
 # Command line alternatives
@@ -176,10 +184,16 @@ if not (which zoxide | is-empty) {
 $env.DOCKER_BUILDKIT = 1
 if not (which nvim | is-empty) {
     $env.EDITOR = "nvim"
+    $env.SVN_EDITOR = "nvim"
 } else if not (which vim | is-empty) {
     $env.EDITOR = "vim"
+    $env.SVN_EDITOR = "vim"
 } else if not (which vi | is-empty) {
     $env.EDITOR = "vi"
+    $env.SVN_EDITOR = "vi"
+} else if not (which nano | is-empty) {
+    $env.EDITOR = "nano"
+    $env.SVN_EDITOR = "nano"
 }
 
 ## direnv
@@ -223,8 +237,6 @@ if not (which asdf | is-empty) {
         $env.PATH = ($"($env.HOME)/.asdf/shims" | append $env.PATH | uniq)
     }
 }
-
-## mise
 
 ## ghq
 if ("/opt/ghq/ghq" | path exists) {

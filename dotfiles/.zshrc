@@ -28,6 +28,8 @@ HISTFILE="$HOME/.zsh_history"
 HISTSIZE=100000
 SAVEHIST=100000
 
+typeset -U path PATH
+
 autoload -Uz colors
 autoload -Uz compinit
 autoload -Uz vcs_info
@@ -81,79 +83,10 @@ precmd() {
 
 PROMPT="%n@%M:%/%% "
 
-# Key bindings
-if type fzf > /dev/null 2>&1; then
-    if type tac > /dev/null 2>&1; then
-        TAC="tac"
-    else
-        TAC="tail -r"
-    fi
-
-    function fzf_select() {
-        BUFFER=$(history -n 1 | $TAC | fzf --ansi --cycle --header-first --no-separator --no-sort --color "light" --layout "reverse" --scheme "history" --tabstop 4 --query "$LBUFFER" --tiebreak "index")
-        CURSOR="$#BUFFER"
-        zle reset-prompt
-    }
-    zle -N fzf_select
-    bindkey '^R' fzf_select
-fi
-
-if type pet > /dev/null 2>&1; then
-    function prev() {
-        PREV=$(fc -lrn | head -n 1)
-        /bin/sh -c "pet new $(printf %q "$PREV")"
-    }
-
-    function pet_select() {
-        BUFFER=$(pet search --query "$LBUFFER")
-        CURSOR="$#BUFFER"
-        zle reset-prompt
-    }
-    zle -N pet_select
-    bindkey '^P' pet_select
-fi
-
-if type ghq > /dev/null 2>&1; then
-    if type fzf > /dev/null 2>&1; then
-        function ghq_select() {
-            GHQ_SOURCE=$(ghq list --full-path | fzf --ansi --cycle --header-first --no-separator --no-sort --color "light" --layout "reverse" --scheme "history" --tabstop 4 --query "$LBUFFER" --tiebreak "index")
-            if [ "$GHQ_SOURCE" ]; then
-                BUFFER='cd "'$GHQ_SOURCE'"'
-                CURSOR="$#BUFFER"
-            fi
-            zle reset-prompt
-        }
-        zle -N ghq_select
-        bindkey '^G' ghq_select
-    fi
-fi
-
-# Aliases
-export LESS="--chop-long-lines --ignore-case --line-numbers --long-prompt --raw-control-chars"
-alias  ctop="ctop -i"
-alias  egrep="egrep --color=auto"
-alias  emacs="emacs -nw"
-alias  fgrep="fgrep --color=auto"
-alias  glances="glances --theme-white"
-alias  grep="grep --color=auto"
-alias  mysql="mysql --auto-rehash"
-alias  screen="screen -U"
-alias  tmux="tmux -2"
-
-if type nvim > /dev/null 2>&1; then
-    alias vi="nvim"
-    alias vim="nvim"
-    alias view="nvim -R"
-fi
-
-if type rlwrap > /dev/null 2>&1; then
-    alias ocaml="rlwrap ocaml"
-fi
-
-# OS type specifled
+# OS type specified
 case "${OSTYPE}" in
     linux*)
-        alias  ls="ls --color=auto"
+        alias ls="ls --color=auto"
 
         if [ -d "/usr/share/zsh-completions" ]; then
             export FPATH=$FPATH:"/usr/share/zsh-completions"
@@ -174,14 +107,14 @@ case "${OSTYPE}" in
         fi
         ;;
     darwin*)
-        alias  ls="ls -FG"
+        alias ls="ls -FG"
 
         if [ -f "/opt/homebrew/bin/brew" ]; then
             eval "$(/opt/homebrew/bin/brew shellenv)"
         fi
 
         BASE_PATH="/usr"
-        if type brew > /dev/null 2>&1; then
+        if type brew >/dev/null 2>&1; then
             BASE_PATH="$(brew --prefix)"
         fi
 
@@ -224,18 +157,22 @@ case "${OSTYPE}" in
         fi
 
         if [ -d "/sw/bin" ]; then
-            export PATH="/sw/bin:$PATH"
+            export PATH="$PATH:/sw/bin"
         fi
         if [ -d "/sw/sbin" ]; then
-            export PATH="/sw/sbin:$PATH"
-        fi
-
-        if [ -d "$BASE_PATH/opt/mysql-client/bin" ]; then
-            export PATH="$BASE_PATH/opt/mysql-client/bin:$PATH"
+            export PATH="$PATH/sw/sbin"
         fi
 
         if [ -d "$HOME/.docker/bin" ]; then
             export PATH="$PATH:$HOME/.docker/bin"
+        fi
+
+        if [ -d "$BASE_PATH/opt/mysql-client/bin" ]; then
+            export PATH="$PATH:$BASE_PATH/opt/mysql-client/bin"
+        fi
+
+        if [ -d "$BASE_PATH/opt/libpq/bin" ]; then
+            export PATH="$PATH:$BASE_PATH/opt/libpq/bin"
         fi
 
         if [ -d "$HOME/Library/Android/sdk" ]; then
@@ -244,39 +181,108 @@ case "${OSTYPE}" in
         ;;
 esac
 
+# Key bindings
+if type fzf >/dev/null 2>&1; then
+    if type tac >/dev/null 2>&1; then
+        TAC="tac"
+    else
+        TAC="tail -r"
+    fi
+
+    function fzf_select() {
+        BUFFER=$(history -n 1 | $TAC | fzf --ansi --cycle --header-first --no-separator --no-sort --color "light" --layout "reverse" --scheme "history" --tabstop 4 --query "$LBUFFER" --tiebreak "index")
+        CURSOR="$#BUFFER"
+        zle reset-prompt
+    }
+    zle -N fzf_select
+    bindkey '^R' fzf_select
+fi
+
+if type pet >/dev/null 2>&1; then
+    function prev() {
+        PREV=$(fc -lrn | head -n 1)
+        /bin/sh -c "pet new $(printf %q "$PREV")"
+    }
+
+    function pet_select() {
+        BUFFER=$(pet search --query "$LBUFFER")
+        CURSOR="$#BUFFER"
+        zle reset-prompt
+    }
+    zle -N pet_select
+    bindkey '^P' pet_select
+fi
+
+if type ghq >/dev/null 2>&1; then
+    if type fzf >/dev/null 2>&1; then
+        function ghq_select() {
+            GHQ_SOURCE=$(ghq list --full-path | fzf --ansi --cycle --header-first --no-separator --no-sort --color "light" --layout "reverse" --scheme "history" --tabstop 4 --query "$LBUFFER" --tiebreak "index")
+            if [ "$GHQ_SOURCE" ]; then
+                BUFFER='cd "'$GHQ_SOURCE'"'
+                CURSOR="$#BUFFER"
+            fi
+            zle reset-prompt
+        }
+        zle -N ghq_select
+        bindkey '^G' ghq_select
+    fi
+fi
+
+# Aliases
+export LESS="--chop-long-lines --ignore-case --line-numbers --long-prompt --raw-control-chars"
+alias ctop="ctop -i"
+alias egrep="egrep --color=auto"
+alias emacs="emacs -nw"
+alias fgrep="fgrep --color=auto"
+alias glances="glances --theme-white"
+alias grep="grep --color=auto"
+alias mysql="mysql --auto-rehash"
+alias screen="screen -U"
+alias tmux="tmux -2"
+
+if type nvim >/dev/null 2>&1; then
+    alias vi="nvim"
+    alias vim="nvim"
+    alias view="nvim -R"
+fi
+
+if type rlwrap >/dev/null 2>&1; then
+    alias ocaml="rlwrap ocaml"
+fi
+
 # Command line alternatives
-if type batcat > /dev/null 2>&1; then
+if type batcat >/dev/null 2>&1; then
     alias cat='batcat --plain --pager never --theme "Monokai Extended Light"'
-elif type bat > /dev/null 2>&1; then
+elif type bat >/dev/null 2>&1; then
     alias cat='bat --plain --pager never --theme "Monokai Extended Light"'
 fi
-if type delta > /dev/null 2>&1; then
+if type delta >/dev/null 2>&1; then
     alias delta='delta --line-numbers --navigate --side-by-side --syntax-theme "OneHalfLight"'
 fi
-if type colordiff > /dev/null 2>&1; then
-    alias  diff="colordiff"
+if type colordiff >/dev/null 2>&1; then
+    alias diff="colordiff"
 fi
-if type eza > /dev/null 2>&1; then
+if type eza >/dev/null 2>&1; then
     alias ls="eza --group --icons"
 fi
-if type hexyl > /dev/null 2>&1; then
+if type hexyl >/dev/null 2>&1; then
     alias hexdump="hexyl"
     alias od="hexyl"
 fi
-if type rg > /dev/null 2>&1; then
+if type rg >/dev/null 2>&1; then
     alias grep="rg"
 fi
-if type runiq > /dev/null 2>&1; then
+if type runiq >/dev/null 2>&1; then
     alias uniq="runiq"
 fi
-if type sp > /dev/null 2>&1; then
+if type sp >/dev/null 2>&1; then
     alias sort="sp"
 fi
-if type tuc > /dev/null 2>&1; then
+if type tuc >/dev/null 2>&1; then
     alias cut="tuc"
 fi
-if type zoxide > /dev/null 2>&1; then
-    if ! (type z > /dev/null 2>&1); then
+if type zoxide >/dev/null 2>&1; then
+    if ! (type z >/dev/null 2 >&1); then
         eval "$(zoxide init zsh)"
     fi
     alias cd="z"
@@ -305,16 +311,22 @@ fi
 # Applications
 export DOCKER_BUILDKIT=1
 if type nvim > /dev/null 2>&1; then
+    export EDITOR="nvim"
     export SVN_EDITOR="nvim"
 elif type vim > /dev/null 2>&1; then
+    export EDITOR="vim"
     export SVN_EDITOR="vim"
 elif type vi > /dev/null 2>&1; then
+    export EDITOR="vi"
     export SVN_EDITOR="vi"
+elif type nano >/dev/null 2>&1; then
+    export EDITOR="nano"
+    export SVN_EDITOR="nano"
 fi
 
 ## direnv
-if type direnv > /dev/null 2>&1; then
-    if ! (type _direnv_hook > /dev/null 2>&1); then
+if type direnv >/dev/null 2>&1; then
+    if ! (type _direnv_hook >/dev/null 2 >&1); then
         eval "$(direnv hook zsh)"
         alias tmux="direnv exec / tmux"
     fi
@@ -324,21 +336,21 @@ fi
 if [ -d "/opt/anyenv/bin" ]; then
     export PATH="$PATH:/opt/anyenv/bin"
 fi
-if type anyenv > /dev/null 2>&1; then
+if type anyenv >/dev/null 2>&1; then
     eval "$(anyenv init -)"
 fi
 
 ## asdf
 if [ -f "/opt/asdf/asdf" ]; then
-    export PATH="/opt/asdf:$PATH"
+    export PATH="$PATH:/opt/asdf"
 fi
-if type asdf > /dev/null 2>&1; then
+if type asdf >/dev/null 2>&1; then
     export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
     export ASDF_GOLANG_MOD_VERSION_ENABLED=true
 fi
 
 ## mise
-if type mise > /dev/null 2>&1; then
+if type mise >/dev/null 2>&1; then
     eval "$(mise activate zsh)"
 fi
 
@@ -348,7 +360,7 @@ if [ -d "/opt/ghq/ghq" ]; then
 fi
 
 ## thefuck
-if type thefuck > /dev/null 2>&1; then
+if type thefuck >/dev/null 2>&1; then
     if [ "$(command -v fuck | cut -c 1)" = "/" ]; then
         PYTHONWARNINGS=ignore
         eval $(thefuck --alias)
@@ -382,7 +394,7 @@ if [ -f "/usr/share/virtualenvwrapper/virtualenvwrapper_lazy.sh" ]; then
 fi
 
 ## Go
-if type go > /dev/null 2>&1; then
+if type go >/dev/null 2>&1; then
     if [ -z "$GOPATH" ]; then
         export GOPATH="$HOME/.go"
     fi
@@ -430,8 +442,8 @@ if [ -d "$HOME/.volta/bin" ]; then
 fi
 
 ## PHP
-if type php > /dev/null 2>&1; then
-    alias  vld="php -d vld.active=1 -d vld.execute=0 -f"
+if type php >/dev/null 2>&1; then
+    alias vld="php -d vld.active=1 -d vld.execute=0 -f"
     if [ -d "/opt/composer" ]; then
         export PATH="$PATH:/opt/composer"
     fi
@@ -482,18 +494,18 @@ if [ -d "/opt/cocos2d-x/cocos2d-x" ]; then
     # Add environment variable COCOS_CONSOLE_ROOT for cocos2d-x
     if [ -d "/opt/cocos2d-x/cocos2d-x/tools/cocos2d-console/bin" ]; then
         export COCOS_CONSOLE_ROOT="/opt/cocos2d-x/cocos2d-x/tools/cocos2d-console/bin"
-        export PATH="$COCOS_CONSOLE_ROOT:$PATH"
+        export PATH="$PATH:$COCOS_CONSOLE_ROOT"
     fi
 
     # Add environment variable COCOS_TEMPLATES_ROOT for cocos2d-x
     if [ -d "/opt/cocos2d-x/cocos2d-x/templates" ]; then
         export COCOS_TEMPLATES_ROOT="/opt/cocos2d-x/cocos2d-x/templates"
-        export PATH="$COCOS_TEMPLATES_ROOT:$PATH"
+        export PATH="$PATH:$COCOS_TEMPLATES_ROOT"
     fi
 
     # Add environment variable ANT_ROOT for cocos2d-x
     if [ -d "/usr/share/ant/bin" ]; then
         export ANT_ROOT="/usr/share/ant/bin"
-        export PATH="$ANT_ROOT:$PATH"
+        export PATH="$PATH:$ANT_ROOT"
     fi
 fi

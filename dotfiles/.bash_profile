@@ -21,6 +21,105 @@ HISTCONTROL=erasedups
 
 shopt -s expand_aliases
 
+# Prompt
+PS1='\u@\h:$PWD\$ '
+
+# OS type specified
+case "${OSTYPE}" in
+    linux*)
+        alias  ls="ls --color=auto"
+
+        if [ -f "/usr/share/bash-completion/bash_completion" ]; then
+            .  "/usr/share/bash-completion/bash_completion"
+        fi
+
+        if [ -f "/usr/share/autojump/autojump.bash" ]; then
+            . "/usr/share/autojump/autojump.bash"
+        fi
+
+        if [ -d "$HOME/Android/sdk" ]; then
+            export ANDROID_HOME="$HOME/Android/sdk"
+        fi
+        ;;
+    darwin*)
+        alias  ls="ls -FG"
+
+        if [ -f "/opt/homebrew/bin/brew" ]; then
+            eval "$(/opt/homebrew/bin/brew shellenv)"
+        fi
+
+        BASE_PATH="/usr"
+        if type brew > /dev/null 2>&1; then
+            BASE_PATH="$(brew --prefix)"
+        fi
+
+        if [ -f "$BASE_PATH/etc/bash_completion" ]; then
+            . "$BASE_PATH/etc/bash_completion"
+        fi
+
+        for DIRECTORY in coreutils findutils gawk gnu-sed gnu-tar gnu-time gnu-which grep make moreutils
+        do
+            if [ -d "$BASE_PATH/opt/$DIRECTORY/libexec/gnubin" ]; then
+                export PATH="$BASE_PATH/opt/$DIRECTORY/libexec/gnubin:$PATH"
+                if [ "$DIRECTORY" = "coreutils" ]; then
+                    alias ls="ls --color=auto"
+                fi
+            fi
+            if [ -d "$BASE_PATH/opt/$DIRECTORY/libexec/gnuman" ]; then
+                export MANPATH="$BASE_PATH/opt/$DIRECTORY/libexec/gnuman:$MANPATH"
+            fi
+        done
+        for DIRECTORY in curl gnu-getopt whois
+        do
+            if [ -d "$BASE_PATH/opt/$DIRECTORY/bin" ]; then
+                export PATH="$BASE_PATH/opt/$DIRECTORY/bin:$PATH"
+            fi
+        done
+
+        if [ -f "$BASE_PATH/share/autojump/autojump.bash" ]; then
+            . "$BASE_PATH/share/autojump/autojump.bash"
+        fi
+
+        if [ -d "/usr/local/sbin" ]; then
+            export PATH="$PATH:/usr/local/sbin"
+        fi
+
+        if [ -d "/sw/bin" ]; then
+            export PATH="$PATH:/sw/bin"
+        fi
+        if [ -d "/sw/sbin" ]; then
+            export PATH="$PATH:/sw/sbin"
+        fi
+
+        if [ -d "$HOME/.docker/bin" ]; then
+            export PATH="$PATH:$HOME/.docker/bin"
+        fi
+
+        if [ -d "$BASE_PATH/opt/mysql-client/bin" ]; then
+            export PATH="$PATH:$BASE_PATH/opt/mysql-client/bin"
+        fi
+
+        if [ -d "$BASE_PATH/opt/libpq/bin" ]; then
+            export PATH="$PATH:$BASE_PATH/opt/libpq/bin"
+        fi
+
+        if [ -d "$HOME/Library/Android/sdk" ]; then
+            export ANDROID_HOME="$HOME/Library/Android/sdk"
+        fi
+        ;;
+esac
+
+# Git prompt
+if type __git_ps1 > /dev/null 2>&1; then
+    precmd() {
+        local vsc_info="$(__git_ps1)"
+        if [ -n "$vsc_info" ]; then
+            PS1="\[$(tput sc; tput cuf $(($(tput cols) - ${#vsc_info})); echo -n "$vsc_info"; tput rc)\]$PS1"
+        fi
+    }
+    PROMPT_COMMAND="precmd"
+fi
+
 # Key bindings
 if type fzf > /dev/null 2>&1; then
     if type tac > /dev/null 2>&1; then
@@ -87,97 +186,6 @@ if type rlwrap > /dev/null 2>&1; then
     alias ocaml="rlwrap ocaml"
 fi
 
-# OS type specifled
-case "${OSTYPE}" in
-    linux*)
-        alias  ls="ls --color=auto"
-
-        if [ -f "/usr/share/bash-completion/bash_completion" ]; then
-            .  "/usr/share/bash-completion/bash_completion"
-        fi
-
-        if [ -f "/usr/share/autojump/autojump.bash" ]; then
-            . "/usr/share/autojump/autojump.bash"
-        fi
-
-        if [ -d "$HOME/Android/sdk" ]; then
-            export ANDROID_HOME="$HOME/Android/sdk"
-        fi
-        ;;
-    darwin*)
-        alias  ls="ls -FG"
-
-        if [ -f "/opt/homebrew/bin/brew" ]; then
-            eval "$(/opt/homebrew/bin/brew shellenv)"
-        fi
-
-        BASE_PATH="/usr"
-        if type brew > /dev/null 2>&1; then
-            BASE_PATH="$(brew --prefix)"
-        fi
-
-        if [ -f "$BASE_PATH/etc/bash_completion" ]; then
-            . "$BASE_PATH/etc/bash_completion"
-        fi
-
-        for DIRECTORY in coreutils findutils gawk gnu-sed gnu-tar gnu-time gnu-which grep make moreutils
-        do
-            if [ -d "$BASE_PATH/opt/$DIRECTORY/libexec/gnubin" ]; then
-                export PATH="$BASE_PATH/opt/$DIRECTORY/libexec/gnubin:$PATH"
-                if [ "$DIRECTORY" = "coreutils" ]; then
-                    alias ls="ls --color=auto"
-                fi
-            fi
-            if [ -d "$BASE_PATH/opt/$DIRECTORY/libexec/gnuman" ]; then
-                export MANPATH="$BASE_PATH/opt/$DIRECTORY/libexec/gnuman:$MANPATH"
-            fi
-        done
-		for DIRECTORY in curl gnu-getopt whois
-        do
-            if [ -d "$BASE_PATH/opt/$DIRECTORY/bin" ]; then
-                export PATH="$BASE_PATH/opt/$DIRECTORY/bin:$PATH"
-            fi
-        done
-
-        if [ -f "$BASE_PATH/share/autojump/autojump.bash" ]; then
-            . "$BASE_PATH/share/autojump/autojump.bash"
-        fi
-
-        if [ -d "/usr/local/sbin" ]; then
-            export PATH="$PATH:/usr/local/sbin"
-        fi
-
-        if [ -d "/sw/bin" ]; then
-            export PATH="/sw/bin:$PATH"
-        fi
-        if [ -d "/sw/sbin" ]; then
-            export PATH="/sw/sbin:$PATH"
-        fi
-
-        if [ -d "$BASE_PATH/opt/mysql-client/bin" ]; then
-            export PATH="$BASE_PATH/opt/mysql-client/bin:$PATH"
-        fi
-
-        if [ -d "$HOME/.docker/bin" ]; then
-            export PATH="$PATH:$HOME/.docker/bin"
-        fi
-
-        if [ -d "$HOME/Library/Android/sdk" ]; then
-            export ANDROID_HOME="$HOME/Library/Android/sdk"
-        fi
-        ;;
-esac
-
-# Prompt
-if type __git_ps1 > /dev/null 2>&1; then
-    precmd() {
-        RPROMPT=$(__git_ps1)
-        printf "%*s" $(($COLUMNS - ${#PROMPT} - 1)) $RPROMPT
-    }
-    #PS1='$(tput sc; precmd; tput rc)${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-    PS1='$(tput sc; precmd; tput rc)\u@\H:$(pwd)% '
-fi
-
 # Command line alternatives
 if type batcat > /dev/null 2>&1; then
     alias cat='batcat --plain --pager never --theme "Monokai Extended Light"'
@@ -191,7 +199,7 @@ if type colordiff > /dev/null 2>&1; then
     alias  diff="colordiff"
 fi
 if type eza > /dev/null 2>&1; then
-    alias ls="eza --group --icons"c
+    alias ls="eza --group --icons"
 fi
 if type hexyl > /dev/null 2>&1; then
     alias hexdump="hexyl"
@@ -239,11 +247,17 @@ fi
 # Applications
 export DOCKER_BUILDKIT=1
 if type nvim > /dev/null 2>&1; then
+    export EDITOR="nvim"
     export SVN_EDITOR="nvim"
 elif type vim > /dev/null 2>&1; then
+    export EDITOR="vim"
     export SVN_EDITOR="vim"
 elif type vi > /dev/null 2>&1; then
+    export EDITOR="vi"
     export SVN_EDITOR="vi"
+elif type nano > /dev/null 2>&1; then
+    export EDITOR="nano"
+    export SVN_EDITOR="nano"
 fi
 
 ## direnv
@@ -264,7 +278,7 @@ fi
 
 ## asdf
 if [ -f "/opt/asdf/asdf" ]; then
-    export PATH="/opt/asdf:$PATH"
+    export PATH="$PATH:/opt/asdf"
 fi
 if type asdf > /dev/null 2>&1; then
     export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
@@ -416,18 +430,21 @@ if [ -d "/opt/cocos2d-x/cocos2d-x" ]; then
     # Add environment variable COCOS_CONSOLE_ROOT for cocos2d-x
     if [ -d "/opt/cocos2d-x/cocos2d-x/tools/cocos2d-console/bin" ]; then
         export COCOS_CONSOLE_ROOT="/opt/cocos2d-x/cocos2d-x/tools/cocos2d-console/bin"
-        export PATH="$COCOS_CONSOLE_ROOT:$PATH"
+        export PATH="$PATH:$COCOS_CONSOLE_ROOT"
     fi
 
     # Add environment variable COCOS_TEMPLATES_ROOT for cocos2d-x
     if [ -d "/opt/cocos2d-x/cocos2d-x/templates" ]; then
         export COCOS_TEMPLATES_ROOT="/opt/cocos2d-x/cocos2d-x/templates"
-        export PATH="$COCOS_TEMPLATES_ROOT:$PATH"
+        export PATH="$PATH:$COCOS_TEMPLATES_ROOT"
     fi
 
     # Add environment variable ANT_ROOT for cocos2d-x
     if [ -d "/usr/share/ant/bin" ]; then
         export ANT_ROOT="/usr/share/ant/bin"
-        export PATH="$ANT_ROOT:$PATH"
+        export PATH="$PATH:$ANT_ROOT"
     fi
 fi
+
+# Export unique PATH
+export PATH="$(echo $PATH | sed -e 's/:/\n/g' | sed -e '/^$/d' | awk '!x[$0]++' | paste -sd:)"
