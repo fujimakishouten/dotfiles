@@ -9,9 +9,6 @@ set -Ceu
 cd "$(dirname $0)"
 DIRECTORY="$(pwd)"
 
-if [ ! -d "$HOME/.config/fish" ]; then
-    mkdir -p "$HOME/.config/fish"
-fi
 if [ ! -d "$HOME/.local/share/nvim/site" ]; then
     mkdir -p "$HOME/.local/share/nvim/site"
 fi
@@ -23,18 +20,20 @@ do
 done
 
 # fish
-ln -ins "$HOME/.fish/config.fish" "$HOME/.config/fish"
-ln -ins "$HOME/.fish/functions" "$HOME/.config/fish"
+ln -ins "$HOME/.fish" "$HOME/.config/fish"
 
 # neovim
 ln -ins "$HOME/.vim" "$HOME/.config/nvim"
 ln -ins "$HOME/.vim/pack" "$HOME/.local/share/nvim/site/pack"
 
+# nushell
+ln -ins "$HOME/.nushell" "$HOME/.config/nushell"
+
 # vim
 ln -ins "$HOME/.vim/init.vim" "$HOME/.vimrc"
 
 # wezterm
-ln -ins "$HOME/.wezterm/wezterm.lua" "$HOME/.config/wezterm"
+ln -ins "$HOME/.wezterm" "$HOME/.config/wezterm"
 
 
 

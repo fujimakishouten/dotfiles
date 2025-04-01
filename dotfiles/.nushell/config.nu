@@ -359,3 +359,4 @@ if ("/opt/cocos2d-x/cocos2d-x" | path exists) {
         $env.PATH = ($env.PATH | append $"($env.ANT_ROOT)" | uniq)
     }
 }
+
