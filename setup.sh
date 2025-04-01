@@ -15,9 +15,6 @@ fi
 if [ ! -d "$HOME/.local/share/nvim/site" ]; then
     mkdir -p "$HOME/.local/share/nvim/site"
 fi
-if [ ! -d "$HOME/.config/wezterm" ]; then
-    mkdir -p "$HOME/.config/wezterm"
-fi
 
 for FILE in $(find "$DIRECTORY/dotfiles" -maxdepth 1 | grep -Ev "^$DIRECTORY/dotfiles$")
 do
