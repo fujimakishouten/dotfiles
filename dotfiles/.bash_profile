@@ -244,8 +244,7 @@ fi
 #    esac
 #fi
 
-# Applications
-export DOCKER_BUILDKIT=1
+# Editor
 if type nvim > /dev/null 2>&1; then
     export EDITOR="nvim"
     export SVN_EDITOR="nvim"
@@ -259,6 +258,11 @@ elif type nano > /dev/null 2>&1; then
     export EDITOR="nano"
     export SVN_EDITOR="nano"
 fi
+
+# Applications
+## docker
+export COMPOSE_DOCKER_CLI_BUILD=1
+export DOCKER_BUILDKIT=1
 
 ## direnv
 if type direnv > /dev/null 2>&1; then

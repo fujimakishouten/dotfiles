@@ -50,8 +50,7 @@ def prompt [] {
 def vcs_info [] {
     if (do { git rev-parse --is-inside-work-tree } | complete).exit_code == 0 {
         let branch = (git branch --show-current | str trim)
-        let status = if ((git status --porcelain | str trim | str length) > 0) { "*" } else { "" }
-        $"(ansi grey)\(($branch)($status)\)(ansi reset)"
+        $"(ansi grey)\(($branch)\)(ansi reset)"
     } else {
         ""
     }
@@ -180,8 +179,7 @@ if not (which tac | is-empty) {
 if not (which zoxide | is-empty) {
 }
 
-# Application
-$env.DOCKER_BUILDKIT = 1
+# Editor
 if not (which nvim | is-empty) {
     $env.EDITOR = "nvim"
     $env.SVN_EDITOR = "nvim"
@@ -195,6 +193,11 @@ if not (which nvim | is-empty) {
     $env.EDITOR = "nano"
     $env.SVN_EDITOR = "nano"
 }
+
+# Applications
+## docker
+$env.COMPOSE_DOCKER_CLI_BUILD = 1
+$env.DOCKER_BUILDKIT = 1
 
 ## direnv
 $env.config = {

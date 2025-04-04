@@ -174,8 +174,7 @@ end
 #    end
 #end
 
-# Applications
-set -x DOCKER_BUILDKIT 1
+# Editor
 if type nvim > /dev/null 2>&1
     set -x EDITOR "nvim"
     set -x SVN_EDITOR "nvim"
@@ -189,6 +188,11 @@ else if type nano > /dev/null 2>&1
     set -x EDITOR "nano"
     set -x SVN_EDITOR "nano"
 end
+
+# Applications
+## docker
+set -x COMPOSE_DOCKER_CLI_BUILD 1
+set -x DOCKER_BUILDKIT 1
 
 ## direnv
 if type direnv > /dev/null 2>&1
