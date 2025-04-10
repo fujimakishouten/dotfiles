@@ -407,6 +407,7 @@ if type go >/dev/null 2>&1; then
         mkdir -p "$GOPATH/bin" "$GOPATH/pkg" "$GOPATH/src"
     fi
 
+    export CGO_ENABLED=0
     export GO111MODULE=on
     export GOBIN="$GOPATH/bin"
     export PATH="$PATH:$GOBIN"

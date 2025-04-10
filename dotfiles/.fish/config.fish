@@ -275,6 +275,7 @@ if type go > /dev/null 2>&1
         mkdir -p "$GOPATH/bin" "$GOPATH/pkg" "$GOPATH/src"
     end
 
+    set -x CGO_ENABLED 0
     set -x GO111MODULE on
     set -x GOBIN "$GOPATH/bin"
     fish_add_path --append "$GOBIN"

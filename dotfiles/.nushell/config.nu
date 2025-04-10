@@ -280,6 +280,7 @@ if not (which go | is-empty) {
         mkdir $"($env.GOPATH)/bin" $"($env.GOPATH)/pkg" $"(env.GOPATH/src)"
     }
 
+    $env.CGO_ENABLED = 0
     $env.GO111MODULE = "on"
     $env.GOBIN = $"($env.GOPATH)/bin"
     $env.PATH = ($env.PATH | append $"($env.GOBIN)" | uniq)
