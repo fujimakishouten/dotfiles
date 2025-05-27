@@ -82,13 +82,12 @@ config.colors = {
 
 ----------------------------------------------------------------------
 
-if string.find(wezterm.target_triple, "darwin") ~= nil then
+config.dpi = 96
+if wezterm.target_triple:find("darwin") then
     config.dpi = 72
     config.dpi_by_screen = {
         ["Built-in Display"] = 144
     }
-else
-    config.dpi = 96
 end
 
 ----------------------------------------------------------------------
@@ -102,9 +101,11 @@ wezterm.on("gui-startup", function(cmd)
         position = {
             x = x,
             y = y,
-            origin = "ActiveScreen"
+            origin = "ScreenCordinate"
         }
     })
+
+    wezterm.sleep_ms(100)
     window:gui_window():set_position(x, y)
     window:gui_window():set_inner_size(width, height)
 end)
