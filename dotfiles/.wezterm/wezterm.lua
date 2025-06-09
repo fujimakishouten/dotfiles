@@ -14,8 +14,6 @@ end
 
 local schemes = wezterm.color.get_builtin_schemes()
 local scheme = "Ayu Light (Gogh)"
-local width = 1360
-local height = 755
 local cols = 148
 local rows = 32
 
@@ -93,21 +91,18 @@ end
 ----------------------------------------------------------------------
 
 wezterm.on("gui-startup", function(cmd)
-    local x = (wezterm.gui.screens().active.width - width) / 2
-    local y = (wezterm.gui.screens().active.height - height) / 2
     local tab, pane, window = wezterm.mux.spawn_window(cmd or {
         width = cols,
         height = rows,
-        position = {
-            x = x,
-            y = y,
-            origin = "ScreenCordinate"
-        }
     })
+end)
 
-    wezterm.sleep_ms(100)
-    window:gui_window():set_position(x, y)
-    window:gui_window():set_inner_size(width, height)
+wezterm.on("window-resized", function(window, pane)
+    local screen = wezterm.gui.screens().active
+    local dimensions = window:get_dimensions()
+    local x = (screen.width - dimensions.pixel_width) / 2
+    local y = (screen.height - dimensions.pixel_height) / 2
+    window:gui_window():set_posision(x, y)
 end)
 
 ----------------------------------------------------------------------
