@@ -14,8 +14,12 @@ end
 
 local schemes = wezterm.color.get_builtin_schemes()
 local scheme = "Ayu Light (Gogh)"
-local cols = 148
-local rows = 32
+local cols = 120
+local rows = 24
+if wezterm.target_triple:find("darwin") then
+    cols = 148
+    rows = 32
+end
 
 ----------------------------------------------------------------------
 
