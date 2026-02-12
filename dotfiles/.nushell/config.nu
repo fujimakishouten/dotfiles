@@ -68,7 +68,7 @@ if $env.OSTYPE =~ "linux" {
 if $env.OSTYPE =~ "Darwin" {
     if ("/opt/homebrew/bin/brew" | path exists) {
         let brew_env = (/opt/homebrew/bin/brew shellenv | lines |
-            filter {|line| $line =~ "^export " } |
+            where ($it =~ "^export ") |
             str replace "export " "" |
             parse "{name}={value}" |
             update value {|r| $r.value | str replace --all '"' "" })
@@ -85,7 +85,7 @@ if $env.OSTYPE =~ "Darwin" {
             $env.PATH = ($env.PATH | prepend $"($env.BASE_PATH)/opt/($DIRECTORY)/libexec/gnubin"  | uniq)
         }
         if ($"($env.BASE_PATH)/opt/($DIRECTORY)/libexec/gnuman" | path exists) {
-            $env.MANPATH = ($env | get -i MANPATH | default [] | prepend $"($env.BASE_PATH)/opt/($DIRECTORY)/libexec/gnuman" | uniq)
+            $env.MANPATH = ($env | get --optional MANPATH | default [] | prepend $"($env.BASE_PATH)/opt/($DIRECTORY)/libexec/gnuman" | uniq)
         }
     }
 
@@ -219,7 +219,7 @@ $env.config = {
 if not (which anyenv | is-empty) {
     def --env anyenv-init [] {
         let init_cmd = (anyenv init - | str trim)
-        let path_lines = ($init_cmd | lines | filter {|line| $line =~ "PATH="})
+        let path_lines = ($init_cmd | lines | where ($it =~ "PATH="))
         if ($path_lines | length) > 0 {
             let path_str = ($path_lines | first | str replace "PATH=" "" | str replace -a "\"" "")
             let path_list = ($path_str | split row ":")
@@ -375,4 +375,3 @@ if ("/opt/cocos2d-x/cocos2d-x" | path exists) {
         $env.PATH = ($env.PATH | append $"($env.ANT_ROOT)" | uniq)
     }
 }
-
