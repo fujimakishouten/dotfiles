@@ -16,7 +16,7 @@ if test -d "$HOME/.local/bin"
 end
 
 # Prompt
-set -x __fish_git_prompt_color_branch "$fish_color_normal"
+set -x __fish_git_prompt_color_branch "normal"
 
 # OS type specified
 switch (uname)
