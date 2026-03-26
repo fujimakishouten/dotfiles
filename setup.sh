@@ -19,8 +19,14 @@ do
     ln -ins  "$FILE" "$HOME/$BASENAME"
 done
 
+# config
+mkdir -p "$HOME/.config"
+
 # fish
 ln -ins "$HOME/.fish" "$HOME/.config/fish"
+
+# ghostty
+ln -ins "$HOME/.ghostty" "$HOME/.config/ghostty"
 
 # neovim
 ln -ins "$HOME/.vim" "$HOME/.config/nvim"

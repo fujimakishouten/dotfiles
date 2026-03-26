@@ -1,0 +1,21 @@
+language = "ja"
+
+theme = "Ayu Light"
+background-opacity = 0.80
+
+window-width = 150
+window-height = 32
+window-padding-x = 3
+window-padding-y = 3
+window-padding-balance = true
+
+font-family = "VL NF"
+font-size = 18.0
+adjust-cell-height = "20%"
+selection-background = "#e9edf3"
+selection-foreground = cell-foreground
+
+clipboard-read = allow
+clipboard-write = allow
+
+working-directory = home
