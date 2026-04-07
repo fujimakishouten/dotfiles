@@ -92,6 +92,8 @@ case "${OSTYPE}" in
             export FPATH=$FPATH:"/usr/share/zsh-completions"
         fi
         if [ -f "/usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
+            typeset -U ZSH_AUTOSUGGEST_IGNORE_WIDGETS
+            ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(bracketed-paste)
             . "/usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
         fi
         if [ -f "/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
@@ -122,6 +124,8 @@ case "${OSTYPE}" in
             export FPATH=$FPATH:"$BASE_PATH/share/zsh-completions"
         fi
         if [ -f "$BASE_PATH/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
+            typeset -U ZSH_AUTOSUGGEST_IGNORE_WIDGETS
+            ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(bracketed-paste)
             . "$BASE_PATH/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
         fi
         if [ -f "$BASE_PATH/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
