@@ -42,7 +42,7 @@ switch (uname)
             set BASE_PATH "$(brew --prefix)"
         end
 
-        for DIRECTORY in coreutils findutils gawk gnu-getopt gnu-sed gnu-tar gnu-time gnu-which grep make moreutils
+        for DIRECTORY in coreutils diffutils findutils gawk gnu-getopt gnu-sed gnu-tar gnu-time gnu-which grep make moreutils
             if test -d "$BASE_PATH/opt/$DIRECTORY/libexec/gnubin"
                 fish_add_path "$BASE_PATH/opt/$DIRECTORY/libexec/gnubin"
                 if test "$DIRECTORY" = "coreutils"
@@ -51,6 +51,17 @@ switch (uname)
             end
             if test -d "$BASE_PATH/opt/$DIRECTORY/libexec/gnuman"
                 set -x MANPATH "$BASE_PATH/opt/$DIRECTORY/libexec/gnuman" "$MANPATH"
+            end
+        end
+        for DIRECTORY in uutils-coreutils uutils-diffutils uutils-findutils
+            if test -d "$BASE_PATH/opt/$DIRECTORY/libexec/uubin"
+                fish_add_path "$BASE_PATH/opt/$DIRECTORY/libexec/uubin"
+                if test "$DIRECTORY" = "uutils-coreutils"
+                    alias ls="ls --color=auto"
+                end
+            end
+            if test -d "$BASE_PATH/opt/$DIRECTORY/libexec/uuman"
+                set -x MANPATH "$BASE_PATH/opt/$DIRECTORY/libexec/uuman" "$MANPATH"
             end
         end
         for DIRECTORY in curl gnu-getopt whois

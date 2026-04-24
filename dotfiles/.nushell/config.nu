@@ -89,6 +89,15 @@ if $env.OSTYPE =~ "Darwin" {
         }
     }
 
+    for $DIRECTORY in ["uutils-coreutils", "uutils-diffutils", "uutils-findutils"] {
+        if ($"($env.BASE_PATH)/opt/($DIRECTORY)/libexec/uubin" | path exists) {
+            $env.PATH = ($env.PATH | prepend $"($env.BASE_PATH)/opt/($DIRECTORY)/libexec/uubin"  | uniq)
+        }
+        if ($"($env.BASE_PATH)/opt/($DIRECTORY)/libexec/uuman" | path exists) {
+            $env.MANPATH = ($env | get --optional MANPATH | default [] | prepend $"($env.BASE_PATH)/opt/($DIRECTORY)/libexec/uuman" | uniq)
+        }
+    }
+
     for $DIRECTORY in ["curl", "gnu-getopt", "whois"] {
         if ($"($env.BASE_PATH)/opt/($DIRECTORY)/bin" | path exists) {
             $env.PATH = ($env.PATH | prepend $"($env.BASE_PATH)/opt/($DIRECTORY)/bin" | uniq)

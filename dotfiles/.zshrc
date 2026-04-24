@@ -132,7 +132,7 @@ case "${OSTYPE}" in
             . "$BASE_PATH/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
         fi
 
-        for DIRECTORY in coreutils findutils gawk gnu-sed gnu-tar gnu-time gnu-which grep make moreutils
+        for DIRECTORY in coreutils diffutils findutils gawk gnu-sed gnu-tar gnu-time gnu-which grep make moreutils
         do
             if [ -d "$BASE_PATH/opt/$DIRECTORY/libexec/gnubin" ]; then
                 export PATH="$BASE_PATH/opt/$DIRECTORY/libexec/gnubin:$PATH"
@@ -144,7 +144,18 @@ case "${OSTYPE}" in
                 export MANPATH="$BASE_PATH/opt/$DIRECTORY/libexec/gnuman:$MANPATH"
             fi
         done
-
+        for DIRECTORY in uutils-coreutils uutils-diffutils uutils-findutils
+        do
+            if [ -d "$BASE_PATH/opt/$DIRECTORY/libexec/uubin" ]; then
+                export PATH="$BASE_PATH/opt/$DIRECTORY/libexec/uubin:$PATH"
+                if [ "$DIRECTORY" = "uutils-coreutils" ]; then
+                    alias ls="ls --color=auto"
+                fi
+            fi
+            if [ -d "$BASE_PATH/opt/$DIRECTORY/libexec/uuman" ]; then
+                export MANPATH="$BASE_PATH/opt/$DIRECTORY/libexec/uuman:$MANPATH"
+            fi
+        done
         for DIRECTORY in curl gnu-getopt whois
         do
             if [ -d "$BASE_PATH/opt/$DIRECTORY/bin" ]; then
