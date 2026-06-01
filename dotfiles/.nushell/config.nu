@@ -23,6 +23,9 @@ $env.LC_ALL = "en_GB.UTF-8"
 $env.LC_COLLATE = "en_GB.UTF-8"
 $env.LANG = "en_GB.UTF-8"
 
+# Config
+$env.XDG_CONFIG_HOME = $"($env.HOME)/.config"
+
 # Path
 if ("/usr/games" | path exists) {
     $env.PATH = ($env.PATH | append "/usr/games" | uniq)

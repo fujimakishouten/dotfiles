@@ -1,0 +1,4 @@
+# This file contains fish universal variable definitions.
+# VERSION: 3.0
+SETUVAR __fish_initialized:4300
+SETUVAR fish_user_paths:/Users/miki/\x2easdf/shims\x1e/opt/homebrew/opt/whois/bin\x1e/opt/homebrew/opt/gnu\x2dgetopt/bin\x1e/opt/homebrew/opt/uutils\x2dfindutils/libexec/uubin\x1e/opt/homebrew/opt/uutils\x2ddiffutils/libexec/uubin\x1e/opt/homebrew/opt/uutils\x2dcoreutils/libexec/uubin\x1e/opt/homebrew/opt/grep/libexec/gnubin\x1e/opt/homebrew/opt/gnu\x2dtar/libexec/gnubin\x1e/opt/homebrew/opt/gnu\x2dsed/libexec/gnubin\x1e/opt/homebrew/opt/gawk/libexec/gnubin\x1e/opt/homebrew/opt/findutils/libexec/gnubin\x1e/opt/homebrew/opt/coreutils/libexec/gnubin\x1e/Users/miki/\x2elocal/bin\x1e/opt/realesrgan/realesrgan\x1e/Users/miki/\x2ego/bin\x1e/Users/miki/\x2ebun/bin\x1e/opt/nave/bin\x1e/Users/miki/\x2ecargo/bin

@@ -4,6 +4,9 @@ export LC_ALL="en_GB.UTF-8"
 export LC_COLLATE="en_GB.UTF-8"
 export LANG="en_GB.UTF-8"
 
+# Config
+export XDG_CONFIG_HOME="$HOME/.config"
+
 # Path
 if [ -d "/usr/games" ]; then
     export PATH="$PATH:/usr/games"
@@ -134,18 +137,7 @@ fi
 
 # Key bindings
 if type fzf > /dev/null 2>&1; then
-    if type tac > /dev/null 2>&1; then
-        TAC="tac"
-    else
-        TAC="tail -r"
-    fi
-
-    function fzf_select {
-        declare BUFFER=$(history | sed 's/^ *[0-9]* *//' | $TAC | fzf --ansi --cycle --header-first --no-separator --no-sort --color "light" --layout "reverse" --scheme "history" --tabstop 4 --query "$LEADLINE_LINE" --tiebreak "index")
-        READLINE_LINE="${BUFFER}"
-        READLINE_POINT="${#BUFFER}"
-    }
-    bind -x '"\C-r": fzf_select'
+    source <(fzf --bash)
 fi
 
 if type pet > /dev/null 2>&1; then

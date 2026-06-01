@@ -4,6 +4,9 @@ set -x LC_ALL "en_GB.UTF-8"
 set -x LC_COLLATE "en_GB.UTF-8"
 set -x LANG "en_GB.UTF-8"
 
+# Config
+set -x XDG_CONFIG_HOME "$HOME/.config"
+
 # Path
 if test -d "/usr/games"
     fish_add_path --append "/usr/games"
@@ -104,11 +107,11 @@ end
 
 ## Key bindings
 if type fzf > /dev/null 2>&1
-    function fish_user_key_bindings
-        bind \cr fzf_select
-        bind \cp pet_select
-        bind \cg ghq_select
-    end
+    fzf --fish | source
+end
+
+if type pet > /dev/null 2>&1
+    bind \cp pet_select
 end
 
 # Alias
@@ -242,6 +245,7 @@ end
 ## ghq
 if test -d "/opt/ghq/ghq"
     fish_add_path --append "/opt/ghq/ghq"
+    bind \cg ghq_select
 end
 
 ### thefuck

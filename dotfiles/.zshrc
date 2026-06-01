@@ -4,6 +4,9 @@ export LC_ALL="en_GB.UTF-8"
 export LC_COLLATE="en_GB.UTF-8"
 export LANG="en_GB.UTF-8"
 
+# Config
+export XDG_CONFIG_HOME="$HOME/.config"
+
 # Path
 if [ -d "/usr/games" ]; then
     export PATH="$PATH:/usr/games"
@@ -198,19 +201,7 @@ esac
 
 # Key bindings
 if type fzf >/dev/null 2>&1; then
-    if type tac >/dev/null 2>&1; then
-        TAC="tac"
-    else
-        TAC="tail -r"
-    fi
-
-    function fzf_select() {
-        BUFFER=$(history -n 1 | $TAC | fzf --ansi --cycle --header-first --no-separator --no-sort --color "light" --layout "reverse" --scheme "history" --tabstop 4 --query "$LBUFFER" --tiebreak "index")
-        CURSOR="$#BUFFER"
-        zle reset-prompt
-    }
-    zle -N fzf_select
-    bindkey '^R' fzf_select
+    source <(fzf --zsh)
 fi
 
 if type pet >/dev/null 2>&1; then
