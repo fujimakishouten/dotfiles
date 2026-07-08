@@ -28,6 +28,9 @@ ln -ins "$HOME/.fish" "$HOME/.config/fish"
 # ghostty
 ln -ins "$HOME/.ghostty" "$HOME/.config/ghostty"
 
+# kitty
+ln -ins "$HOME/.kitty" "$HOME/.config/kitty"
+
 # neovim
 ln -ins "$HOME/.vim" "$HOME/.config/nvim"
 ln -ins "$HOME/.vim/pack" "$HOME/.local/share/nvim/site/pack"
