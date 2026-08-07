@@ -170,7 +170,7 @@ if not (which colordiff | is-empty) {
     alias diff = colordiff
 }
 if not (which eza | is-empty) {
-    alias ls = eza --group --icons
+    alias ls = eza --group --color auto --icons auto
 }
 if not (which hexyl | is-empty) {
     alias hexdump = hexyl

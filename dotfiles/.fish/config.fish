@@ -149,7 +149,7 @@ if type colordiff > /dev/null 2>&1
     alias diff "colordiff"
 end
 if type eza > /dev/null 2>&1
-    alias ls="eza --group --icons"
+    alias ls="eza --group --color auto --icons auto"
 end
 if type hexyl > /dev/null 2>&1
     alias hexdump="hexyl"
