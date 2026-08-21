@@ -200,3 +200,12 @@ autocmd BufWritePre * :%s/\s\+$//e
 " Fix paste bug triggered by the above inoremaps
 set t_BE=
 
+"--------------------------------------------------------------------
+" nvim
+"--------------------------------------------------------------------
+
+if has('nvim')
+  let g:termfeatures = get(g:, 'termfeatures', {})
+  let g:termfeatures.osc52 = v:false
+endif
+
