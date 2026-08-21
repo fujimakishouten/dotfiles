@@ -136,6 +136,10 @@ if type rlwrap > /dev/null 2>&1
     alias ocaml "rlwrap ocaml"
 end
 
+if set -q KITTY_WINDOW_ID
+    alias ssh "kitten ssh"
+end
+
 # Command line alternatives
 if type batcat > /dev/null 2>&1
     alias cat='batcat --plain --pager never --theme "Monokai Extended Light"'

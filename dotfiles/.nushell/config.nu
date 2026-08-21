@@ -157,6 +157,10 @@ if not (which rlwrap | is-empty) {
     alias ocaml = rlwrap ocaml
 }
 
+if "KITTY_WINDOW_ID" in $env {
+    alias ssh = kitten ssh
+}
+
 # Command line alternatives
 if not (which batcat | is-empty) {
     alias cat = batcat --plain --pager never --theme "Monokai Extended Light"
