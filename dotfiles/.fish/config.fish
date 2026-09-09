@@ -155,6 +155,9 @@ end
 if type eza > /dev/null 2>&1
     alias ls="eza --group --color auto --icons auto"
 end
+if type glow > /dev/null 2>&1
+    alias glow="glow --witdh 0"
+end
 if type hexyl > /dev/null 2>&1
     alias hexdump="hexyl"
     alias od="hexyl"
@@ -234,15 +237,17 @@ if test -f "/opt/asdf"
 end
 if type asdf > /dev/null 2>&1
     if test -z "$ASDF_DATA_DIR"
-        fish_add_path "$HOME/.asdf/shims"
+        set ASDF_SHIMS_PATH "$HOME/.asdf/shims"
     else
-        fish_add_path "$ASDF_DATA_DIR/shims"
+        set ASDF_SHIMS_PATH "$ASDF_DATA_DIR/shims"
     end
+    fish_add_path "$ASDF_SHIMS_PATH"
     set -x ASDF_GOLANG_MOD_VERSION_ENABLED true
 end
 
 ## mise
 if type mise > /dev/null 2>&1
+    set -x PATH (string match -v -- "$ASDF_SHIMS_PATH" $PATH)
     mise activate fish | source
 end
 

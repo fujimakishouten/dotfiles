@@ -209,6 +209,9 @@ fi
 if type eza > /dev/null 2>&1; then
     alias ls="eza --group --color auto --icons auto"
 fi
+if type glow > /dev/null 2>&1; then
+    alias glow="glow --witdh 0"
+fi
 if type hexyl > /dev/null 2>&1; then
     alias hexdump="hexyl"
     alias od="hexyl"
@@ -299,6 +302,12 @@ fi
 
 ## mise
 if type mise > /dev/null 2>&1; then
+    ASDF_SHIMS_PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims"
+    PATH=":$PATH:"
+    PATH="${PATH//:$ASDF_SHIMS_PATH:/:}"
+    PATH="${PATH#:}"
+    PATH="${PATH%:}"
+    export PATH
     eval "$(mise activate bash)"
 fi
 

@@ -176,6 +176,9 @@ if not (which colordiff | is-empty) {
 if not (which eza | is-empty) {
     alias ls = eza --group --color auto --icons auto
 }
+if not (which glow | is-empty) {
+    alias glow = glow --width 0
+}
 if not (which hexyl | is-empty) {
     alias hexdump = hexyl
     alias od = hexyl
@@ -246,16 +249,20 @@ if not (which anyenv | is-empty) {
 }
 
 ## asdf
+let asdf_shims_path = (
+    $env.ASDF_DATA_DIR?
+        | default ($env.HOME | path join ".asdf")
+        | path join "shims"
+)
 if ("/opt/asdf/asdf" | path exists) {
     $env.PATH = ($env.PATH | append "/opt/asdf")
 }
 if not (which asdf | is-empty) {
-    if ($env | columns | any {|col| $col == "ASDF_DATA_DIR"}) {
-        $env.PATH = ($"($env.ASDF_DATA_DIR)/.asdf/shims" | append $env.PATH | uniq)
-    } else {
-        $env.PATH = ($"($env.HOME)/.asdf/shims" | append $env.PATH | uniq)
-    }
+    $env.PATH = ($asdf_shims_path | append $env.PATH | uniq)
 }
+
+## mise
+use ($nu.default-config-dir | path join "mise.nu")
 
 ## ghq
 if ("/opt/ghq/ghq" | path exists) {
