@@ -114,6 +114,33 @@ case "${OSTYPE}" in
     darwin*)
         alias ls="ls -FG"
 
+        if [ -d "/usr/local/sbin" ]; then
+            export PATH="$PATH:/usr/local/sbin"
+        fi
+
+        # Fink
+        if [ -d "/sw/bin" ]; then
+            export PATH="/sw/bin:$PATH"
+        fi
+        if [ -d "/sw/sbin" ]; then
+            export PATH="/sw/sbin:$PATH"
+        fi
+
+        # MacPorts
+        if [ -d "/opt/local/bin" ]; then
+            export PATH="/opt/local/bin:$PATH"
+        fi
+        if [ -d "/opt/local/sbin" ]; then
+            export PATH="/opt/local/sbin:$PATH"
+        fi
+        for DIRECTORY in gnubin uutils
+        do
+            if [ -d "/opt/local/libexec/$DIRECTORY" ]; then
+                export PATH="/opt/local/libexec/$DIRECTORY:$PATH"
+            fi
+        done
+
+        # Homebrew
         if [ -f "/opt/homebrew/bin/brew" ]; then
             eval "$(/opt/homebrew/bin/brew shellenv)"
         fi
@@ -168,17 +195,6 @@ case "${OSTYPE}" in
 
         if [ -f "$BASE_PATH/share/autojump/autojump.zsh" ]; then
             . "$BASE_PATH/share/autojump/autojump.zsh"
-        fi
-
-        if [ -d "/usr/local/sbin" ]; then
-            export PATH="$PATH:/usr/local/sbin"
-        fi
-
-        if [ -d "/sw/bin" ]; then
-            export PATH="$PATH:/sw/bin"
-        fi
-        if [ -d "/sw/sbin" ]; then
-            export PATH="$PATH/sw/sbin"
         fi
 
         if [ -d "$HOME/.docker/bin" ]; then

@@ -69,6 +69,32 @@ if $env.OSTYPE =~ "linux" {
     }
 }
 if $env.OSTYPE =~ "Darwin" {
+    # Fink
+    if ("/sw/bin" | path exists) {
+        $env.PATH = ($env.PATH | prepend "/sw/bin" | uniq)
+    }
+    if ("/sw/sbin" | path exists) {
+        $env.PATH = ($env.PATH | prepend "/sw/sbin" | uniq)
+    }
+
+    # MacPorts
+    if ("/usr/local/sbin" | path exists) {
+        $env.PATH = ($env.PATH | append "/usr/local/bin" | uniq)
+    }
+
+    if ("/opt/local/bin" | path exists) {
+        $env.PATH = ($env.PATH | prepend "/opt/local/bin" | uniq)
+    }
+    if ("/opt/local/sbin" | path exists) {
+        $env.PATH = ($env.PATH | prepend "/opt/local/sbin" | uniq)
+    }
+    for $DIRECTORY in ["gnubin", "uutils"] {
+        if ($"/opt/local/libexec/($DIRECTORY)" | path exists) {
+            $env.PATH = ($env.PATH | prepend $"/opt/local/libexec/($DIRECTORY)" | uniq)
+        }
+    }
+
+    # Homebrew
     if ("/opt/homebrew/bin/brew" | path exists) {
         let brew_env = (/opt/homebrew/bin/brew shellenv | lines |
             where ($it =~ "^export ") |
@@ -105,17 +131,6 @@ if $env.OSTYPE =~ "Darwin" {
         if ($"($env.BASE_PATH)/opt/($DIRECTORY)/bin" | path exists) {
             $env.PATH = ($env.PATH | prepend $"($env.BASE_PATH)/opt/($DIRECTORY)/bin" | uniq)
         }
-    }
-
-    if ("/usr/local/sbin" | path exists) {
-        $env.PATH = ($env.PATH | append "/usr/local/bin" | uniq)
-    }
-
-    if ("/sw/bin" | path exists) {
-        $env.PATH = ($env.PATH | prepend "/sw/bin" | uniq)
-    }
-    if ("/sw/sbin" | path exists) {
-        $env.PATH = ($env.PATH | prepend "/sw/sbin" | uniq)
     }
 
     if ($"($env.BASE_PATH)/opt/mysql-client/bin" | path exists) {

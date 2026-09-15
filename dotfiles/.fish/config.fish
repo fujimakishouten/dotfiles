@@ -36,6 +36,32 @@ switch (uname)
     case "Darwin"
         alias ls "ls -FG"
 
+        if test -d "/usr/local/sbin"
+            fish_add_path --append "/usr/local/sbin"
+        end
+
+        # Fink
+        if test -d "/sw/bin"
+            fish_add_path --append "/sw/bin"
+        end
+        if test -d "/sw/sbin"
+            fish_add_path --append "/sw/sbin"
+        end
+
+        # MacPorts
+        if test -d "/opt/local/bin"
+            fish_add_path --append "/opt/local/bin"
+        end
+        if test -d "/opt/local/sbin"
+            fish_add_path --append "/opt/local/sbin"
+        end
+        for DIRECTORY in gnubin uutils
+            if test -d "/opt/local/libexec/$DIRECTORY"
+                fish_add_path "/opt/lcoal/libexec/$DIRECTORY"
+            end
+        end
+
+        # Homebrew
         if test -f "/opt/homebrew/bin/brew"
             eval (/opt/homebrew/bin/brew shellenv)
         end
@@ -75,17 +101,6 @@ switch (uname)
 
         if test -f "$BASE_PATH/share/autojump/autojump.fish"
             source "$BASE_PATH/share/autojump/autojump.fish"
-        end
-
-        if test -d "/usr/local/sbin"
-            fish_add_path --append "/usr/local/sbin"
-        end
-
-        if test -d "/sw/bin"
-            fish_add_path --append "/sw/bin"
-        end
-        if test -d "/sw/sbin"
-            fish_add_path --append "/sw/sbin"
         end
 
         if test -d "$HOME/.docker/bin"
