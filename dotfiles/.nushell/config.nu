@@ -69,28 +69,27 @@ if $env.OSTYPE =~ "linux" {
     }
 }
 if $env.OSTYPE =~ "Darwin" {
-    # Fink
-    if ("/sw/bin" | path exists) {
-        $env.PATH = ($env.PATH | prepend "/sw/bin" | uniq)
+    $env.BASE_PATH = "/usr"
+    if ("/usr/local/sbin" | path exists) {
+        $env.PATH = ($env.PATH | append "/usr/local/sbin" | uniq)
     }
-    if ("/sw/sbin" | path exists) {
+
+    # Fink
+    if not (which fink | is-empty) {
+        $env.BASE_PATH = "/sw"
+        $env.PATH = ($env.PATH | prepend "/sw/bin" | uniq)
         $env.PATH = ($env.PATH | prepend "/sw/sbin" | uniq)
     }
 
     # MacPorts
-    if ("/usr/local/sbin" | path exists) {
-        $env.PATH = ($env.PATH | append "/usr/local/bin" | uniq)
-    }
-
-    if ("/opt/local/bin" | path exists) {
-        $env.PATH = ($env.PATH | prepend "/opt/local/bin" | uniq)
-    }
-    if ("/opt/local/sbin" | path exists) {
-        $env.PATH = ($env.PATH | prepend "/opt/local/sbin" | uniq)
-    }
-    for $DIRECTORY in ["gnubin", "uutils"] {
-        if ($"/opt/local/libexec/($DIRECTORY)" | path exists) {
-            $env.PATH = ($env.PATH | prepend $"/opt/local/libexec/($DIRECTORY)" | uniq)
+    if not (which port | is-empty) {
+        $env.BASE_PATH = "/opt/local"
+        $env.PATH = ($env.PATH | append "/opt/local/bin" | uniq)
+        $env.PATH = ($env.PATH | append "/opt/local/sbin" | uniq)
+        for $DIRECTORY in ["gnubin", "uutils"] {
+            if ($"/opt/local/libexec/($DIRECTORY)" | path exists) {
+                $env.PATH = ($env.PATH | prepend $"/opt/local/libexec/($DIRECTORY)" | uniq)
+            }
         }
     }
 
@@ -104,33 +103,47 @@ if $env.OSTYPE =~ "Darwin" {
         load-env ($brew_env | transpose -r -d)
     }
 
-    $env.BASE_PATH = "/usr"
     if not (which brew | is-empty) {
         $env.BASE_PATH = (brew --prefix | str trim)
+        for $DIRECTORY in ["coreutils", "findutils", "gawk", "gnu-sed", "gnu-tar", "gnu-time", "gnu-which", "grep", "make", "moreutils"] {
+            if ($"($env.BASE_PATH)/opt/($DIRECTORY)/libexec/gnubin" | path exists) {
+                $env.PATH = ($env.PATH | prepend $"($env.BASE_PATH)/opt/($DIRECTORY)/libexec/gnubin"  | uniq)
+            }
+            if ($"($env.BASE_PATH)/opt/($DIRECTORY)/libexec/gnuman" | path exists) {
+                $env.MANPATH = ($env | get --optional MANPATH | default [] | prepend $"($env.BASE_PATH)/opt/($DIRECTORY)/libexec/gnuman" | uniq)
+            }
+        }
+        for $DIRECTORY in ["uutils-coreutils", "uutils-diffutils", "uutils-findutils"] {
+            if ($"($env.BASE_PATH)/opt/($DIRECTORY)/libexec/uubin" | path exists) {
+                $env.PATH = ($env.PATH | prepend $"($env.BASE_PATH)/opt/($DIRECTORY)/libexec/uubin"  | uniq)
+            }
+            if ($"($env.BASE_PATH)/opt/($DIRECTORY)/libexec/uuman" | path exists) {
+                $env.MANPATH = ($env | get --optional MANPATH | default [] | prepend $"($env.BASE_PATH)/opt/($DIRECTORY)/libexec/uuman" | uniq)
+            }
+        }
+        for $DIRECTORY in ["curl", "gnu-getopt", "whois"] {
+            if ($"($env.BASE_PATH)/opt/($DIRECTORY)/bin" | path exists) {
+                $env.PATH = ($env.PATH | prepend $"($env.BASE_PATH)/opt/($DIRECTORY)/bin" | uniq)
+            }
+        }
     }
 
-    for $DIRECTORY in ["coreutils", "findutils", "gawk", "gnu-sed", "gnu-tar", "gnu-time", "gnu-which", "grep", "make", "moreutils"] {
-        if ($"($env.BASE_PATH)/opt/($DIRECTORY)/libexec/gnubin" | path exists) {
-            $env.PATH = ($env.PATH | prepend $"($env.BASE_PATH)/opt/($DIRECTORY)/libexec/gnubin"  | uniq)
-        }
-        if ($"($env.BASE_PATH)/opt/($DIRECTORY)/libexec/gnuman" | path exists) {
-            $env.MANPATH = ($env | get --optional MANPATH | default [] | prepend $"($env.BASE_PATH)/opt/($DIRECTORY)/libexec/gnuman" | uniq)
-        }
+    # Nix
+    if ("/run/current-system/sw/bin" | path exists) {
+        $env.PATH = ($env.PATH | prepend "/run/current-system/sw/bin" | uniq)
+    }
+    if ("/run/current-system/sw/bin" | path exists) {
+        $env.PATH = ($env.PATH | prepend "/run/current-system/sw/sbin" | uniq)
+    }
+    if ($"/nix/var/nix/profiles/per-user/($env.USER)/bin" | path exists) {
+        $env.PATH = ($env.PATH | prepend "/nix/var/nix/profiles/per-user/($env.USER)/bin" | uniq)
+    }
+    if ($"/nix/var/nix/profiles/per-user/($env.USER)/sbin" | path exists) {
+        $env.PATH = ($env.PATH | prepend "/nix/var/nix/profiles/per-user/($env.USER)/sbin" | uniq)
     }
 
-    for $DIRECTORY in ["uutils-coreutils", "uutils-diffutils", "uutils-findutils"] {
-        if ($"($env.BASE_PATH)/opt/($DIRECTORY)/libexec/uubin" | path exists) {
-            $env.PATH = ($env.PATH | prepend $"($env.BASE_PATH)/opt/($DIRECTORY)/libexec/uubin"  | uniq)
-        }
-        if ($"($env.BASE_PATH)/opt/($DIRECTORY)/libexec/uuman" | path exists) {
-            $env.MANPATH = ($env | get --optional MANPATH | default [] | prepend $"($env.BASE_PATH)/opt/($DIRECTORY)/libexec/uuman" | uniq)
-        }
-    }
-
-    for $DIRECTORY in ["curl", "gnu-getopt", "whois"] {
-        if ($"($env.BASE_PATH)/opt/($DIRECTORY)/bin" | path exists) {
-            $env.PATH = ($env.PATH | prepend $"($env.BASE_PATH)/opt/($DIRECTORY)/bin" | uniq)
-        }
+    if ($"($env.HOME)/.docker/bin" | path exists) {
+        $env.PATH = ($env.PATH | append $"($env.HOME)/.docker/bin" | uniq)
     }
 
     if ($"($env.BASE_PATH)/opt/mysql-client/bin" | path exists) {
@@ -139,10 +152,6 @@ if $env.OSTYPE =~ "Darwin" {
 
     if ($"($env.BASE_PATH)/opt/libpq/bin" | path exists) {
         $env.PATH = ($env.PATH | append $"($env.BASE_PATH)/opt/libpq/bin" | uniq)
-    }
-
-    if ($"($env.HOME)/.docker/bin" | path exists) {
-        $env.PATH = ($env.PATH | append $"($env.HOME)/.docker/bin" | uniq)
     }
 
     if ($"($env.HOME)/Library/Android/sdk" | path exists) {

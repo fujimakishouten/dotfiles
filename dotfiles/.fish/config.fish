@@ -36,28 +36,27 @@ switch (uname)
     case "Darwin"
         alias ls "ls -FG"
 
+        set BASE_PATH "/usr"
         if test -d "/usr/local/sbin"
             fish_add_path --append "/usr/local/sbin"
         end
 
         # Fink
-        if test -d "/sw/bin"
+        if type fink > /dev/null 2>&1
+            set BASE_PATH "/sw"
             fish_add_path --append "/sw/bin"
-        end
-        if test -d "/sw/sbin"
             fish_add_path --append "/sw/sbin"
         end
 
         # MacPorts
-        if test -d "/opt/local/bin"
+        if type port > /dev/null 2>&1
+            set BASE_PATH "/opt/local"
             fish_add_path --append "/opt/local/bin"
-        end
-        if test -d "/opt/local/sbin"
             fish_add_path --append "/opt/local/sbin"
-        end
-        for DIRECTORY in gnubin uutils
-            if test -d "/opt/local/libexec/$DIRECTORY"
-                fish_add_path "/opt/lcoal/libexec/$DIRECTORY"
+            for DIRECTORY in gnubin uutils
+                if test -d "/opt/local/libexec/$DIRECTORY"
+                    fish_add_path "/opt/lcoal/libexec/$DIRECTORY"
+                end
             end
         end
 
@@ -66,37 +65,50 @@ switch (uname)
             eval (/opt/homebrew/bin/brew shellenv)
         end
 
-        set BASE_PATH "/usr"
         if type brew > /dev/null 2>&1
             set BASE_PATH "$(brew --prefix)"
+
+            for DIRECTORY in coreutils diffutils findutils gawk gnu-getopt gnu-sed gnu-tar gnu-time gnu-which grep make moreutils
+                if test -d "$BASE_PATH/opt/$DIRECTORY/libexec/gnubin"
+                    fish_add_path "$BASE_PATH/opt/$DIRECTORY/libexec/gnubin"
+                    if test "$DIRECTORY" = "coreutils"
+                        alias ls "ls --color=auto"
+                    end
+                end
+                if test -d "$BASE_PATH/opt/$DIRECTORY/libexec/gnuman"
+                    set -x MANPATH "$BASE_PATH/opt/$DIRECTORY/libexec/gnuman" "$MANPATH"
+                end
+            end
+            for DIRECTORY in uutils-coreutils uutils-diffutils uutils-findutils
+                if test -d "$BASE_PATH/opt/$DIRECTORY/libexec/uubin"
+                    fish_add_path "$BASE_PATH/opt/$DIRECTORY/libexec/uubin"
+                    if test "$DIRECTORY" = "uutils-coreutils"
+                        alias ls="ls --color=auto"
+                    end
+                end
+                if test -d "$BASE_PATH/opt/$DIRECTORY/libexec/uuman"
+                    set -x MANPATH "$BASE_PATH/opt/$DIRECTORY/libexec/uuman" "$MANPATH"
+                end
+            end
+            for DIRECTORY in curl gnu-getopt whois
+                if test -d "$BASE_PATH/opt/$DIRECTORY/bin"
+                    fish_add_path "$BASE_PATH/opt/$DIRECTORY/bin"
+                end
+            end
         end
 
-        for DIRECTORY in coreutils diffutils findutils gawk gnu-getopt gnu-sed gnu-tar gnu-time gnu-which grep make moreutils
-            if test -d "$BASE_PATH/opt/$DIRECTORY/libexec/gnubin"
-                fish_add_path "$BASE_PATH/opt/$DIRECTORY/libexec/gnubin"
-                if test "$DIRECTORY" = "coreutils"
-                    alias ls "ls --color=auto"
-                end
-            end
-            if test -d "$BASE_PATH/opt/$DIRECTORY/libexec/gnuman"
-                set -x MANPATH "$BASE_PATH/opt/$DIRECTORY/libexec/gnuman" "$MANPATH"
-            end
+        # Nix
+        if test -d "/run/current-system/sw/bin"
+            fish_add_path --append "/run/current-system/sw/bin"
         end
-        for DIRECTORY in uutils-coreutils uutils-diffutils uutils-findutils
-            if test -d "$BASE_PATH/opt/$DIRECTORY/libexec/uubin"
-                fish_add_path "$BASE_PATH/opt/$DIRECTORY/libexec/uubin"
-                if test "$DIRECTORY" = "uutils-coreutils"
-                    alias ls="ls --color=auto"
-                end
-            end
-            if test -d "$BASE_PATH/opt/$DIRECTORY/libexec/uuman"
-                set -x MANPATH "$BASE_PATH/opt/$DIRECTORY/libexec/uuman" "$MANPATH"
-            end
+        if test -d "/run/current-system/sw/sbin"
+            fish_add_path --append "/run/current-system/sw/sbin"
         end
-        for DIRECTORY in curl gnu-getopt whois
-            if test -d "$BASE_PATH/opt/$DIRECTORY/bin"
-                fish_add_path "$BASE_PATH/opt/$DIRECTORY/bin"
-            end
+        if test -d "/nix/var/nix/profiles/per-user/$USER/bin"
+            fish_add_path --append "/nix/var/nix/profiles/per-user/$USER/bin"
+        end
+        if test -d "/nix/var/nix/profiles/per-user/$USER/sbin"
+            fish_add_path --append "/nix/var/nix/profiles/per-user/$USER/sbin"
         end
 
         if test -f "$BASE_PATH/share/autojump/autojump.fish"
@@ -233,7 +245,7 @@ set -x DOCKER_BUILDKIT 1
 ## direnv
 if type direnv > /dev/null 2>&1
     if ! type _direnv_hook > /dev/null 2>&1
-        eval (direnv hook fish)
+        direnv hook fish | source
         alias tmux "direnv exec / tmux"
     end
 end
