@@ -201,7 +201,7 @@ if not (which eza | is-empty) {
     alias ls = eza --group --color auto --icons auto
 }
 if not (which glow | is-empty) {
-    alias glow = glow --width 0
+    alias glow = glow --style light --width 0
 }
 if not (which hexyl | is-empty) {
     alias hexdump = hexyl

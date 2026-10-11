@@ -55,14 +55,14 @@ switch (uname)
             fish_add_path --append "/opt/local/sbin"
             for DIRECTORY in gnubin uutils
                 if test -d "/opt/local/libexec/$DIRECTORY"
-                    fish_add_path "/opt/lcoal/libexec/$DIRECTORY"
+                    fish_add_path "/opt/local/libexec/$DIRECTORY"
                 end
             end
         end
 
         # Homebrew
         if test -f "/opt/homebrew/bin/brew"
-            eval (/opt/homebrew/bin/brew shellenv)
+            /opt/homebrew/bin/brew shellenv | source
         end
 
         if type brew > /dev/null 2>&1
@@ -183,7 +183,7 @@ if type eza > /dev/null 2>&1
     alias ls="eza --group --color auto --icons auto"
 end
 if type glow > /dev/null 2>&1
-    alias glow="glow --witdh 0"
+    alias glow="glow --style light --width 0"
 end
 if type hexyl > /dev/null 2>&1
     alias hexdump="hexyl"

@@ -303,7 +303,7 @@ if type eza >/dev/null 2>&1; then
     alias ls="eza --group --color auto --icons auto"
 fi
 if type glow >/dev/null 2>&1; then
-    alias glow="glow --width 0"
+    alias glow="glow --style light --width 0"
 fi
 if type hexyl >/dev/null 2>&1; then
     alias hexdump="hexyl"
