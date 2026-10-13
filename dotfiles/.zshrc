@@ -195,13 +195,24 @@ case "${OSTYPE}" in
         if [ -d "$BASE_PATH/share/zsh-completions" ]; then
             export FPATH=$FPATH:"$BASE_PATH/share/zsh-completions"
         fi
+        if [ -d "/run/current-system/sw/share/zsh/site-functions" ]; then
+            export FPATH="$FPATH:/run/current-system/sw/share/zsh/site-functions"
+        fi
         if [ -f "$BASE_PATH/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
             typeset -U ZSH_AUTOSUGGEST_IGNORE_WIDGETS
             ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(bracketed-paste)
             . "$BASE_PATH/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
         fi
+        if [ -f "/run/current-system/sw/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
+            typeset -U ZSH_AUTOSUGGEST_IGNORE_WIDGETS
+            ZSH_AUTOSUGGEST_IGNORE_WIDGETS+=(bracketed-paste)
+            . "/run/current-system/sw/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+        fi
         if [ -f "$BASE_PATH/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
             . "$BASE_PATH/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+        fi
+        if [ -f "/run/current-system/sw/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
+            . "/run/current-system/sw/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
         fi
 
         if [ -f "$BASE_PATH/share/autojump/autojump.zsh" ]; then
