@@ -141,6 +141,9 @@ if $env.OSTYPE =~ "Darwin" {
     if ($"/nix/var/nix/profiles/per-user/($env.USER)/sbin" | path exists) {
         $env.PATH = ($env.PATH | prepend "/nix/var/nix/profiles/per-user/($env.USER)/sbin" | uniq)
     }
+    if ("/run/current-system/sw/lib/pkgconf" | path exists) {
+        $env.PKG_CONFIG_PATH = ($env.PKG_CONFIG_PATH | prepend "/run/current-system/sw/lib/pkgconf" | uniq)
+    }
 
     if ($"($env.HOME)/.docker/bin" | path exists) {
         $env.PATH = ($env.PATH | append $"($env.HOME)/.docker/bin" | uniq)

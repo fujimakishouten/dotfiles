@@ -190,6 +190,9 @@ case "${OSTYPE}" in
         if [ -d "/nix/var/nix/profiles/per-user/$USER/sbin" ]; then
             export PATH="/nix/var/nix/profiles/per-user/$USER/sbin:$PATH"
         fi
+        if [ -d "/run/current-system/sw/lib/pkgconf" ]; then
+            export PKG_CONFIG_PATH="/run/current-system/sw/lib/pkgconf:$PKG_CONFIG_PATH"
+        fi
 
         # zsh
         if [ -d "$BASE_PATH/share/zsh-completions" ]; then
