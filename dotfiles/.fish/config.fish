@@ -11,11 +11,23 @@ set -x XDG_CONFIG_HOME "$HOME/.config"
 if test -d "/usr/games"
     fish_add_path --append "/usr/games"
 end
+if test -d "/usr/bin"
+    fish_add_path "/usr/bin"
+end
+if test -d "/usr/sbin"
+    fish_add_path "/usr/sbin"
+end
+if test -d "/usr/local/bin"
+    fish_add_path "/usr/local/bin"
+end
+if test -d "/usr/local/sbin"
+    fish_add_path "/usr/local/sbin"
+end
 if test -d "$HOME/bin"
-    fish_add_path --append "$HOME/bin"
+    fish_add_path "$HOME/bin"
 end
 if test -d "$HOME/.local/bin"
-    fish_add_path --append "$HOME/.local/bin"
+    fish_add_path "$HOME/.local/bin"
 end
 
 # Prompt

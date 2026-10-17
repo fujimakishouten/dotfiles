@@ -30,11 +30,23 @@ $env.XDG_CONFIG_HOME = $"($env.HOME)/.config"
 if ("/usr/games" | path exists) {
     $env.PATH = ($env.PATH | append "/usr/games" | uniq)
 }
+if ("/usr/bin" | path exists) {
+    $env.PATH = ($env.PATH | prepend "/usr/bin" | uniq)
+}
+if ("/usr/sbin" | path exists) {
+    $env.PATH = ($env.PATH | prepend "/usr/sbin" | uniq)
+}
+if ("/usr/local/bin" | path exists) {
+    $env.PATH = ($env.PATH | prepend "/usr/local/bin" | uniq)
+}
+if ("/usr/local/sbin" | path exists) {
+    $env.PATH = ($env.PATH | prepend "/usr/local/sbin" | uniq)
+}
 if ($"($env.HOME)/bin" | path exists) {
-    $env.PATH = ($env.PATH | append $"($env.HOME)/bin" | uniq)
+    $env.PATH = ($env.PATH | prepend $"($env.HOME)/bin" | uniq)
 }
 if ($"($env.HOME)/.local/bin" | path exists) {
-    $env.PATH = ($env.PATH | append $"($env.HOME)/.local/bin" | uniq)
+    $env.PATH = ($env.PATH | prepend $"($env.HOME)/.local/bin" | uniq)
 }
 
 # Nushell

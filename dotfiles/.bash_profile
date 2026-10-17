@@ -11,6 +11,18 @@ export XDG_CONFIG_HOME="$HOME/.config"
 if [ -d "/usr/games" ]; then
     export PATH="$PATH:/usr/games"
 fi
+if [ -d "/usr/bin" ]; then
+    export PATH="$PATH:/usr/bin"
+fi
+if [ -d "/usr/sbin" ]; then
+    export PATH="$PATH:/usr/sbin"
+fi
+if [ -d "/usr/local/bin" ]; then
+    export PATH="$PATH:/usr/local/bin"
+fi
+if [ -d "/usr/local/sbin" ]; then
+    export PATH="$PATH:/usr/local/sbin"
+fi
 if [ -d "$HOME/bin" ]; then
     export PATH="$PATH:$HOME/bin"
 fi
