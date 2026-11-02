@@ -210,6 +210,9 @@ case "${OSTYPE}" in
         if [ -d "$BASE_PATH/share/zsh-completions" ]; then
             export FPATH=$FPATH:"$BASE_PATH/share/zsh-completions"
         fi
+        if [ -d "$BASE_PATH/share/zsh/site-functions" ]; then
+            export FPATH=$FPATH:"$BASE_PATH/share/zsh/site-functions"
+        fi
         if [ -d "/run/current-system/sw/share/zsh/site-functions" ]; then
             export FPATH="$FPATH:/run/current-system/sw/share/zsh/site-functions"
         fi
