@@ -189,7 +189,7 @@ case "${OSTYPE}" in
             done
         fi
 
-        # Nix
+		# Nix
         if [ -d "/run/current-system/sw/bin" ]; then
             export PATH="/run/current-system/sw/bin:$PATH"
         fi
@@ -204,6 +204,9 @@ case "${OSTYPE}" in
         fi
         if [ -d "/run/current-system/sw/lib/pkgconf" ]; then
             export PKG_CONFIG_PATH="/run/current-system/sw/lib/pkgconf:$PKG_CONFIG_PATH"
+        fi
+        if [ -d "/run/current-system/sw/lib/pkgconf" ]; then
+            export PKG_CONFIG_PATH="/run/current-system/sw/share/pkgconf:$PKG_CONFIG_PATH"
         fi
 
         # zsh
@@ -397,6 +400,9 @@ fi
 export COMPOSE_DOCKER_CLI_BUILD=1
 export DOCKER_BUILDKIT=1
 
+## colima
+export COLIMA_HOME="$HOME/.config/colima"
+
 ## direnv
 if type direnv >/dev/null 2>&1; then
     if ! (type _direnv_hook >/dev/null 2 >&1); then
@@ -457,12 +463,15 @@ if [ -d "/opt/realesrgan/realesrgan" ]; then
     export PATH="$PATH:/opt/realesrgan/realesrgan"
 fi
 
+## AWS
+export AWS_DEFAULT_PROFILE="dena-ffrk-dev-aws.administrator"
+
 ## Python
 export PYTHONUTF8=1
-export PYTHONDEVMODE=1
-export PYTHONIOENCODING="UTF-8"
-export PYTHONWARNINGS="default"
-export WORKON_HOME="$HOME/.virtualenvs"
+#export PYTHONDEVMODE=1
+export PYTHONIOENCODING=UTF-8
+#export PYTHONWARNINGS=default
+export WORKON_HOME=$HOME/.virtualenvs
 if [ -f "/usr/share/virtualenvwrapper/virtualenvwrapper_lazy.sh" ]; then
     . "/usr/share/virtualenvwrapper/virtualenvwrapper_lazy.sh"
 fi
@@ -480,6 +489,7 @@ if type go >/dev/null 2>&1; then
     export CGO_ENABLED=0
     export GO111MODULE=on
     export GOBIN="$GOPATH/bin"
+    export GOPRIVATE="github.dena.jp"
     export PATH="$PATH:$GOBIN"
 fi
 
@@ -584,3 +594,39 @@ if [ -d "/opt/cocos2d-x/cocos2d-x" ]; then
         export PATH="$PATH:$ANT_ROOT"
     fi
 fi
+
+## Google Cloud SDK
+if [ -f /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc ]; then
+    . /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc
+fi
+if [ -f /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc ]; then
+    . /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc
+fi
+
+## Docker credential GCR
+if [ -d /opt/docker-credential-gcr/docker-credential-gcr ]; then
+    export PATH=$PATH:/opt/docker-credential-gcr/docker-credential-gcr
+fi
+
+# DGPM
+if [ -d $GOPATH/src/github.dena.jp/dev-portal/dgpm/build/release/dgpm/darwin-amd64/bin ]; then
+    export PATH=$PATH:$GOPATH/src/github.dena.jp/dev-portal/dgpm/build/release/dgpm/darwin-amd64/bin
+elif [ -d $HOME/.dgpm/darwin-amd64/bin ]; then
+    export PATH=$PATH:$HOME/.dgpm/darwin-amd64/bin
+fi
+
+# Adobe AIR
+if [ -d "/opt/Adobe/AIRSDK/bin" ]; then
+    PATH="$PATH:/opt/Adobe/AIRSDK/bin"
+fi
+
+# Gemini CLI
+export GOOGLE_CLOUD_LOCATION="us-central1"
+export GOOGLE_CLOUD_PROJECT="dena-tsubami-ai-dev-gcp"
+export GOOGLE_GENAI_USE_VERTEXAI="true"
+
+# .NET Tools
+if [ -d "$HOME/.dotnet/tools" ]; then
+    export PATH="$PATH:$HOME/.dotnet/tools"
+fi
+

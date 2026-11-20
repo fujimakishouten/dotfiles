@@ -156,6 +156,9 @@ if $env.OSTYPE =~ "Darwin" {
     if ("/run/current-system/sw/lib/pkgconf" | path exists) {
         $env.PKG_CONFIG_PATH = ($env.PKG_CONFIG_PATH | prepend "/run/current-system/sw/lib/pkgconf" | uniq)
     }
+    if ("/run/current-system/sw/share/pkgconf" | path exists) {
+        $env.PKG_CONFIG_PATH = ($env.PKG_CONFIG_PATH | prepend "/run/current-system/sw/share/pkgconf" | uniq)
+    }
 
     if ($"($env.HOME)/.docker/bin" | path exists) {
         $env.PATH = ($env.PATH | append $"($env.HOME)/.docker/bin" | uniq)

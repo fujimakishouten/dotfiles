@@ -125,6 +125,9 @@ switch (uname)
         if test -d "/run/current-system/sw/lib/pkgconf"
             set -x PKG_CONFIG_PATH "/run/current-system/sw/lib/pkgconf" "$PKG_CONFIG_PATH"
         end
+                if test -d "/run/current-system/sw/share/pkgconf"
+            set -x PKG_CONFIG_PATH "/run/current-system/sw/share/pkgconf" "$PKG_CONFIG_PATH"
+        end
 
         if test -f "$BASE_PATH/share/autojump/autojump.fish"
             source "$BASE_PATH/share/autojump/autojump.fish"

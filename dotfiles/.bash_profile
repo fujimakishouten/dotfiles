@@ -138,6 +138,9 @@ case "${OSTYPE}" in
         if [ -d "/run/current-system/sw/lib/pkgconf" ]; then
             export PKG_CONFIG_PATH="/run/current-system/sw/lib/pkgconf:$PKG_CONFIG_PATH"
         fi
+        if [ -d "/run/current-system/sw/lib/pkgconf" ]; then
+            export PKG_CONFIG_PATH="/run/current-system/sw/share/pkgconf:$PKG_CONFIG_PATH"
+        fi
 
         if [ -f "$BASE_PATH/share/autojump/autojump.zsh" ]; then
             . "$BASE_PATH/share/autojump/autojump.zsh"
